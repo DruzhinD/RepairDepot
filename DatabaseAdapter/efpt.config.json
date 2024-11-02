@@ -1,0 +1,106 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "RepairDepotContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "DatabaseAdapter",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "public.AwardOrder",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.CompleteReport",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Employee",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Employee_RepairTask",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.ExternalRailway",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Foreman",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.InternalRailway",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.QualityControl",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Railway",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.RepairOrder",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.RepairRequest",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.RepairTask",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.RepairType",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.service_directorate",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Wagon",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Worker",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
