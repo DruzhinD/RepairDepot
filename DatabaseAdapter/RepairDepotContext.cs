@@ -66,7 +66,7 @@ public partial class RepairDepotContext : DbContext
         modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         modelBuilder.ApplyConfiguration(new CompleteReportConfiguration());
         modelBuilder.ApplyConfiguration(new AwardOrderConfiguration());
-
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }
