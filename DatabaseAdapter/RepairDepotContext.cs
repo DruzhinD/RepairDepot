@@ -46,6 +46,10 @@ public partial class RepairDepotContext : DbContext
 
     public virtual DbSet<Worker> Workers { get; set; }
 
+    public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<Permission> Permissions { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresEnum("wagon_type", new[] { "купейный", "спальный", "плацкартный", "почтовый", "багажный" });
@@ -67,6 +71,7 @@ public partial class RepairDepotContext : DbContext
         modelBuilder.ApplyConfiguration(new CompleteReportConfiguration());
         modelBuilder.ApplyConfiguration(new AwardOrderConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new PermissionConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

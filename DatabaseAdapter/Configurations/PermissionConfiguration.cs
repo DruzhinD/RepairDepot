@@ -9,15 +9,11 @@ using System.Threading.Tasks;
 
 namespace DatabaseAdapter.Configurations
 {
-    internal class UserConfiguration : IEntityTypeConfiguration<User>
+    internal class PermissionConfiguration : IEntityTypeConfiguration<Permission>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Permission> builder)
         {
             builder.HasKey(x => x.Id);
-            builder
-                .HasOne(x => x.Permission)
-                .WithMany(x => x.Users)
-                .HasForeignKey(x => x.PermissionId);
         }
     }
 }

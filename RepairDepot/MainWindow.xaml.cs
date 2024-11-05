@@ -19,12 +19,6 @@ namespace RepairDepot
     {
         public MainWindow()
         {
-            DatabaseConnection con = new DatabaseConnection(Config.GetInstanse());
-            int x = 0;
-            int y = 0;
-
-            //Console.WriteLine(x.ToString() + y.ToString());
-            InitializeComponent();
         }
     }
 }
