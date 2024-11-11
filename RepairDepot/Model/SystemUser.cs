@@ -9,12 +9,14 @@ namespace RepairDepot.Model
     public class SystemUser
     {
         protected User user;
-        protected RepairDepotContext dbContext;
+        public User User { get => user; }
+        protected DbContextOptions<RepairDepotContext> dbContextOptions;
+        RepairDepotContext dbContext; //удалить
         public Permission Privileges { get => user.Permission; }
 
-        public SystemUser(RepairDepotContext dbContext)
+        public SystemUser(DbContextOptions<RepairDepotContext> dbContextOptions)
         {
-            this.dbContext = dbContext; 
+            this.dbContextOptions = dbContextOptions;
         }
 
         #region Авторизация/Регистрация
@@ -22,35 +24,22 @@ namespace RepairDepot.Model
         /// Авторизация
         /// </summary>
         /// <returns>true - авторизация успешна, иначе false</returns>
-        public async Task<bool> Authorization(string login, string password)
+        public async Task<bool> AuthorizationAsync(string login, string password)
         {
-            //идентификация (логин)
-            bool result = await this.IdentifyAsync(login);
-            if (!result)
-                return false;
-            //аутентификация (пароль)
-            result = this.Authentificate(password);
-            return result;
-        }
 
-        /// <summary>
-        /// Идентификация, т.е. сравнение логина
-        /// </summary>
-        private async Task<bool> IdentifyAsync(string login)
-        {
-            User result = await dbContext.Users.FirstAsync(x => x.Login == login);
-            if (result == null)
-                return false;
-            user = result;
-            return true;
-        }
-
-        /// <summary>
-        /// Аутентификация, т.е. сравнение пароля при гарантированном совпадении логина
-        /// </summary>
-        public bool Authentificate(string password)
-        {
-            return user.Password == password;
+            using (RepairDepotContext dbContext = new RepairDepotContext(dbContextOptions))
+            {
+                //идентификация (логин)
+                User user = await dbContext.Users.FirstOrDefaultAsync(x => x.Login == login);
+                if (user == null)
+                    return false;
+                //аутентификация (пароль)
+                bool result = PasswordHasher.Validate(user.Password, password);
+                //если пароль введен верно, то сохраняем сведения о пользователе
+                if (result)
+                    this.user = user;
+                return result;
+            }
         }
 
         /// <summary>
@@ -61,10 +50,14 @@ namespace RepairDepot.Model
         public async Task<bool> RegisterAsync(User notExistUser)
         {
             //вернет значение, если пользователь с таким логином уже существует
-            User user = await this.dbContext.Users.FirstAsync(x => x.Login == notExistUser.Login);
+            User user = await this.dbContext.Users.FirstOrDefaultAsync(x => x.Login == notExistUser.Login);
             if (user != null)
                 return false;
+            //заменяем явный пароль на его хеш и таким образом отправляем в базу
+            user.Password = PasswordHasher.Hash(user.Password);
+
             await dbContext.Users.AddAsync(notExistUser);
+            await dbContext.SaveChangesAsync();
             return true;
         }
         #endregion

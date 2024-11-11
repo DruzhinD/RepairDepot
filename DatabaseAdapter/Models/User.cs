@@ -3,10 +3,14 @@
 
 namespace DatabaseAdapter.Models
 {
+    [Table("user")]
     public class User
     {
+        [Column("id")]
         public int Id { get; set; }
+        [Column("login")]
         public string Login { get; set; }
+        [Column("password")]
         public string Password { get; set; }
 
         [Column("first_name")]

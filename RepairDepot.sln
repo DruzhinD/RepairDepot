@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepairDepot", "RepairDepot\RepairDepot.csproj", "{66C7CEDB-6BAE-4EEC-ABF1-CD082757FF68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseAdapter", "DatabaseAdapter\DatabaseAdapter.csproj", "{11C8ED26-8897-4941-8B40-C4CB22FD5801}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseAdapter", "DatabaseAdapter\DatabaseAdapter.csproj", "{11C8ED26-8897-4941-8B40-C4CB22FD5801}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "TestConsole\TestConsole.csproj", "{23CC5BD8-81F4-4186-B903-46961E0E2E11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{11C8ED26-8897-4941-8B40-C4CB22FD5801}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11C8ED26-8897-4941-8B40-C4CB22FD5801}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11C8ED26-8897-4941-8B40-C4CB22FD5801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23CC5BD8-81F4-4186-B903-46961E0E2E11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23CC5BD8-81F4-4186-B903-46961E0E2E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23CC5BD8-81F4-4186-B903-46961E0E2E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23CC5BD8-81F4-4186-B903-46961E0E2E11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

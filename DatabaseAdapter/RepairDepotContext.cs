@@ -2,8 +2,11 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using DatabaseAdapter.Configurations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace DatabaseAdapter.Models;
 
@@ -74,5 +77,13 @@ public partial class RepairDepotContext : DbContext
         modelBuilder.ApplyConfiguration(new PermissionConfiguration());
 
         base.OnModelCreating(modelBuilder);
+    }
+
+    //логирование
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder
+            .LogTo(Console.WriteLine, LogLevel.Warning);
     }
 }
