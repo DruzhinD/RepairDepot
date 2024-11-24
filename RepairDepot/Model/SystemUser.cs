@@ -1,5 +1,6 @@
 ﻿using DatabaseAdapter.Models;
 using Microsoft.EntityFrameworkCore;
+using RepairDepot.ViewModel;
 #nullable disable
 namespace RepairDepot.Model
 {
@@ -10,13 +11,10 @@ namespace RepairDepot.Model
     {
         protected User user;
         public User User { get => user; }
-        protected DbContextOptions<RepairDepotContext> dbContextOptions;
-        RepairDepotContext dbContext; //удалить
         public Permission Privileges { get => user.Permission; }
 
-        public SystemUser(DbContextOptions<RepairDepotContext> dbContextOptions)
+        public SystemUser()
         {
-            this.dbContextOptions = dbContextOptions;
         }
 
         #region Авторизация/Регистрация
@@ -27,10 +25,12 @@ namespace RepairDepot.Model
         public async Task<bool> AuthorizationAsync(string login, string password)
         {
 
-            using (RepairDepotContext dbContext = new RepairDepotContext(dbContextOptions))
+            using (RepairDepotContext dbContext = new RepairDepotContext(CommonData.DbContextOptions))
             {
                 //идентификация (логин)
-                User user = await dbContext.Users.FirstOrDefaultAsync(x => x.Login == login);
+                User user = await dbContext.Users
+                    .Include(p => p.Permission)
+                    .FirstOrDefaultAsync(x => x.Login == login);
                 if (user == null)
                     return false;
                 //аутентификация (пароль)
@@ -49,16 +49,20 @@ namespace RepairDepot.Model
         /// <returns>true - регистрация успешна</returns>
         public async Task<bool> RegisterAsync(User notExistUser)
         {
-            //вернет значение, если пользователь с таким логином уже существует
-            User user = await this.dbContext.Users.FirstOrDefaultAsync(x => x.Login == notExistUser.Login);
-            if (user != null)
-                return false;
-            //заменяем явный пароль на его хеш и таким образом отправляем в базу
-            user.Password = PasswordHasher.Hash(user.Password);
+            using (RepairDepotContext dbContext = new(CommonData.DbContextOptions))
+            {
+                //вернет значение, если пользователь с таким логином уже существует
+                User user = await dbContext.Users.FirstOrDefaultAsync(x => x.Login == notExistUser.Login);
+                if (user != null)
+                    return false;
+                //заменяем явный пароль на его хеш и таким образом отправляем в базу
+                notExistUser.Password = PasswordHasher.Hash(notExistUser.Password);
 
-            await dbContext.Users.AddAsync(notExistUser);
-            await dbContext.SaveChangesAsync();
-            return true;
+                dbContext.Attach(notExistUser);
+                await dbContext.Users.AddAsync(notExistUser);
+                await dbContext.SaveChangesAsync();
+                return true;
+            }
         }
         #endregion
     }

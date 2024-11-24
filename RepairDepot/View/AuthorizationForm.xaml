@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:RepairDepot.View"
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
              mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800">
+             d:DesignHeight="300"
+             d:DesignWidth="600">
     <UserControl.DataContext>
         <viewmodel:AuthorizationVM />
     </UserControl.DataContext>
@@ -17,7 +17,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <!--поля ввода-->
@@ -49,7 +49,8 @@
             <Button MinHeight="50"
                     Command="{Binding Authorize}"
                     Margin="0, 10"
-                    Style="{StaticResource ButtonBaseStyle}" />
+                    Style="{StaticResource ButtonBaseStyle}" 
+                    Content="Войти"/>
             <Label MinHeight="50"
                    Style="{StaticResource LabelStyle}"
                    Content="{Binding OperationMsg}" />

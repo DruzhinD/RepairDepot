@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DatabaseAdapter.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +9,9 @@ using System.Windows;
 
 namespace RepairDepot.ViewModel
 {
-    public class BasePageVM : BaseVM
+    public abstract class BasePageVM : BaseVM
     {
-        protected Visibility visible = Visibility.Visible;
+        protected Visibility visible;
         /// <summary>
         /// Отображать на экране или нет
         /// </summary>
@@ -20,5 +22,12 @@ namespace RepairDepot.ViewModel
                 visible = value; OnPropertyChanged();
             }
         }
+
+        public BasePageVM() { }
+        protected BasePageVM(DbContextOptions<RepairDepotContext> options)
+        {
+            this.dbContextOptions = options;
+        }
+        protected DbContextOptions<RepairDepotContext> dbContextOptions;
     }
 }

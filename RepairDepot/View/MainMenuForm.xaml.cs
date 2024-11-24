@@ -17,14 +17,14 @@ using System.Windows.Shapes;
 namespace RepairDepot.View
 {
     /// <summary>
-    /// Логика взаимодействия для AuthorizationForm.xaml
+    /// Логика взаимодействия для MainMenuForm.xaml
     /// </summary>
-    public partial class AuthorizationForm : UserControl
+    public partial class MainMenuForm : UserControl
     {
-        public AuthorizationForm(AuthorizationVM auth)
+        public MainMenuForm(MainMenuVM vm)
         {
             InitializeComponent();
-            DataContext = auth;
+            DataContext = vm;
         }
     }
 }

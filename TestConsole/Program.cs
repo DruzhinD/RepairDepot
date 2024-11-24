@@ -6,11 +6,10 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
+            //не работает со строками этот замут
             string s1 = "12345";
-            string s2 = "12345";
-            PasswordHasher hasher = new PasswordHasher();
-            (string hash, string salt) = hasher.HashAndSalt(s1);
-            bool result = hasher.Validate(hash, salt, s2);
+            string s2 = s1;
+            s1 += "000";
             return;
 
         }

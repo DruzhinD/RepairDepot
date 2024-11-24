@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 #nullable disable
 namespace RepairDepot.ViewModel
 {
-    public class BaseVM : INotifyPropertyChanged
+    public abstract class BaseVM : INotifyPropertyChanged
     {
         #region Реализация интерфейса
         public event PropertyChangedEventHandler PropertyChanged;
@@ -17,6 +17,12 @@ namespace RepairDepot.ViewModel
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
+
+        /// <summary>
+        /// Ининициализация ViewModel
+        /// </summary>
+        public virtual async Task Initialize() { }
+
         #endregion
     }
 }

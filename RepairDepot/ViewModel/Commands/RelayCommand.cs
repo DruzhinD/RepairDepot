@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 #nullable disable
-namespace RepairDepot.ViewModel
+namespace RepairDepot.ViewModel.Commands
 {
     public class RelayCommand : ICommand
     {
