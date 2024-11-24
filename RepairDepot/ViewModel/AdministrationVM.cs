@@ -18,7 +18,7 @@ namespace RepairDepot.ViewModel
         AsyncCommand openPermissionEditForm;
         public AsyncCommand OpenPermissionEditForm
         {
-            get => openPermissionEditForm ??= new AsyncCommand(async () => { Mediator.Notify(nameof(PermissionEditVM)); });
+            get => openPermissionEditForm ??= new AsyncCommand(async (obj) => { Mediator.Notify(nameof(PermissionEditVM)); });
         }
         #endregion
 

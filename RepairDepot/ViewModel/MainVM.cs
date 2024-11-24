@@ -90,26 +90,26 @@ public class MainVM : BaseVM
     }
 
     //TODO не await'ится
-    async void SelectRegistrationForm(object obj)
+    async Task SelectRegistrationForm(object obj)
     {
         registrationVM = new RegistrationVM();
         await registrationVM.Initialize();
         CurrentView = new RegistrationForm(registrationVM);
     }
 
-    void SelectAuthForm(object obj)
+    async Task SelectAuthForm(object obj)
     {
         authorizationVM = new AuthorizationVM();
-        authorizationVM.Initialize();
+        await authorizationVM.Initialize();
         CurrentView = new AuthorizationForm(authorizationVM);
     }
 
-    void SelectMainMenu(object obj)
+    async Task SelectMainMenu(object obj)
     {
         if (mainMenuVM == null)
         {
             mainMenuVM = new MainMenuVM();
-            mainMenuVM.Initialize();
+            await mainMenuVM.Initialize();
         }
 
         if (authorizationVM.AuthorizationStatus)
@@ -118,7 +118,7 @@ public class MainVM : BaseVM
     }
 
     //TODO не await'ится
-    async void SelectPermissionEditForm(object obj)
+    async Task SelectPermissionEditForm(object obj)
     {
         PermissionEditVM = new PermissionEditVM();
         await PermissionEditVM.Initialize();

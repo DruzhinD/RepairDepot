@@ -18,7 +18,7 @@ namespace RepairDepot.ViewModel
 
         #region Команды
         AsyncCommand saveChanges;
-        public AsyncCommand SaveChanges { get => saveChanges ??= new AsyncCommand(async () => { await SyncWithDb(); }); }
+        public AsyncCommand SaveChanges { get => saveChanges ??= new AsyncCommand(async (obj) => { await SyncWithDb(); }); }
         #endregion
         public PermissionEditVM()
         {

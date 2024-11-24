@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows;
-using System.Windows.Input;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-
-namespace RepairDepot.ViewModel.Commands
+﻿namespace RepairDepot.ViewModel.Commands
 {
     public class AsyncCommand : AsyncCommandBase
     {
-        private readonly Func<Task> _command;
-        public AsyncCommand(Func<Task> command)
+        private readonly Func<object, Task> _command;
+        public AsyncCommand(Func<object, Task> command)
         {
             _command = command;
         }
@@ -21,9 +11,11 @@ namespace RepairDepot.ViewModel.Commands
         {
             return true;
         }
-        public override Task ExecuteAsync(object parameter)
+        public async override Task ExecuteAsync(object parameter)
         {
-            return _command();
+            var task = _command(parameter);
+            await task;
+            
         }
     }
 }

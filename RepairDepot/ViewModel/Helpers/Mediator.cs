@@ -2,14 +2,14 @@
 {
     public static class Mediator
     {
-        private static IDictionary<string, List<Action<object>>> pl_dict =
-           new Dictionary<string, List<Action<object>>>();
+        private static IDictionary<string, List<Func<object, Task>>> pl_dict =
+           new Dictionary<string, List<Func<object, Task>>>();
 
-        public static void Subscribe(string token, Action<object> callback)
+        public static void Subscribe(string token, Func<object, Task> callback)
         {
             if (!pl_dict.ContainsKey(token))
             {
-                var list = new List<Action<object>>();
+                var list = new List<Func<object, Task>>();
                 list.Add(callback);
                 pl_dict.Add(token, list);
             }
@@ -24,17 +24,17 @@
             }
         }
 
-        public static void Unsubscribe(string token, Action<object> callback)
+        public static void Unsubscribe(string token, Func<object, Task> callback)
         {
             if (pl_dict.ContainsKey(token))
                 pl_dict[token].Remove(callback);
         }
 
-        public static void Notify(string token, object args = null)
+        public async static Task Notify(string token, object args = null)
         {
             if (pl_dict.ContainsKey(token))
                 foreach (var callback in pl_dict[token])
-                    callback(args);
+                    await callback(args);
         }
     }
 }

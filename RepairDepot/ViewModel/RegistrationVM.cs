@@ -56,7 +56,7 @@ public class RegistrationVM : BasePageVM
     {
         get
         {
-            return registrate ??= new AsyncCommand(async () =>
+            return registrate ??= new AsyncCommand(async (obj) =>
             {
                 if (!IsCorrectInput())
                 {
