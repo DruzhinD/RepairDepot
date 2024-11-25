@@ -27,10 +27,12 @@
 
             <Button Style="{StaticResource ButtonBaseStyle}"
                     Margin="10"
-                    Content="" />
+                    Content="Permission"
+                    Command="{Binding OpenTableEdit, IsAsync=True}"/>
             <Button Style="{StaticResource ButtonBaseStyle}"
                     Margin="10"
-                    Content="" />
+                    Content="User"
+                    Command="{Binding OpenTableEdit2}"/>
             <Button Style="{StaticResource ButtonBaseStyle}"
                     Margin="10"
                     Content="" />

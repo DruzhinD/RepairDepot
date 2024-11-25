@@ -1,4 +1,5 @@
-﻿using RepairDepot.Model;
+﻿using DatabaseAdapter.Models;
+using RepairDepot.Model;
 using RepairDepot.View;
 using RepairDepot.ViewModel.Commands;
 using System.Windows;
@@ -9,24 +10,9 @@ namespace RepairDepot.ViewModel;
 public class MainVM : BaseVM
 {
     #region Свойства для связи с View
-
-    #region локальные ViewModel
-    //авторизация
-    RegistrationVM? registrationVM;
-
-    //авторизация
-    AuthorizationVM? authorizationVM;
-
-    //приветственная форма
-    WelcomeVM welcomeVM;
-    MainMenuVM mainMenuVM;
-    AdministrationVM administrationVM;
-    PermissionEditVM PermissionEditVM;
-
     //текущая отображаемая форма
     Control currentView;
     public Control CurrentView { get => currentView; set { currentView = value; OnPropertyChanged(); } }
-    #endregion
 
     //Видимость элементов управления
     Visibility enableControls;
@@ -58,12 +44,25 @@ public class MainVM : BaseVM
         {
             return openAdministrationVM ?? (openAdministrationVM = new RelayCommand((obj) =>
             {
-                administrationVM = new AdministrationVM();
+                AdministrationVM administrationVM = new AdministrationVM();
                 administrationVM.Initialize();
                 CurrentView = new AdministrationForm(administrationVM);
             }));
         }
     }
+
+    RelayCommand openMainMenu;
+    public RelayCommand OpenMainMenu
+    {
+        get
+        {
+            return openMainMenu ?? (openMainMenu = new RelayCommand(obj =>
+            {
+                SelectMainMenu("");
+            }));
+        }
+    }
+
     #endregion
 
     Config config;
@@ -74,7 +73,7 @@ public class MainVM : BaseVM
         config = Config.GetInstanse();
 
         Initialize();
-        welcomeVM = new WelcomeVM();
+        WelcomeVM welcomeVM = new WelcomeVM();
         CurrentView = new WelcomeForm(welcomeVM);
     }
 
@@ -87,18 +86,21 @@ public class MainVM : BaseVM
         Mediator.Subscribe(nameof(AuthorizationVM), SelectAuthForm);
         Mediator.Subscribe(nameof(RegistrationVM), SelectRegistrationForm);
         Mediator.Subscribe(nameof(PermissionEditVM), SelectPermissionEditForm);
+        Mediator.Subscribe("TableEditVM", SelectTableEditForm);
+        Mediator.Subscribe("TableEditVM2", SelectTableEditForm2);
+
     }
 
     async Task SelectRegistrationForm(object obj)
     {
-        registrationVM = new RegistrationVM();
+        RegistrationVM registrationVM = new RegistrationVM();
         await registrationVM.Initialize();
         CurrentView = new RegistrationForm(registrationVM);
     }
 
     async Task SelectAuthForm(object obj)
     {
-        authorizationVM = new AuthorizationVM();
+        AuthorizationVM authorizationVM = new AuthorizationVM();
         await authorizationVM.Initialize();
         CurrentView = new AuthorizationForm(authorizationVM);
         //CurrentView = authorizationVM;
@@ -106,23 +108,33 @@ public class MainVM : BaseVM
 
     async Task SelectMainMenu(object obj)
     {
-        if (mainMenuVM == null)
-        {
-            mainMenuVM = new MainMenuVM();
-            await mainMenuVM.Initialize();
-        }
-
-            EnableControls = Visibility.Visible;
-
-        if (authorizationVM.AuthorizationStatus)
-            EnableControls = Visibility.Visible;
+        if (CommonData.User.Privileges.Name == "Администратор")
+            this.EnableControls = Visibility.Visible;
+        MainMenuVM mainMenuVM = new MainMenuVM();
+        await mainMenuVM.Initialize();
         CurrentView = new MainMenuForm(mainMenuVM);
     }
 
     async Task SelectPermissionEditForm(object obj)
     {
-        PermissionEditVM = new PermissionEditVM();
+        PermissionEditVM PermissionEditVM = new PermissionEditVM();
         await PermissionEditVM.Initialize();
         CurrentView = new PermissionEditForm(PermissionEditVM);
+    }
+
+    async Task SelectTableEditForm(object obj)
+    {
+
+        var form = new TableEditVM<Permission>();
+        await form.Initialize();
+        CurrentView = new TableEditForm(form);
+    }
+
+    async Task SelectTableEditForm2(object obj)
+    {
+
+        var form = new TableEditVM<User>();
+        await form.Initialize();
+        CurrentView = new TableEditForm(form);
     }
 }

@@ -36,10 +36,6 @@ public class AuthorizationVM : BasePageVM
 
     #endregion
 
-    /// <summary>
-    /// пользователь
-    /// </summary>
-    public SystemUser? User;
 
     public AuthorizationVM() { }
 
@@ -61,7 +57,7 @@ public class AuthorizationVM : BasePageVM
                 }
 
                 //попытка авторизации
-                User = new SystemUser();
+                SystemUser User = new SystemUser();
                 Task<bool> authTask = User.AuthorizationAsync(this.InputLogin, InputPassword);
                 //await Task.Delay(6 * 1000); //TODO: убрать проверку асинхронности
                 bool authResult = await authTask;
@@ -70,14 +66,14 @@ public class AuthorizationVM : BasePageVM
                     this.AuthorizationStatus = true;
                     msg = "Авторизация выполнена успешно! \n" +
                     $"Добро пожаловать, {User.User.FirstName}!";
-                    CommonData.User = this.User;
+                    CommonData.User = User;
                 }
                 else
                 {
                     msg = "Неверный логин/пароль";
                 }
                 this.OperationMsg = msg;
-                await Task.Delay(2 * 1000);
+                //await Task.Delay(2 * 1000);
                 await Mediator.Notify("authorize");
             });
         }

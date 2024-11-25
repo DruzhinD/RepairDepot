@@ -4,9 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RepairDepot.View"
+             xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding Source={x:Type viewmodel:TableEditVM`1}}">
+    <!--<UserControl.DataContext>
+        <viewmodel:TableEditVM />
+    </UserControl.DataContext>-->
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <DataGrid ItemsSource="{Binding Data}"
+                  AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"
+                  AutoGenerateColumns="True">
             
+        </DataGrid>
+        <Button Grid.Row="1"/>
     </Grid>
 </UserControl>

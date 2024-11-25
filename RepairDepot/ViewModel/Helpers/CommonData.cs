@@ -20,19 +20,5 @@ namespace RepairDepot.ViewModel
         /// Авторизованный пользователь системы
         /// </summary>
         public static SystemUser User { get => user; set => user = value; }
-
-        static DbContextOptions<RepairDepotContext> dbContextOptions;
-        public static DbContextOptions<RepairDepotContext> DbContextOptions
-        {
-            get
-            {
-                if (dbContextOptions == null)
-                {
-                    Config config = Config.GetInstanse();
-                    dbContextOptions =  new DbContextOptionsBuilder<RepairDepotContext>().UseNpgsql(config["connectionString"]).Options;
-                }
-                return dbContextOptions;
-            }
-        }
     }
 }

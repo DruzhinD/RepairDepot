@@ -118,7 +118,7 @@ public class RegistrationVM : BasePageVM
         List<Permission> permissions;
         try
         {
-            using (RepairDepotContext dbContext = new RepairDepotContext(CommonData.DbContextOptions))
+            using (RepairDepotContext dbContext = new RepairDepotContext(Config.GetInstanse().DbContextOptions))
             {
                 Task<List<Permission>> task = dbContext.Permissions.ToListAsync();
                 permissions = await task;

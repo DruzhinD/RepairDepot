@@ -49,6 +49,9 @@ namespace RepairDepot.View
             {
                 e.Cancel = true;
             }
+            //ID отображается первым
+            if (displayName == "ID")
+                e.Column.DisplayIndex = 0;
         }
 
         public static string GetPropertyDisplayName(object descriptor)

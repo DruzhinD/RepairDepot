@@ -25,7 +25,7 @@ namespace RepairDepot.Model
         public async Task<bool> AuthorizationAsync(string login, string password)
         {
 
-            using (RepairDepotContext dbContext = new RepairDepotContext(CommonData.DbContextOptions))
+            using (RepairDepotContext dbContext = new RepairDepotContext(Config.GetInstanse().DbContextOptions))
             {
                 //идентификация (логин)
                 User user = await dbContext.Users
@@ -49,7 +49,7 @@ namespace RepairDepot.Model
         /// <returns>true - регистрация успешна</returns>
         public async Task<bool> RegisterAsync(User notExistUser)
         {
-            using (RepairDepotContext dbContext = new(CommonData.DbContextOptions))
+            using (RepairDepotContext dbContext = new(Config.GetInstanse().DbContextOptions))
             {
                 //вернет значение, если пользователь с таким логином уже существует
                 User user = await dbContext.Users.FirstOrDefaultAsync(x => x.Login == notExistUser.Login);
