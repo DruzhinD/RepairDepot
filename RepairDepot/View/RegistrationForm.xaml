@@ -81,7 +81,7 @@
 
         <Button Style="{StaticResource ButtonBaseStyle}"
                 Content="Зарегистрировать"
-                Command="{Binding Registrate}"
+                Command="{Binding Registrate, IsAsync=True}"
                 Grid.Row="6"
                 Grid.Column="0"
                 Grid.ColumnSpan="2" 

@@ -8,6 +8,11 @@ namespace RepairDepot.View
     /// </summary>
     public partial class AdministrationForm : UserControl
     {
+        public AdministrationForm()
+        {
+            InitializeComponent();
+        }
+
         public AdministrationForm(AdministrationVM vm)
         {
             InitializeComponent();

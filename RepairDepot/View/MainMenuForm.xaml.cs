@@ -21,6 +21,11 @@ namespace RepairDepot.View
     /// </summary>
     public partial class MainMenuForm : UserControl
     {
+        public MainMenuForm()
+        {
+            InitializeComponent();
+        }
+
         public MainMenuForm(MainMenuVM vm)
         {
             InitializeComponent();

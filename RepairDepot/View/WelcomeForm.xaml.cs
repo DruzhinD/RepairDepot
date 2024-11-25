@@ -21,6 +21,11 @@ namespace RepairDepot.View
     /// </summary>
     public partial class WelcomeForm : UserControl
     {
+        public WelcomeForm()
+        {
+            InitializeComponent();
+        }
+
         public WelcomeForm(WelcomeVM welcomeVM)
         {
             InitializeComponent();

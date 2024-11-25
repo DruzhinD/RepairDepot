@@ -89,7 +89,6 @@ public class MainVM : BaseVM
         Mediator.Subscribe(nameof(PermissionEditVM), SelectPermissionEditForm);
     }
 
-    //TODO не await'ится
     async Task SelectRegistrationForm(object obj)
     {
         registrationVM = new RegistrationVM();
@@ -102,6 +101,7 @@ public class MainVM : BaseVM
         authorizationVM = new AuthorizationVM();
         await authorizationVM.Initialize();
         CurrentView = new AuthorizationForm(authorizationVM);
+        //CurrentView = authorizationVM;
     }
 
     async Task SelectMainMenu(object obj)
@@ -112,12 +112,13 @@ public class MainVM : BaseVM
             await mainMenuVM.Initialize();
         }
 
+            EnableControls = Visibility.Visible;
+
         if (authorizationVM.AuthorizationStatus)
             EnableControls = Visibility.Visible;
         CurrentView = new MainMenuForm(mainMenuVM);
     }
 
-    //TODO не await'ится
     async Task SelectPermissionEditForm(object obj)
     {
         PermissionEditVM = new PermissionEditVM();

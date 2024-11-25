@@ -21,6 +21,11 @@ namespace RepairDepot.View
     /// </summary>
     public partial class AuthorizationForm : UserControl
     {
+        public AuthorizationForm()
+        {
+            InitializeComponent();
+        }
+
         public AuthorizationForm(AuthorizationVM auth)
         {
             InitializeComponent();

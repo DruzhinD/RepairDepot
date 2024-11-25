@@ -8,6 +8,21 @@
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodel:WelcomeVM}">
         <view:WelcomeForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:AdministrationVM}">
+        <view:AdministrationForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:RegistrationVM}">
+        <view:RegistrationForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:MainMenuVM}">
+        <view:MainMenuForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:PermissionEditVM}">
+        <view:PermissionEditForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:TableEditVM}">
+        <view:TableEditForm />
     </DataTemplate>-->
     <!--базовый стиль-->
     <Style TargetType="Control"

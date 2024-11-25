@@ -16,18 +16,42 @@
     <Grid Background="#FFFFB152">
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="10*" />
-
+            <RowDefinition Height="8*" />
         </Grid.RowDefinitions>
-        <Menu MinHeight="25">
+
+        <TabControl Visibility="Hidden">
+            <TabItem Header="123">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Button Content="11"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="456">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Button />
+                    <TextBlock Grid.Row="1"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <StackPanel MinHeight="25"
+                    Orientation="Horizontal"
+                    Margin="3">
+
             <Button Content="Войти"
-                    Style="{StaticResource ButtonBaseStyle}"
+                    Style="{StaticResource TopMenuButton}"
                     Command="{Binding OpenAuthorizationVM}" />
             <Button Content="Администрирование"
-                    Style="{StaticResource ButtonBaseStyle}"
+                    Style="{StaticResource TopMenuButton}"
                     Command="{Binding OpenAdministrationVM}"
-                    Visibility="{Binding EnableControls}"/>
-        </Menu>
+                    Visibility="{Binding EnableControls}" />
+        </StackPanel>
         <ContentControl Grid.Row="1"
                         Content="{Binding CurrentView}">
         </ContentControl>

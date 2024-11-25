@@ -1,8 +1,5 @@
-﻿using DatabaseAdapter.Models;
-using RepairDepot.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,19 +16,13 @@ using System.Windows.Shapes;
 namespace RepairDepot.View
 {
     /// <summary>
-    /// Логика взаимодействия для RegistrationForm.xaml
+    /// Логика взаимодействия для TableEditForm.xaml
     /// </summary>
-    public partial class RegistrationForm : UserControl
+    public partial class TableEditForm : UserControl
     {
-        public RegistrationForm()
+        public TableEditForm()
         {
             InitializeComponent();
-        }
-
-        public RegistrationForm(RegistrationVM registrationVM)
-        {
-            InitializeComponent();
-            DataContext = registrationVM;
         }
     }
 }
