@@ -5,9 +5,8 @@ using System.Collections.Generic;
 
 namespace DatabaseAdapter.Models;
 
-public partial class Wagon
+public partial class Wagon : BaseModel
 {
-    public int Id { get; set; }
 
     public long RegNumber { get; set; }
 

@@ -8,9 +8,8 @@ namespace DatabaseAdapter.Models;
 /// <summary>
 /// Работник (рабочий)
 /// </summary>
-public partial class Worker
+public partial class Worker : BaseModel
 {
-    public int Id { get; set; }
 
     public int EmployeeId { get; set; }
 

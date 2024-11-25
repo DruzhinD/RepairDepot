@@ -8,10 +8,8 @@ namespace DatabaseAdapter.Models;
 /// <summary>
 /// Наряд на ремонт
 /// </summary>
-public partial class RepairOrder
+public partial class RepairOrder : BaseModel
 {
-    public int Id { get; set; }
-
     public int RepairRequestId { get; set; }
 
     public decimal Money { get; set; }

@@ -8,10 +8,8 @@ namespace DatabaseAdapter.Models;
 /// <summary>
 /// Запрос на ремонт
 /// </summary>
-public partial class RepairRequest
+public partial class RepairRequest : BaseModel
 {
-    public int Id { get; set; }
-
     public int WagonId { get; set; }
 
     public int RepairTypeId { get; set; }

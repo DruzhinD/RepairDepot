@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using DatabaseAdapter.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.IO;
 using System.Text.Json;
 
 #nullable disable
@@ -9,6 +12,33 @@ namespace RepairDepot.Model;
 /// </summary>
 public class Config
 {
+    #region Singleton
+    private Config()
+    {
+        this.Initialize();
+    }
+
+    public static Config GetInstanse()
+    {
+        if (instanse == null)
+            return new Config();
+        return Config.instanse;
+    }
+    #endregion
+
+    DbContextOptions<RepairDepotContext> dbContextOptions;
+    public DbContextOptions<RepairDepotContext> DbContextOptions
+    {
+        get
+        {
+            if (dbContextOptions == null)
+            {
+                dbContextOptions = new DbContextOptionsBuilder<RepairDepotContext>().UseNpgsql(this["connectionString"]).Options;
+            }
+            return dbContextOptions;
+        }
+    }
+
     /// <summary>
     /// индексатор конфигуратора
     /// </summary>
@@ -43,18 +73,6 @@ public class Config
         }
         //string json = JsonSerializer.Deserialize()
         return data;
-    }
-
-    private Config()
-    {
-        this.Initialize();
-    }
-
-    public static Config GetInstanse()
-    {
-        if (instanse == null)
-            return new Config();
-        return Config.instanse;
     }
 
 }

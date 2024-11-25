@@ -5,10 +5,8 @@ using System.Collections.Generic;
 
 namespace DatabaseAdapter.Models;
 
-public partial class Railway
+public partial class Railway : BaseModel
 {
-    public int Id { get; set; }
-
     public bool External { get; set; }
 
     public virtual ICollection<ExternalRailway> ExternalRailways { get; set; } = new List<ExternalRailway>();

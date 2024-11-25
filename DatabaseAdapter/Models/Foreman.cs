@@ -8,10 +8,8 @@ namespace DatabaseAdapter.Models;
 /// <summary>
 /// Бригадир
 /// </summary>
-public partial class Foreman
+public partial class Foreman : BaseModel
 {
-    public int Id { get; set; }
-
     public int EmployeeId { get; set; }
 
     public virtual Employee Employee { get; set; }

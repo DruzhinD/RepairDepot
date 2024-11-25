@@ -4,10 +4,8 @@
 namespace DatabaseAdapter.Models
 {
     [Table("user")]
-    public class User
+    public class User : BaseModel
     {
-        [Column("id")]
-        public int Id { get; set; }
         [Column("login")]
         public string Login { get; set; }
         [Column("password")]
