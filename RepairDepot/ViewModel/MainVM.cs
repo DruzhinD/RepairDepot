@@ -2,8 +2,10 @@
 using RepairDepot.Model;
 using RepairDepot.View;
 using RepairDepot.ViewModel.Commands;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace RepairDepot.ViewModel;
 
@@ -17,10 +19,6 @@ public class MainVM : BaseVM
     //Видимость элементов управления
     Visibility enableControls;
     public Visibility EnableControls { get => enableControls; set {  enableControls = value; OnPropertyChanged(); } }
-
-    string label;
-    public string Label { get => label; 
-        set { label = value; OnPropertyChanged(); } }
     #endregion
 
     #region Команды для View
@@ -137,4 +135,73 @@ public class MainVM : BaseVM
         await form.Initialize();
         CurrentView = new TableEditForm(form);
     }
+
+
+
+    #region tab
+    static int tabs = 1;
+    public ObservableCollection<Item> Titles
+    {
+        get { return _titles; }
+        set
+        {
+            _titles = value;
+            OnPropertyChanged("Titles");
+        }
+    }
+
+    public class Item
+    {
+        public string Header { get; set; }
+        public Control Content { get; set; }
+    }
+
+    private ICommand _addTab;
+    private ICommand _removeTab;
+    private ObservableCollection<Item> _titles = new ObservableCollection<Item>();
+
+    public ICommand AddTab
+    {
+        get
+        {
+            return _addTab ?? (_addTab = new RelayCommand(
+               x =>
+               {
+                   AddTabItem();
+               }));
+        }
+    }
+
+    public ICommand RemoveTab
+    {
+        get
+        {
+            return _removeTab ?? (_removeTab = new RelayCommand(
+               x =>
+               {
+                   RemoveTabItem();
+               }));
+        }
+    }
+
+    private void RemoveTabItem()
+    {
+        Titles.Remove(Titles.Last());
+        tabs--;
+    }
+
+    private void AddTabItem()
+    {
+        var header = "Tab " + tabs;
+        var vm = new MainMenuVM();
+        vm.Initialize();
+        var content = new MainMenuForm(vm);
+        var item = new Item { Header = header, Content = content };
+
+        Titles.Add(item);
+        tabs++;
+        OnPropertyChanged("Titles");
+    }
+    #endregion
+
 }

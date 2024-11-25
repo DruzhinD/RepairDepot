@@ -2,7 +2,7 @@
 
 namespace RepairDepot.ViewModel
 {
-    public class AdministrationVM : BasePageVM
+    public class AdministrationVM : BaseVM
     {
         #region Команды
         RelayCommand openRegistrationForm;

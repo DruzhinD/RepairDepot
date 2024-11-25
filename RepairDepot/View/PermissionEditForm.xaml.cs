@@ -28,7 +28,7 @@ namespace RepairDepot.View
             InitializeComponent();
         }
 
-        public PermissionEditForm(BasePageVM vm)
+        public PermissionEditForm(BaseVM vm)
         {
             InitializeComponent();
             DataContext = vm;

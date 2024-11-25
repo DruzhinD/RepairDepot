@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RepairDepot.ViewModel
 {
-    public class MainMenuVM : BasePageVM
+    public class MainMenuVM : BaseVM
     {
         #region Команды
         AsyncCommand openTableEdit;

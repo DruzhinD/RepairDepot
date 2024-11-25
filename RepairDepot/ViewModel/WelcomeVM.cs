@@ -4,7 +4,7 @@ using RepairDepot.ViewModel.Commands;
 
 namespace RepairDepot.ViewModel
 {
-    public class WelcomeVM : BasePageVM
+    public class WelcomeVM : BaseVM
     {
         #region Свойства для связи с View
         #endregion

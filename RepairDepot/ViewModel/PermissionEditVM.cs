@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace RepairDepot.ViewModel
 {
-    public class PermissionEditVM : BasePageVM
+    public class PermissionEditVM : BaseVM
     {
         #region Свойства для View
         public ObservableCollection<Permission> Permissions { get; set; }

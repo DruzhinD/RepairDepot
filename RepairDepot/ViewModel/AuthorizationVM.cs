@@ -8,7 +8,7 @@ namespace RepairDepot.ViewModel;
 /// <summary>
 /// Страница авторизации
 /// </summary>
-public class AuthorizationVM : BasePageVM
+public class AuthorizationVM : BaseVM
 {
     #region Свойства для взаимодействия с View
     string _inputLogin = string.Empty;

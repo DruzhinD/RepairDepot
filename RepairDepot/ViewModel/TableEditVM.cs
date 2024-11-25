@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace RepairDepot.ViewModel
 {
-    class TableEditVM<T> : BasePageVM where T : BaseModel
+    class TableEditVM<T> : BaseVM where T : BaseModel
     {
         public ObservableCollection<T> Data { get; set; } = new ObservableCollection<T>();
 

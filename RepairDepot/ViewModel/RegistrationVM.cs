@@ -9,7 +9,7 @@ namespace RepairDepot.ViewModel;
 /// <summary>
 /// ViewModel для страницы регистрации
 /// </summary>
-public class RegistrationVM : BasePageVM
+public class RegistrationVM : BaseVM
 {
     #region Свойства для взаимодействия с View
     //логин
@@ -90,10 +90,6 @@ public class RegistrationVM : BasePageVM
 
 
     public RegistrationVM() { }
-    protected RegistrationVM(DbContextOptions<RepairDepotContext> options)
-        : base(options)
-    {
-    }
 
     public override async Task Initialize()
     {
