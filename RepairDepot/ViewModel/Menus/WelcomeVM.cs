@@ -1,11 +1,14 @@
 ﻿using DatabaseAdapter.Models;
 using Microsoft.EntityFrameworkCore;
 using RepairDepot.ViewModel.Commands;
+using RepairDepot.ViewModel.DefinitionVM;
 
 namespace RepairDepot.ViewModel
 {
-    public class WelcomeVM : BaseVM
+    public class WelcomeVM : BasePageVM
     {
+        public override string Name => "Приветствие";
+
         #region Свойства для связи с View
         #endregion
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RepairDepot.Model;
 using RepairDepot.ViewModel.Commands;
+using RepairDepot.ViewModel.DefinitionVM;
 using System.Collections.ObjectModel;
 #nullable disable
 namespace RepairDepot.ViewModel;
@@ -9,8 +10,10 @@ namespace RepairDepot.ViewModel;
 /// <summary>
 /// ViewModel для страницы регистрации
 /// </summary>
-public class RegistrationVM : BaseVM
+public class RegistrationVM : BasePageVM
 {
+    public override string Name => "Регистрация пользователя";
+
     #region Свойства для взаимодействия с View
     //логин
     string _login = string.Empty;

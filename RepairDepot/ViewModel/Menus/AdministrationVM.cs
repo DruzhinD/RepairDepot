@@ -1,9 +1,12 @@
 ﻿using RepairDepot.ViewModel.Commands;
+using RepairDepot.ViewModel.DefinitionVM;
 
 namespace RepairDepot.ViewModel
 {
-    public class AdministrationVM : BaseVM
+    public class AdministrationVM : BasePageVM
     {
+        public override string Name => "Администрирование";
+
         #region Команды
         RelayCommand openRegistrationForm;
         public RelayCommand OpenRegistrationForm

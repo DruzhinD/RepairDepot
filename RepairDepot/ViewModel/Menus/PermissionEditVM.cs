@@ -1,12 +1,15 @@
 ﻿using DatabaseAdapter.Models;
 using RepairDepot.Model.TableManaging;
 using RepairDepot.ViewModel.Commands;
+using RepairDepot.ViewModel.DefinitionVM;
 using System.Collections.ObjectModel;
 
 namespace RepairDepot.ViewModel
 {
-    public class PermissionEditVM : BaseVM
+    public class PermissionEditVM : BasePageVM
     {
+        public override string Name => "Права доступа";
+
         #region Свойства для View
         public ObservableCollection<Permission> Permissions { get; set; }
         #endregion

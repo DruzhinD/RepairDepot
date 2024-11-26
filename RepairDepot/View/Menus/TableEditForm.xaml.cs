@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualBasic;
-using RepairDepot.ViewModel;
+using RepairDepot.ViewModel.DefinitionVM;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

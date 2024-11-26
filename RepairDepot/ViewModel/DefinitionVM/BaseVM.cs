@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 #nullable disable
-namespace RepairDepot.ViewModel
+namespace RepairDepot.ViewModel.DefinitionVM
 {
     public abstract class BaseVM : INotifyPropertyChanged
     {

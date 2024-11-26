@@ -2,14 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using RepairDepot.Model;
 using RepairDepot.ViewModel.Commands;
+using RepairDepot.ViewModel.DefinitionVM;
 
 namespace RepairDepot.ViewModel;
 
 /// <summary>
 /// Страница авторизации
 /// </summary>
-public class AuthorizationVM : BaseVM
+public class AuthorizationVM : BasePageVM
 {
+    public override string Name => "Авторизация";
+
     #region Свойства для взаимодействия с View
     string _inputLogin = string.Empty;
     /// <summary>

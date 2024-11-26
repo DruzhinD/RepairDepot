@@ -1,5 +1,6 @@
 ﻿using DatabaseAdapter.Models;
 using RepairDepot.ViewModel.Commands;
+using RepairDepot.ViewModel.DefinitionVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace RepairDepot.ViewModel
 {
-    public class MainMenuVM : BaseVM
+    public class MainMenuVM : BasePageVM
     {
+        public override string Name => "Главное меню";
+
         #region Команды
         AsyncCommand openTableEdit;
         public AsyncCommand OpenTableEdit

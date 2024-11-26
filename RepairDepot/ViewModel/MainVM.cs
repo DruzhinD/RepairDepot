@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using RepairDepot.ViewModel.DefinitionVM;
 
 namespace RepairDepot.ViewModel;
 
@@ -13,7 +14,7 @@ public class MainVM : BaseVM
 {
     #region Свойства для связи с View
     //текущая отображаемая форма
-    Control currentView;
+    Control currentView; //TODO
     public Control CurrentView { get => currentView; set { currentView = value; OnPropertyChanged(); } }
 
     //Видимость элементов управления
@@ -89,6 +90,7 @@ public class MainVM : BaseVM
 
     }
 
+    //TODO
     async Task SelectRegistrationForm(object obj)
     {
         RegistrationVM registrationVM = new RegistrationVM();
@@ -154,6 +156,8 @@ public class MainVM : BaseVM
     {
         public string Header { get; set; }
         public Control Content { get; set; }
+        RelayCommand remove;
+        //public RelayCommand Remove { get => remove ??= ; }
     }
 
     private ICommand _addTab;
@@ -192,10 +196,10 @@ public class MainVM : BaseVM
 
     private void AddTabItem()
     {
-        var header = "Tab " + tabs;
         var vm = new MainMenuVM();
+        var header = vm.Name;
         vm.Initialize();
-        var content = new MainMenuForm(vm);
+        var content = new MainMenuForm(vm); //TODO
         var item = new Item { Header = header, Content = content };
 
         Titles.Add(item);
