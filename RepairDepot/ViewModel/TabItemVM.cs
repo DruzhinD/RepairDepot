@@ -1,9 +1,5 @@
-﻿using RepairDepot.ViewModel.DefinitionVM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RepairDepot.ViewModel.Commands;
+using RepairDepot.ViewModel.DefinitionVM;
 
 namespace RepairDepot.ViewModel
 {
@@ -12,6 +8,8 @@ namespace RepairDepot.ViewModel
     /// </summary>
     public class TabItemVM : BaseVM
     {
+
+        #region Свойства
         /// <summary>
         /// Содержимое вкладки
         /// </summary>
@@ -23,6 +21,13 @@ namespace RepairDepot.ViewModel
         /// </summary>
         public string Header { get => header; set {  header = value; OnPropertyChanged(); } }
         string header;
+        #endregion
+
+        #region Команды
+        RelayCommand closeSelf;
+        public RelayCommand CloseSelf => closeSelf ??= new RelayCommand(obj => Mediator.Notify("RemoveTab", this.Header));
+        #endregion
+
 
         public TabItemVM(object content, string header)
         {

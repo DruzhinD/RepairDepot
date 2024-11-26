@@ -24,7 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <!--<RowDefinition Height="3*" />-->
-            <RowDefinition Height="14*" />
+            <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
         <StackPanel MinHeight="25"
                     Orientation="Horizontal"
@@ -86,9 +86,11 @@
             </TabControl.ContextMenu>-->
         <!--
         </TabControl>-->
-        <ContentControl Grid.Row="2"
+        <!--<ContentControl Grid.Row="2"
                         Content="{Binding CurrentView}">
-        </ContentControl>
+        </ContentControl>-->
+        <local:CustomTabControl Grid.Row="1"
+                                />
 
     </Grid>
 </Window>

@@ -20,6 +20,12 @@ public class MainVM : BaseVM
     //Видимость элементов управления
     Visibility enableControls;
     public Visibility EnableControls { get => enableControls; set {  enableControls = value; OnPropertyChanged(); } }
+
+
+    /// <summary>
+    /// Меню со вкладками
+    /// </summary>
+    public CustomTabControlVM TabMenu {  get; set; }
     #endregion
 
     #region Команды для View
@@ -31,7 +37,9 @@ public class MainVM : BaseVM
         {
             return openAuthorizationVM ?? (openAuthorizationVM = new RelayCommand(obj =>
             {
-                SelectAuthForm("");
+                AuthorizationVM vm = new AuthorizationVM();
+                Tuple<object, string> tabItemAuth = new Tuple<object, string>(vm, vm.Name);
+                Mediator.Notify("CreateTab", tabItemAuth);
             }));
         }
     }
@@ -71,7 +79,6 @@ public class MainVM : BaseVM
         //параметры бд
         config = Config.GetInstanse();
 
-        Initialize();
         CurrentView = new WelcomeVM();
     }
 
@@ -114,30 +121,23 @@ public class MainVM : BaseVM
 
     async Task SelectPermissionEditForm(object obj)
     {
-        //PermissionEditVM PermissionEditVM = new PermissionEditVM();
-        ////await PermissionEditVM.Initialize();
-        ////CurrentView = new PermissionEditForm(PermissionEditVM);
         CurrentView = new PermissionEditVM();
     }
 
     async Task SelectTableEditForm(object obj)
     {
-
-        //var form = new TableEditVM<Permission>();
-        ////await form.Initialize();
-        //CurrentView = new TableEditForm(form);
         CurrentView = new TableEditForm(new TableEditVM<Permission>());
     }
 
     async Task SelectTableEditForm2(object obj)
     {
-
-        //var form = new TableEditVM<User>();
-        //await form.Initialize();
-        //CurrentView = new TableEditForm(form);
         CurrentView = new TableEditForm(new TableEditVM<User>());
     }
 
+    async Task GetTabControl(object obj)
+    {
+        TabMenu = obj as CustomTabControlVM;
+    }
 
 
     #region tab
