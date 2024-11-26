@@ -7,7 +7,14 @@
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="450"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.DataContext>
         <viewmodel:MainMenuVM />
     </UserControl.DataContext>

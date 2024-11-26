@@ -14,8 +14,8 @@ public class MainVM : BaseVM
 {
     #region Свойства для связи с View
     //текущая отображаемая форма
-    Control currentView; //TODO
-    public Control CurrentView { get => currentView; set { currentView = value; OnPropertyChanged(); } }
+    object currentView; //TODO
+    public object CurrentView { get => currentView; set { currentView = value; OnPropertyChanged(); } }
 
     //Видимость элементов управления
     Visibility enableControls;
@@ -72,8 +72,7 @@ public class MainVM : BaseVM
         config = Config.GetInstanse();
 
         Initialize();
-        WelcomeVM welcomeVM = new WelcomeVM();
-        CurrentView = new WelcomeForm(welcomeVM);
+        CurrentView = new WelcomeVM();
     }
 
 
@@ -95,14 +94,14 @@ public class MainVM : BaseVM
     {
         RegistrationVM registrationVM = new RegistrationVM();
         await registrationVM.Initialize();
-        CurrentView = new RegistrationForm(registrationVM);
+        CurrentView = new RegistrationVM();
     }
 
     async Task SelectAuthForm(object obj)
     {
         AuthorizationVM authorizationVM = new AuthorizationVM();
         await authorizationVM.Initialize();
-        CurrentView = new AuthorizationForm(authorizationVM);
+        CurrentView = new AuthorizationVM();
         //CurrentView = authorizationVM;
     }
 
@@ -110,32 +109,33 @@ public class MainVM : BaseVM
     {
         if (CommonData.User.Privileges.Name == "Администратор")
             this.EnableControls = Visibility.Visible;
-        MainMenuVM mainMenuVM = new MainMenuVM();
-        await mainMenuVM.Initialize();
-        CurrentView = new MainMenuForm(mainMenuVM);
+        CurrentView = new MainMenuVM();
     }
 
     async Task SelectPermissionEditForm(object obj)
     {
-        PermissionEditVM PermissionEditVM = new PermissionEditVM();
-        await PermissionEditVM.Initialize();
-        CurrentView = new PermissionEditForm(PermissionEditVM);
+        //PermissionEditVM PermissionEditVM = new PermissionEditVM();
+        ////await PermissionEditVM.Initialize();
+        ////CurrentView = new PermissionEditForm(PermissionEditVM);
+        CurrentView = new PermissionEditVM();
     }
 
     async Task SelectTableEditForm(object obj)
     {
 
-        var form = new TableEditVM<Permission>();
-        await form.Initialize();
-        CurrentView = new TableEditForm(form);
+        //var form = new TableEditVM<Permission>();
+        ////await form.Initialize();
+        //CurrentView = new TableEditForm(form);
+        CurrentView = new TableEditForm(new TableEditVM<Permission>());
     }
 
     async Task SelectTableEditForm2(object obj)
     {
 
-        var form = new TableEditVM<User>();
-        await form.Initialize();
-        CurrentView = new TableEditForm(form);
+        //var form = new TableEditVM<User>();
+        //await form.Initialize();
+        //CurrentView = new TableEditForm(form);
+        CurrentView = new TableEditForm(new TableEditVM<User>());
     }
 
 

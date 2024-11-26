@@ -9,6 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseAdapter", "Database
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "TestConsole\TestConsole.csproj", "{23CC5BD8-81F4-4186-B903-46961E0E2E11}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{BA9172AB-108C-4264-8545-8D7D3ABF0E3A}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

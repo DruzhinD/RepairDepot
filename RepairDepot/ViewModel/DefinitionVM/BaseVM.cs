@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using RepairDepot.ViewModel.Commands;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 #nullable disable
 namespace RepairDepot.ViewModel.DefinitionVM
 {
@@ -24,5 +20,12 @@ namespace RepairDepot.ViewModel.DefinitionVM
         public virtual async Task Initialize() { }
 
         #endregion
+
+        /// <summary>
+        /// Команда для инициализации юзерконтрола на этапе загрузки. <br/>
+        /// Используется совместно с расширением <see cref="Microsoft.Xaml.Behaviors"/> во View
+        /// </summary>
+        public AsyncCommand InitializeCommand => initializeCommand ??= new AsyncCommand(async (obj) => await this.Initialize());
+        AsyncCommand initializeCommand;
     }
 }

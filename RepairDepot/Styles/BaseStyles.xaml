@@ -1,9 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
+                    xmlns:viewmodelDefinition="clr-namespace:RepairDepot.ViewModel.DefinitionVM"
                     xmlns:view="clr-namespace:RepairDepot.View">
 
-    <!--<DataTemplate DataType="{x:Type viewmodel:AuthorizationVM}">
+    <DataTemplate DataType="{x:Type viewmodel:MainVM}">
+        <view:MainWindow/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:AuthorizationVM}">
         <view:AuthorizationForm />
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodel:WelcomeVM}">
@@ -21,9 +25,13 @@
     <DataTemplate DataType="{x:Type viewmodel:PermissionEditVM}">
         <view:PermissionEditForm />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type viewmodel:TableEditVM}">
+    <DataTemplate DataType="{x:Type viewmodel:CustomTabControlVM}">
+        <view:CustomTabControl />
+    </DataTemplate>
+    <!--<DataTemplate DataType="{x:Type viewmodelDefinition:BasePageVM}">
         <view:TableEditForm />
     </DataTemplate>-->
+
     <!--базовый стиль-->
     <Style TargetType="Control"
            x:Key="BaseControlStyle">

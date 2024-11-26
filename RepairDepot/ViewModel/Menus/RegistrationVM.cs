@@ -1,6 +1,7 @@
 ﻿using DatabaseAdapter.Models;
 using Microsoft.EntityFrameworkCore;
 using RepairDepot.Model;
+using RepairDepot.Model.TableManaging;
 using RepairDepot.ViewModel.Commands;
 using RepairDepot.ViewModel.DefinitionVM;
 using System.Collections.ObjectModel;
@@ -38,7 +39,8 @@ public class RegistrationVM : BasePageVM
     public string MiddleName { get => _middleName; set { _middleName = value; OnPropertyChanged(); } }
 
     //уровни доступа
-    public ObservableCollection<Permission> Permissions { get; set; } = new ObservableCollection<Permission>();
+    ObservableCollection<Permission> permissions = new ObservableCollection<Permission>();
+    public ObservableCollection<Permission> Permissions { get => permissions; set { permissions = value; OnPropertyChanged(); } }
     Permission selectedPermission;
     public Permission SelectedPermission { get => selectedPermission; set { selectedPermission = value; OnPropertyChanged(); } }
 
@@ -114,21 +116,12 @@ public class RegistrationVM : BasePageVM
     /// </summary>
     async Task InitializePermissionsFromDb()
     {
-        List<Permission> permissions;
-        try
-        {
-            using (RepairDepotContext dbContext = new RepairDepotContext(Config.GetInstanse().DbContextOptions))
-            {
-                Task<List<Permission>> task = dbContext.Permissions.ToListAsync();
-                permissions = await task;
-                if (permissions != null)
-                    this.Permissions = new ObservableCollection<Permission>(permissions);
-            }
-        }
-        catch (Exception ex)
-        {
-            return;
-        }
+        //Permissions.Clear();
+        //ObservableCollection<Permission> permissions = await new CommonTableManager<Permission>().LoadData();
+        //foreach (Permission permission in permissions)
+        //    Permissions.Add(permission);
+        Permissions = await new CommonTableManager<Permission>().LoadData();
+
     }
 
     /// <summary>

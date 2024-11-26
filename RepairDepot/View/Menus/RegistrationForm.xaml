@@ -6,10 +6,17 @@
              xmlns:local="clr-namespace:RepairDepot.View"
              xmlns:controls="clr-namespace:RepairDepot.Controls"
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="600"
              Visibility="{Binding Visible}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.DataContext>
         <viewmodel:RegistrationVM />
     </UserControl.DataContext>

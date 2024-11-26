@@ -1,32 +1,41 @@
 ﻿<UserControl x:Class="RepairDepot.View.PermissionEditForm"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:RepairDepot.View"
              xmlns:controls="clr-namespace:RepairDepot.Controls"
-             
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             d:DataContext="{d:DesignInstance Type=viewmodel:PermissionEditVM}"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.DataContext>
         <viewmodel:PermissionEditVM />
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <DataGrid ItemsSource="{Binding Permissions}"
                   AutoGeneratingColumn="DataGrid_AutoGeneratingColumn">
             <!--CanUserAddRows="False"-->
-            
+
         </DataGrid>
 
         <Button Grid.Row="1"
                 Command="{Binding SaveChanges, IsAsync=True}"
                 Style="{StaticResource ButtonBaseStyle}"
                 Margin="3"
-                Content="Сохранить"/>
+                Content="Сохранить" />
     </Grid>
 </UserControl>

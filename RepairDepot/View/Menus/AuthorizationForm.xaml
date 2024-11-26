@@ -6,8 +6,15 @@
              xmlns:local="clr-namespace:RepairDepot.View"
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
              mc:Ignorable="d"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DesignHeight="300"
              d:DesignWidth="600">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.DataContext>
         <viewmodel:AuthorizationVM />
     </UserControl.DataContext>
