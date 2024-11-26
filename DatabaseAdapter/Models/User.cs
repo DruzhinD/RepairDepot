@@ -1,26 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 #nullable disable
 
-namespace DatabaseAdapter.Models
+namespace DatabaseAdapter.Models;
+
+/// <summary>
+/// пользователи приложения
+/// </summary>
+public partial class User : BaseModel
 {
-    [Table("user")]
-    public class User : BaseModel
-    {
-        [Column("login")]
-        public string Login { get; set; }
-        [Column("password")]
-        public string Password { get; set; }
+    public string Login { get; set; }
 
-        [Column("first_name")]
-        public string FirstName { get; set; }
-        [Column("last_name")]
-        public string LastName { get; set; }
-        [Column("middle_name")]
-        public string MiddleName { get; set; }
+    public string Password { get; set; }
 
-        [Column("permission_id")]
-        public int PermissionId {  get; set; }
+    public int PermissionId { get; set; }
 
-        public virtual Permission Permission { get; set; }
-    }
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
+
+    public string MiddleName { get; set; }
+
+    public virtual Permission Permission { get; set; }
 }

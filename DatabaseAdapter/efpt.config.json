@@ -6,7 +6,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Models",
+   "OutputPath": "Models1",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "DatabaseAdapter",
    "Schemas": null,
@@ -15,59 +15,7 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "public.AwardOrder",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.CompleteReport",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.Employee",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.Employee_RepairTask",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.ExternalRailway",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.Foreman",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.InternalRailway",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.QualityControl",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.Railway",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.RepairOrder",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.RepairRequest",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.RepairTask",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.RepairType",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.service_directorate",
+         "Name": "public.permission",
          "ObjectType": 0
       },
       {
@@ -75,7 +23,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "public.Worker",
+         "Name": "public.WagonType",
          "ObjectType": 0
       }
    ],

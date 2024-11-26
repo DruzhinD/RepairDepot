@@ -26,6 +26,11 @@ namespace DatabaseAdapter.Configurations
                 .HasForeignKey(d => d.ServiceDirectorateId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_wagon_service_directorate");
+
+            entity.HasOne(d => d.WagonType).WithMany(p => p.Wagons)
+                .HasForeignKey(d => d.WagonTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_wagon_wagon_type");
         }
     }
 }

@@ -18,6 +18,10 @@ public partial class Wagon : BaseModel
 
     public virtual Railway Railway { get; set; }
 
+    public int WagonTypeId { get; set; }
+
+    public virtual WagonType WagonType { get; set; }
+
     public virtual ICollection<RepairRequest> RepairRequests { get; set; } = new List<RepairRequest>();
 
     public virtual ServiceDirectorate ServiceDirectorate { get; set; }

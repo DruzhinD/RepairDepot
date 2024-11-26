@@ -11,9 +11,32 @@ namespace DatabaseAdapter.Configurations
 {
     internal class PermissionConfiguration : IEntityTypeConfiguration<Permission>
     {
-        public void Configure(EntityTypeBuilder<Permission> builder)
+        public void Configure(EntityTypeBuilder<Permission> entity)
         {
-            builder.HasKey(x => x.Id);
+            entity.HasKey(e => e.Id).HasName("permission_pkey");
+
+            entity.ToTable("permission");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("name");
+            entity.Property(e => e.Admin)
+                .HasDefaultValue(false)
+                .HasColumnName("admin");
+            entity.Property(e => e.PlaningDepartment)
+                .HasDefaultValue(false)
+                .HasColumnName("planing_department");
+            entity.Property(e => e.RepairDepartment)
+                .HasDefaultValue(false)
+                .HasColumnName("repair_department");
+            entity.Property(e => e.StaffDepartment)
+                .HasDefaultValue(false)
+                .HasColumnName("staff_department");
+            entity.Property(e => e.TechnicalDepartment)
+                .HasDefaultValue(false)
+                .HasColumnName("technical_department");
         }
     }
 }
