@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DatabaseAdapter.Models;
 
@@ -10,15 +11,18 @@ namespace DatabaseAdapter.Models;
 /// </summary>
 public partial class CompleteReport : IdModel
 {
-    public int Id { get; set; }
-
+    [DisplayName("ID задания")]
     public int RepairTaskId { get; set; }
 
+    [DisplayName("факт. дата начала")]
     public DateOnly DateStartFact { get; set; }
 
+    [DisplayName("факт. дата окончания")]
     public DateOnly DateStopFact { get; set; }
 
+    [Browsable(false)]
     public virtual QualityControl QualityControl { get; set; }
 
+    [Browsable(false)]
     public virtual RepairTask RepairTask { get; set; }
 }

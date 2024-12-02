@@ -207,7 +207,7 @@ public partial class RepairDepotContext : DbContext
                 .HasColumnName("admin");
             entity.Property(e => e.Name)
                 .IsRequired()
-                .HasMaxLength(20)
+                .HasMaxLength(50)
                 .HasColumnName("name");
             entity.Property(e => e.PlaningDepartment)
                 .HasDefaultValue(false)
@@ -450,4 +450,10 @@ public partial class RepairDepotContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Warning);
+    }
 }

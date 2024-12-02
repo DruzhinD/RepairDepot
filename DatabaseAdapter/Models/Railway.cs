@@ -2,18 +2,21 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DatabaseAdapter.Models;
 
 public partial class Railway : IdModel
 {
-    public int Id { get; set; }
-
+    [DisplayName("Внешняя")]
     public bool External { get; set; }
 
+    [Browsable(false)]
     public virtual ICollection<ExternalRailway> ExternalRailways { get; set; } = new List<ExternalRailway>();
 
+    [Browsable(false)]
     public virtual InternalRailway InternalRailway { get; set; }
 
+    [Browsable(false)]
     public virtual ICollection<Wagon> Wagons { get; set; } = new List<Wagon>();
 }

@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DatabaseAdapter.Models;
 
@@ -10,21 +11,27 @@ namespace DatabaseAdapter.Models;
 /// </summary>
 public partial class Employee : IdModel
 {
-    public int Id { get; set; }
-
+    [DisplayName("Опыт работы (года)")]
     public int Experience { get; set; }
 
+    [DisplayName("ФИО")]
     public string Name { get; set; }
 
+    [DisplayName("Банковская карта")]
     public string BankCard { get; set; }
 
+    [DisplayName("Образование")]
     public string Education { get; set; }
 
+    [DisplayName("Специализация")]
     public string Specialization { get; set; }
 
+    [Browsable(false)]
     public virtual Foreman Foreman { get; set; }
 
+    [Browsable(false)]
     public virtual ICollection<Worker> WorkerChiefs { get; set; } = new List<Worker>();
 
+    [Browsable(false)]
     public virtual Worker WorkerEmployee { get; set; }
 }

@@ -2,28 +2,36 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DatabaseAdapter.Models;
 
 public partial class Wagon : IdModel
 {
-    public int Id { get; set; }
-
+    [DisplayName("Рег. номер")]
     public long RegNumber { get; set; }
 
+    [DisplayName("ID Ж/Д")]
     public int RailwayId { get; set; }
 
+    [DisplayName("ID ДОП")]
     public int ServiceDirectorateId { get; set; }
 
+    [Browsable(false)]
     public byte[] Photo { get; set; }
 
+    [DisplayName("ID типа вагона")]
     public int WagonTypeId { get; set; }
 
+    [Browsable(false)]
     public virtual Railway Railway { get; set; }
 
+    [Browsable(false)]
     public virtual ICollection<RepairRequest> RepairRequests { get; set; } = new List<RepairRequest>();
 
+    [Browsable(false)]
     public virtual ServiceDirectorate ServiceDirectorate { get; set; }
 
+    [Browsable(false)]
     public virtual WagonType WagonType { get; set; }
 }

@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DatabaseAdapter.Models;
 
@@ -10,13 +11,15 @@ namespace DatabaseAdapter.Models;
 /// </summary>
 public partial class AwardOrder : IdModel
 {
-    public int Id { get; set; }
-
+    [DisplayName("ID акта контроля качества")]
     public int QualityControlId { get; set; }
 
+    [DisplayName("Премия (руб)")]
     public decimal Bonus { get; set; }
 
+    [DisplayName("процет премии")]
     public float BonusPercent { get; set; }
 
+    [Browsable(false)]
     public virtual QualityControl QualityControl { get; set; }
 }

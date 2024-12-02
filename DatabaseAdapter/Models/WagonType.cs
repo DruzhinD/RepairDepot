@@ -2,14 +2,15 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DatabaseAdapter.Models;
 
 public partial class WagonType : IdModel
 {
-    public int Id { get; set; }
-
+    [DisplayName("Тип")]
     public string Type { get; set; }
 
+    [Browsable(false)]
     public virtual ICollection<Wagon> Wagons { get; set; } = new List<Wagon>();
 }

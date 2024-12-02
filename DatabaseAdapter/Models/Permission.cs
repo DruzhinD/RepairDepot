@@ -2,24 +2,31 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DatabaseAdapter.Models;
 
 public partial class Permission : IdModel
 {
-    public int Id { get; set; }
-
+    [DisplayName("Наименование")]
     public string Name { get; set; }
 
+    [DisplayName("Админ")]
     public bool Admin { get; set; }
 
+    //TODO надо бы переместить в отдельную таблицу...
+    [DisplayName("Тех отдел")]
     public bool TechnicalDepartment { get; set; }
 
+    [DisplayName("Отдел планирования")]
     public bool PlaningDepartment { get; set; }
 
+    [DisplayName("рем отдел")]
     public bool RepairDepartment { get; set; }
 
+    [DisplayName("отдел кадров")]
     public bool StaffDepartment { get; set; }
 
+    [Browsable(false)]
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

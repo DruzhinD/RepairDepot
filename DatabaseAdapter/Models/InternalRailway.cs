@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DatabaseAdapter.Models;
 
@@ -10,9 +11,9 @@ namespace DatabaseAdapter.Models;
 /// </summary>
 public partial class InternalRailway : IdModel
 {
-    public int Id { get; set; }
-
+    [DisplayName("ID Ж/Д")]
     public int RailwayId { get; set; }
 
+    [Browsable(false)]
     public virtual Railway Railway { get; set; }
 }

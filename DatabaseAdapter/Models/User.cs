@@ -2,6 +2,8 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace DatabaseAdapter.Models;
 
@@ -10,19 +12,24 @@ namespace DatabaseAdapter.Models;
 /// </summary>
 public partial class User : IdModel
 {
-    public int Id { get; set; }
-
+    [DisplayName("Логин")]
     public string Login { get; set; }
 
+    [DisplayName("Пароль")]   
     public string Password { get; set; }
 
+    [DisplayName("ID привилегии")]
     public int PermissionId { get; set; }
-
-    public string FirstName { get; set; }
-
+    
+    [DisplayName("Фамилия")]
     public string LastName { get; set; }
 
+    [DisplayName("Имя")]
+    public string FirstName { get; set; }
+    
+    [DisplayName("Отчество")]
     public string MiddleName { get; set; }
-
+    
+    [Browsable(false)]
     public virtual Permission Permission { get; set; }
 }
