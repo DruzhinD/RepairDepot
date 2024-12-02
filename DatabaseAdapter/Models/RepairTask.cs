@@ -22,4 +22,8 @@ public partial class RepairTask : IdModel
 
     [Browsable(false)]
     public virtual RepairOrder RepairOrder { get; set; }
+
+    [Browsable(false)]
+    public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
+
 }

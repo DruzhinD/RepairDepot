@@ -22,6 +22,8 @@ namespace RepairDepot.ViewModel
         Visibility visibleWorker = Visibility.Collapsed;
         public Visibility VisibleEmployee { get => visibleEmployee; set { visibleEmployee = value; OnPropertyChanged(); } }
         Visibility visibleEmployee = Visibility.Collapsed;
+        public Visibility VisibleEmployeeRepairTask { get => visibleEmployeeRepairTask; set { visibleEmployeeRepairTask = value; OnPropertyChanged(); } }
+        Visibility visibleEmployeeRepairTask = Visibility.Collapsed;
         public Visibility VisibleInternalRailway { get => visibleInternalRailway; set { visibleInternalRailway = value; OnPropertyChanged(); } }
         Visibility visibleInternalRailway = Visibility.Collapsed;
         public Visibility VisibleExternalRailway { get => visibleExternalRailway; set { visibleExternalRailway = value; OnPropertyChanged(); } }
@@ -82,12 +84,12 @@ namespace RepairDepot.ViewModel
             var vm = new TableEditVM<Employee>("Сотрудники (общий список)");
             await CreateViewAndNotify(vm);
         });
-        //AsyncCommand openEmployeeRepairTask;
-        //public AsyncCommand OpenEmployeeRepairTask => openEmployeeRepairTask ??= new AsyncCommand(async (obj) =>
-        //{
-        //    var vm = new TableEditVM<EmployeeRepairTask>("Задание на ремонт - сотрудники");
-        //    await CreateViewAndNotify(vm);
-        //});
+        AsyncCommand openEmployeeRepairTask;
+        public AsyncCommand OpenEmployeeRepairTask => openEmployeeRepairTask ??= new AsyncCommand(async (obj) =>
+        {
+            var vm = new TableEditVM<EmployeeRepairTask>("Задание на ремонт - сотрудники");
+            await CreateViewAndNotify(vm);
+        });
         AsyncCommand openExternalRailway;
         public AsyncCommand OpenExternalRailway => openExternalRailway ??= new AsyncCommand(async (obj) =>
         {
@@ -190,6 +192,7 @@ namespace RepairDepot.ViewModel
                 VisibleWorker = Visibility.Visible;
                 VisibleForeman = Visibility.Visible;
                 VisibleEmployee = Visibility.Visible;
+                //VisibleEmployeeRepairTask = Visibility.Visible;
             }
             if (CommonData.User.Privileges.StaffDepartment)
             {

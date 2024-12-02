@@ -6,7 +6,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Models",
+   "OutputPath": "Models1",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "DatabaseAdapter",
    "Schemas": null,

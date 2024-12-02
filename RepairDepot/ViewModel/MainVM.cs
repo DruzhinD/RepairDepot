@@ -2,6 +2,8 @@
 using System.Windows;
 using RepairDepot.ViewModel.DefinitionVM;
 using RepairDepot.Model;
+using System.IO;
+using System.Diagnostics;
 
 namespace RepairDepot.ViewModel;
 
@@ -61,6 +63,18 @@ public class MainVM : BaseVM
 
     RelayCommand openProfile;
     public RelayCommand OpenProfile => openProfile ??= new RelayCommand(obj => { var vm = new ProfileVM(); Mediator.Notify("CreateTab", new Tuple<object, string>(vm, vm.Name)); });
+
+    /// <summary>
+    /// формирование отчета
+    /// </summary>
+    AsyncCommand createReport;
+    public AsyncCommand CreateReport => createReport ??= new AsyncCommand(async (obj) =>
+    {
+        string path = await new ReportCreator().CreateReport();
+        Process.Start(new ProcessStartInfo(
+            Path.Combine(Config.GetInstanse().SavePath, path))
+        { UseShellExecute = true }); ;
+    });
     #endregion
 
     public MainVM()
@@ -76,6 +90,7 @@ public class MainVM : BaseVM
         WelcomeVM vm = new WelcomeVM();
         var tabItem = new Tuple<object, string>(vm, vm.Name);
         await Mediator.Notify("CreateTab", tabItem);
+        await new ReportCreator().CreateReport();
     }
 
 

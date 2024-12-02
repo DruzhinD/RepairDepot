@@ -19,8 +19,6 @@ public partial class RepairDepotContext : DbContext
 
     public virtual DbSet<Employee> Employees { get; set; }
 
-    public virtual DbSet<EmployeeRepairTask> EmployeeRepairTasks { get; set; }
-
     public virtual DbSet<ExternalRailway> ExternalRailways { get; set; }
 
     public virtual DbSet<Foreman> Foremen { get; set; }
@@ -105,7 +103,7 @@ public partial class RepairDepotContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("bank_card");
             entity.Property(e => e.Education)
-                .HasMaxLength(60)
+                .HasMaxLength(100)
                 .HasColumnName("education");
             entity.Property(e => e.Experience).HasColumnName("experience");
             entity.Property(e => e.Name)
@@ -113,32 +111,31 @@ public partial class RepairDepotContext : DbContext
                 .HasMaxLength(80)
                 .HasColumnName("name");
             entity.Property(e => e.Specialization)
-                .HasMaxLength(30)
+                .HasMaxLength(100)
                 .HasColumnName("specialization");
-        });
 
-        modelBuilder.Entity<EmployeeRepairTask>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("Employee_RepairTask");
-
-            entity.Property(e => e.EmployeeId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("Employee_Id");
-            entity.Property(e => e.RepairTaskId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("RepairTask_Id");
-
-            entity.HasOne(d => d.Employee).WithMany()
-                .HasForeignKey(d => d.EmployeeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Employee_RepairTask_Employee_Id_fkey");
-
-            entity.HasOne(d => d.RepairTask).WithMany()
-                .HasForeignKey(d => d.RepairTaskId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Employee_RepairTask_RepairTask_Id_fkey");
+            entity.HasMany(d => d.RepairTasks).WithMany(p => p.Employees)
+                .UsingEntity<Dictionary<string, object>>(
+                    "EmployeeRepairTask",
+                    r => r.HasOne<RepairTask>().WithMany()
+                        .HasForeignKey("RepairTaskId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("Employee_RepairTask_RepairTask_Id_fkey"),
+                    l => l.HasOne<Employee>().WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("Employee_RepairTask_Employee_Id_fkey"),
+                    j =>
+                    {
+                        j.HasKey("EmployeeId", "RepairTaskId").HasName("Employee_RepairTask_pkey");
+                        j.ToTable("Employee_RepairTask");
+                        j.IndexerProperty<int>("EmployeeId")
+                            .ValueGeneratedOnAdd()
+                            .HasColumnName("Employee_Id");
+                        j.IndexerProperty<int>("RepairTaskId")
+                            .ValueGeneratedOnAdd()
+                            .HasColumnName("RepairTask_Id");
+                    });
         });
 
         modelBuilder.Entity<ExternalRailway>(entity =>
@@ -455,5 +452,6 @@ public partial class RepairDepotContext : DbContext
     {
         base.OnConfiguring(optionsBuilder);
         optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Warning);
+        optionsBuilder.UseLazyLoadingProxies();
     }
 }

@@ -34,4 +34,7 @@ public partial class Employee : IdModel
 
     [Browsable(false)]
     public virtual Worker WorkerEmployee { get; set; }
+
+    [Browsable(false)]
+    public virtual ICollection<RepairTask> RepairTasks { get; set; } = new List<RepairTask>();
 }

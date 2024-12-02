@@ -42,6 +42,9 @@ public class Config
         }
     }
 
+    public string LogPath => Path.Combine(Directory.GetCurrentDirectory(), this["log_path"]);
+    public string SavePath => Path.Combine(Directory.GetCurrentDirectory(), this["save_path"]);
+
     /// <summary>
     /// индексатор конфигуратора
     /// </summary>

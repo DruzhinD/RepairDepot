@@ -1,4 +1,6 @@
 ﻿using DatabaseAdapter.Models;
+using DocumentFormat.OpenXml.Spreadsheet;
+using RepairDepot.Model;
 using RepairDepot.Model.TableManaging;
 using RepairDepot.ViewModel.Commands;
 using RepairDepot.ViewModel.DefinitionVM;
@@ -98,7 +100,12 @@ namespace RepairDepot.ViewModel
             }
 
             if (Data.Count == 0 && removeData.Count == 0)
+            {
                 this.OperationMsg = "Нет данных для изменения";
+                return;
+            }
+            string msg = $"{CommonData.User.User.Login} внес изменения в {this.Name}";
+            Logger.Log(msg);
         }
         /// <summary>
         /// Данные на удаление

@@ -43,6 +43,8 @@ namespace RepairDepot.Model
                 {
                     this.user = user;
                     authStatus = true;
+                    string msg = $"Авторизация {user.Login}";
+                    Logger.Log(msg);
                 }
                 return result;
             }
@@ -67,6 +69,8 @@ namespace RepairDepot.Model
                 dbContext.Attach(notExistUser);
                 await dbContext.Users.AddAsync(notExistUser);
                 await dbContext.SaveChangesAsync();
+                string msg = $"Регистрация {user.Login}";
+                Logger.Log(msg);
                 return true;
             }
         }

@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace DatabaseAdapter.Models;
 
-public partial class EmployeeRepairTask : IdModel
+public partial class EmployeeRepairTask : BaseModel
 {
     [DisplayName("ID работника")]
     public int EmployeeId { get; set; }

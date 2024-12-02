@@ -44,6 +44,9 @@
             <Button Content="Главное меню"
                     Command="{Binding OpenMainMenu}"
                     Visibility="{Binding VisibilityAuthorizedControl}" />
+            <Button Content="Сформировать отчет"
+                    Command="{Binding CreateReport}"
+                    Visibility="{Binding VisibilityAuthorizedControl}" />
         </ui:SimpleStackPanel>
         <local:CustomTabControl Grid.Row="1" />
 

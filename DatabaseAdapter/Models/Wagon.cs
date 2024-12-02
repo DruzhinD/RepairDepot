@@ -23,7 +23,7 @@ public partial class Wagon : IdModel
     [DisplayName("ID типа вагона")]
     public int WagonTypeId { get; set; }
 
-    [Browsable(false)]
+    //[Browsable(false)]
     public virtual Railway Railway { get; set; }
 
     [Browsable(false)]

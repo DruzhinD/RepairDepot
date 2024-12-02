@@ -5,5 +5,7 @@
   "dbName": "RepairDepot",
   "username": "postgres",
   "password": "postgres",
-  "logo_path":  "..\\..\\..\\Data\\logo.png"
+  "logo_path": "..\\..\\..\\Data\\logo.png",
+  "log_path": "..\\..\\..\\Data\\logs.log",
+  "save_path": "..\\..\\..\\..\\Saved"
 }
