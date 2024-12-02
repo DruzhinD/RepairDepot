@@ -8,14 +8,14 @@
         xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
-    d:DataContext="{d:DesignInstance Type=viewmodel:MainVM}"
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainVM}"
         mc:Ignorable="d"
-        Title="MainWindow"
         Height="630"
         Width="900"
         MinHeight="450"
         MinWidth="800"
-        Style="{StaticResource DefaultWindowStyle}">
+        Style="{StaticResource DefaultWindowStyle}"
+        Title="Ремонтное депо">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding InitializeCommand}">
@@ -30,9 +30,10 @@
             <RowDefinition />
             <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
-        <StackPanel MinHeight="25"
-                    Orientation="Horizontal"
-                    Margin="3">
+        <ui:SimpleStackPanel MinHeight="25"
+                             Orientation="Horizontal"
+                             Margin="3"
+                             Spacing="10">
             <Button Content="Войти"
                     Command="{Binding OpenAuthorizationVM}" />
             <Button Content="Профиль"
@@ -43,7 +44,7 @@
             <Button Content="Главное меню"
                     Command="{Binding OpenMainMenu}"
                     Visibility="{Binding VisibilityAuthorizedControl}" />
-        </StackPanel>
+        </ui:SimpleStackPanel>
         <local:CustomTabControl Grid.Row="1" />
 
     </Grid>

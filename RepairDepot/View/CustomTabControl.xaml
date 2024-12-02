@@ -36,7 +36,8 @@
                             Height="15"
                             FontSize="10"
                             Padding="0"
-                            Width="15">
+                            Width="15"
+                            Margin="3">
 
                     </Button>
                     <Label Content="{Binding Header}" />

@@ -88,6 +88,7 @@ namespace RepairDepot.ViewModel
                 try
                 {
                     await tableManager.DeleteData(removeData);
+                    removeData.Clear();
                     this.OperationMsg = "Операция выполнена успешно";
                 }
                 catch (Exception ex)
@@ -95,6 +96,9 @@ namespace RepairDepot.ViewModel
                     this.OperationMsg = "Не удалось удалить записи";
                 }
             }
+
+            if (Data.Count == 0 && removeData.Count == 0)
+                this.OperationMsg = "Нет данных для изменения";
         }
         /// <summary>
         /// Данные на удаление

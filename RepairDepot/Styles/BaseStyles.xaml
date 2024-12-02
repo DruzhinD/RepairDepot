@@ -23,9 +23,6 @@
     <DataTemplate DataType="{x:Type viewmodel:MainMenuVM}">
         <view:MainMenuForm />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type viewmodel:PermissionEditVM}">
-        <view:PermissionEditForm />
-    </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodel:CustomTabControlVM}">
         <view:CustomTabControl />
     </DataTemplate>

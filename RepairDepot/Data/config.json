@@ -4,5 +4,6 @@
   "port": "5432",
   "dbName": "RepairDepot",
   "username": "postgres",
-  "password": "postgres"
+  "password": "postgres",
+  "logo_path":  "..\\..\\..\\Data\\logo.png"
 }

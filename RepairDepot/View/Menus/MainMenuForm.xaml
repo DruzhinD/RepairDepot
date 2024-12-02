@@ -27,24 +27,33 @@
             <Setter Property="VerticalAlignment"
                     Value="Stretch" />
             <Setter Property="Margin"
-                    Value="3" />
+                    Value="5" />
         </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
 
         <ui:SimpleStackPanel  Grid.Row="0">
-            <TextBlock TextAlignment="Center">
+            <TextBlock TextAlignment="Center"
+                       FontSize="24">
                 Главное меню
             </TextBlock>
-            <TextBlock TextAlignment="Left">
+            <TextBlock TextAlignment="Left"
+                       MaxWidth="300"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Left"
+                       FontStyle="Italic">
                 Для перехода к нужному документу или разделу нажмите соответствующую кнопку.
             </TextBlock>
         </ui:SimpleStackPanel>
 
+        <Border Grid.Row="1"
+                Margin="3"
+               BorderThickness="5"
+                BorderBrush="#a6b3ff">
         <ScrollViewer Grid.Row="1"
                       ui:ScrollViewerHelper.AutoHideScrollBars="True">
             <ui:SimpleStackPanel ui:ScrollViewerHelper.AutoHideScrollBars="True">
@@ -99,5 +108,6 @@
 
             </ui:SimpleStackPanel>
         </ScrollViewer>
+        </Border>
     </Grid>
 </UserControl>

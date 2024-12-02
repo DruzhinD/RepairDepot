@@ -28,14 +28,17 @@ public class Config
 
     DbContextOptions<RepairDepotContext> dbContextOptions;
     public DbContextOptions<RepairDepotContext> DbContextOptions
+        => dbContextOptions ??= new DbContextOptionsBuilder<RepairDepotContext>().UseNpgsql(this["connectionString"]).Options;
+
+    /// <summary>
+    /// путь к логотипу программы, отображаемый в форме приветствия
+    /// </summary>
+    public string LogoPath
     {
         get
         {
-            if (dbContextOptions == null)
-            {
-                dbContextOptions = new DbContextOptionsBuilder<RepairDepotContext>().UseNpgsql(this["connectionString"]).Options;
-            }
-            return dbContextOptions;
+            var s = Path.Combine(Directory.GetCurrentDirectory(), this["logo_path"]);
+            return s;
         }
     }
 

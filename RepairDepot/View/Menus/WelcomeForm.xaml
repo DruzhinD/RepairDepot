@@ -11,20 +11,45 @@
     <UserControl.DataContext>
         <viewmodel:WelcomeVM />
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize"
+                    Value="16" />
+            <Setter Property="TextAlignment"
+                    Value="Center" />
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
             <RowDefinition Height="3*" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBlock
-                   Grid.Row="0"
-                   TextAlignment="Center">
-            Приветствие
-        </TextBlock>
+        <StackPanel>
 
+            <TextBlock Grid.Row="0"
+                       TextAlignment="Center"
+                       Text="Информационная система">
+            </TextBlock>
+            <TextBlock>
+                "Ремонтное депо".
+            </TextBlock>
+            <TextBlock>
+                Для продолжения необходимо войти в систему.
+            </TextBlock>
+            <TextBlock>
+                Нажмите кнопку "войти".
+            </TextBlock>
+        </StackPanel>
+        <DockPanel LastChildFill="True"
+                   Grid.Row="1">
+            <Image MinWidth="300"
+                   MinHeight="250"
+                   Source="{Binding LogoPath}" />
+        </DockPanel>
         <!--кнопки-->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
@@ -32,8 +57,9 @@
             <Button VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Margin="5"
-                    Content="Войти" 
-                    Command="{Binding Auth}"/>
+                    Content="Войти"
+                    FontSize="24"
+                    Command="{Binding Auth}" />
         </Grid>
     </Grid>
 </UserControl>
