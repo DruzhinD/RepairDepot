@@ -2,25 +2,21 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace DatabaseAdapter.Models;
 
 /// <summary>
 /// Приказ о начислении премии
 /// </summary>
-public partial class AwardOrder : BaseModel
+public partial class AwardOrder : IdModel
 {
+    public int Id { get; set; }
 
     public int QualityControlId { get; set; }
-
-    [DisplayName("Бонус")]
 
     public decimal Bonus { get; set; }
 
     public float BonusPercent { get; set; }
-
-    [Browsable(false)]
 
     public virtual QualityControl QualityControl { get; set; }
 }

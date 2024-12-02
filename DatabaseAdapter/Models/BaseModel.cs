@@ -1,17 +1,12 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DatabaseAdapter.Models
 {
-    /// <summary>
-    /// хранит свойства, общие для всех таблиц в базе данных
-    /// </summary>
     public abstract class BaseModel
     {
-        
-        [Column("id")]
-        [ReadOnly(true)]
-        [DisplayName("ID")]
-        public int Id { get; set; }
     }
 }

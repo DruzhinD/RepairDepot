@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 namespace DatabaseAdapter.Models;
 
-public partial class Wagon : BaseModel
+public partial class Wagon : IdModel
 {
+    public int Id { get; set; }
 
     public long RegNumber { get; set; }
 
@@ -16,13 +17,13 @@ public partial class Wagon : BaseModel
 
     public byte[] Photo { get; set; }
 
-    public virtual Railway Railway { get; set; }
-
     public int WagonTypeId { get; set; }
 
-    public virtual WagonType WagonType { get; set; }
+    public virtual Railway Railway { get; set; }
 
     public virtual ICollection<RepairRequest> RepairRequests { get; set; } = new List<RepairRequest>();
 
     public virtual ServiceDirectorate ServiceDirectorate { get; set; }
+
+    public virtual WagonType WagonType { get; set; }
 }

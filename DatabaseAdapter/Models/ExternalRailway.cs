@@ -8,8 +8,10 @@ namespace DatabaseAdapter.Models;
 /// <summary>
 /// Внешняя ЖД
 /// </summary>
-public partial class ExternalRailway : BaseModel
+public partial class ExternalRailway : IdModel
 {
+    public int Id { get; set; }
+
     public int RailwayId { get; set; }
 
     public long Inn { get; set; }

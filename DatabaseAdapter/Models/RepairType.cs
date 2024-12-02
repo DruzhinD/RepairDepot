@@ -8,8 +8,9 @@ namespace DatabaseAdapter.Models;
 /// <summary>
 /// Справочник тип ремонта
 /// </summary>
-public partial class RepairType : BaseModel
+public partial class RepairType : IdModel
 {
+    public int Id { get; set; }
 
     public string Type { get; set; }
 

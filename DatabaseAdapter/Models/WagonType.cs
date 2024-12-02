@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DatabaseAdapter.Models;
 
-public partial class WagonType
+public partial class WagonType : IdModel
 {
     public int Id { get; set; }
 

@@ -8,8 +8,10 @@ namespace DatabaseAdapter.Models;
 /// <summary>
 /// Дирекция по обслуживанию пассажиров
 /// </summary>
-public partial class ServiceDirectorate : BaseModel
+public partial class ServiceDirectorate : IdModel
 {
+    public int Id { get; set; }
+
     public string Directorate { get; set; }
 
     public string Description { get; set; }

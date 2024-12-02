@@ -8,8 +8,10 @@ namespace DatabaseAdapter.Models;
 /// <summary>
 /// Отчет о выполнении работ
 /// </summary>
-public partial class CompleteReport : BaseModel
+public partial class CompleteReport : IdModel
 {
+    public int Id { get; set; }
+
     public int RepairTaskId { get; set; }
 
     public DateOnly DateStartFact { get; set; }

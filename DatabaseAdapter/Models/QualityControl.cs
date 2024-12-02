@@ -8,8 +8,10 @@ namespace DatabaseAdapter.Models;
 /// <summary>
 /// Акт контроля качества
 /// </summary>
-public partial class QualityControl : BaseModel
+public partial class QualityControl : IdModel
 {
+    public int Id { get; set; }
+
     public int CompleteReportId { get; set; }
 
     public bool Quality { get; set; }

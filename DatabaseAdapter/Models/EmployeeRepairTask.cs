@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DatabaseAdapter.Models;
 
-public partial class EmployeeRepairTask
+public partial class EmployeeRepairTask : IdModel
 {
     public int EmployeeId { get; set; }
 
