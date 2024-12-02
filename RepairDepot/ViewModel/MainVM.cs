@@ -9,10 +9,12 @@ public class MainVM : BaseVM
 {
     #region Свойства для связи с View
 
-    //Видимость элементов управления
+    ///<summary>Видимость элементов управления</summary>
+    public Visibility VisibilityAdminControl { get => enableControls; set { enableControls = value; OnPropertyChanged(); } }
     Visibility enableControls;
-    public Visibility EnableControls { get => enableControls; set { enableControls = value; OnPropertyChanged(); } }
 
+    public Visibility VisibilityAuthorizedControl { get => visibilityAuthorizedControl; set { visibilityAuthorizedControl = value; OnPropertyChanged(); } }
+    Visibility visibilityAuthorizedControl;
     #endregion
 
     #region Команды для View
@@ -69,7 +71,8 @@ public class MainVM : BaseVM
 
     public async override Task Initialize()
     {
-        EnableControls = Visibility.Collapsed;
+        VisibilityAdminControl = Visibility.Collapsed;
+        VisibilityAuthorizedControl = Visibility.Collapsed;
         WelcomeVM vm = new WelcomeVM();
         var tabItem = new Tuple<object, string>(vm, vm.Name);
         await Mediator.Notify("CreateTab", tabItem);
@@ -78,7 +81,14 @@ public class MainVM : BaseVM
 
     async Task ShowControlsPerPermission(object obj)
     {
-        if (CommonData.User.Privileges.Name == "Администратор")
-            EnableControls = Visibility.Visible;
+        if (!CommonData.User.AuthStatus)
+            return;
+
+        VisibilityAuthorizedControl = Visibility.Visible;
+        if (CommonData.User.Privileges.Admin)
+            VisibilityAdminControl = Visibility.Visible;
+        else
+            VisibilityAdminControl = Visibility.Collapsed;
+
     }
 }

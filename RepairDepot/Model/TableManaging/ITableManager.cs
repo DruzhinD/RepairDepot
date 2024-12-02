@@ -25,5 +25,12 @@ namespace RepairDepot.Model.TableManaging
         /// </summary>
         /// <param name="data"></param>
         Task SaveData(IEnumerable<T> data);
+
+        /// <summary>
+        /// Удалить данные
+        /// </summary>
+        /// <param name="data">данные для удаления</param>
+        /// <returns></returns>
+        Task DeleteData(IEnumerable<T> data);
     }
 }

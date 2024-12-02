@@ -11,8 +11,10 @@
     d:DataContext="{d:DesignInstance Type=viewmodel:MainVM}"
         mc:Ignorable="d"
         Title="MainWindow"
-        Height="450"
-        Width="800"
+        Height="630"
+        Width="900"
+        MinHeight="450"
+        MinWidth="800"
         Style="{StaticResource DefaultWindowStyle}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -37,10 +39,10 @@
                     Command="{Binding OpenProfile}" />
             <Button Content="Администрирование"
                     Command="{Binding OpenAdministrationVM}"
-                    Visibility="{Binding EnableControls}" />
+                    Visibility="{Binding VisibilityAdminControl}" />
             <Button Content="Главное меню"
                     Command="{Binding OpenMainMenu}"
-                    Visibility="{Binding EnableControls}" />
+                    Visibility="{Binding VisibilityAuthorizedControl}" />
         </StackPanel>
         <local:CustomTabControl Grid.Row="1" />
 

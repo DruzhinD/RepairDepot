@@ -24,8 +24,8 @@ namespace RepairDepot.ViewModel
         #endregion
 
         #region Команды
-        RelayCommand closeSelf;
         public RelayCommand CloseSelf => closeSelf ??= new RelayCommand(obj => Mediator.Notify("RemoveTab", this.Header));
+        RelayCommand closeSelf;
         #endregion
 
 

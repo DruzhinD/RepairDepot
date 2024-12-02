@@ -47,43 +47,57 @@
 
         <ScrollViewer Grid.Row="1"
                       ui:ScrollViewerHelper.AutoHideScrollBars="True">
-        <ui:SimpleStackPanel 
-                   ui:ScrollViewerHelper.AutoHideScrollBars="True">
+            <ui:SimpleStackPanel ui:ScrollViewerHelper.AutoHideScrollBars="True">
 
-            <Button Content="Бригадиры"
-                    Command="{Binding OpenForeman, IsAsync=True}" />
-            <Button Content="Рабочие"
-                    Command="{Binding OpenWorker, IsAsync=True}" />
-            <Button Content="Сотрудники (общий список)"
-                    Command="{Binding OpenEmployee, IsAsync=True}" />
-            <!--<Button Content="Задание на ремонт - сотрудники"
+                <Button Content="Бригадиры"
+                        Command="{Binding OpenForeman, IsAsync=True}"
+                        Visibility="{Binding VisibleForeman}" />
+                <Button Content="Рабочие"
+                        Visibility="{Binding VisibleWorker}"
+                        Command="{Binding OpenWorker, IsAsync=True}" />
+                <Button Content="Сотрудники (общий список)"
+                        Visibility="{Binding VisibleEmployee}"
+                        Command="{Binding OpenEmployee, IsAsync=True}" />
+                <!--<Button Content="Задание на ремонт - сотрудники"
                     Command="{Binding OpenEmployeeRepairTask, IsAsync=True}" />-->
-            <Button Content="Внутренние железные дороги"
-                    Command="{Binding OpenInternalRailway, IsAsync=True}" />
-            <Button Content="Внешние железные дороги"
-                    Command="{Binding OpenExternalRailway, IsAsync=True}" />
-            <Button Content="Железные дороги (общий список)"
-                    Command="{Binding OpenRailway, IsAsync=True}" />
-            <Button Content="Вагоны"
-                    Command="{Binding OpenWagon, IsAsync=True}" />
-            <Button Content="Дирекции по обслуживанию пассажиров"
-                    Command="{Binding OpenServiceDirectorate, IsAsync=True}" />
-            <Button Content="Запросы на ремонт"
-                    Command="{Binding OpenRepairRequest, IsAsync=True}" />
-            <Button Content="Типы ремонта"
-                    Command="{Binding OpenRepairType, IsAsync=True}" />
-            <Button Content="Наряды на ремонт"
-                    Command="{Binding OpenRepairOrder, IsAsync=True}" />
-            <Button Content="Задания на ремонт"
-                    Command="{Binding OpenRepairTask, IsAsync=True}" />
-            <Button Content="Отчеты о выполнении работ"
-                    Command="{Binding OpenCompleteReport, IsAsync=True}" />
-            <Button Content="Акты контроля качества"
-                    Command="{Binding OpenQualityControl, IsAsync=True}" />
-            <Button Content="Приказы о начислении премий"
-                    Command="{Binding OpenAwardOrder, IsAsync=True}" />
+                <Button Content="Внутренние железные дороги"
+                        Visibility="{Binding VisibleInternalRailway}"
+                        Command="{Binding OpenInternalRailway, IsAsync=True}" />
+                <Button Content="Внешние железные дороги"
+                        Visibility="{Binding VisibleExternalRailway}"
+                        Command="{Binding OpenExternalRailway, IsAsync=True}" />
+                <Button Content="Железные дороги (общий список)"
+                        Visibility="{Binding VisibleRailway}"
+                        Command="{Binding OpenRailway, IsAsync=True}" />
+                <Button Content="Вагоны"
+                        Visibility="{Binding VisibleWagon}"
+                        Command="{Binding OpenWagon, IsAsync=True}" />
+                <Button Content="Дирекции по обслуживанию пассажиров"
+                        Visibility="{Binding VisibleServiceDirectorate}"
+                        Command="{Binding OpenServiceDirectorate, IsAsync=True}" />
+                <Button Content="Запросы на ремонт"
+                        Visibility="{Binding VisibleRepairRequest}"
+                        Command="{Binding OpenRepairRequest, IsAsync=True}" />
+                <Button Content="Типы ремонта"
+                        Visibility="{Binding VisibleRepairType}"
+                        Command="{Binding OpenRepairType, IsAsync=True}" />
+                <Button Content="Наряды на ремонт"
+                        Visibility="{Binding VisibleRepairOrder}"
+                        Command="{Binding OpenRepairOrder, IsAsync=True}" />
+                <Button Content="Задания на ремонт"
+                        Visibility="{Binding VisibleRepairTask}"
+                        Command="{Binding OpenRepairTask, IsAsync=True}" />
+                <Button Content="Отчеты о выполнении работ"
+                        Visibility="{Binding VisibleCompleteReport}"
+                        Command="{Binding OpenCompleteReport, IsAsync=True}" />
+                <Button Content="Акты контроля качества"
+                        Visibility="{Binding VisibleQualityControl}"
+                        Command="{Binding OpenQualityControl, IsAsync=True}" />
+                <Button Content="Приказы о начислении премий"
+                        Visibility="{Binding VisibleAwardOrder}"
+                        Command="{Binding OpenAwardOrder, IsAsync=True}" />
 
-        </ui:SimpleStackPanel>
+            </ui:SimpleStackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>

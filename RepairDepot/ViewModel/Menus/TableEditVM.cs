@@ -13,16 +13,31 @@ namespace RepairDepot.ViewModel
         ITableManager<T> tableManager = new CommonTableManager<T>();
 
         #region Свойства
+        //коллекция элементов
         public ObservableCollection<T> Data { get => data; set { data = value; OnPropertyChanged(); } }
         ObservableCollection<T> data = new ObservableCollection<T>();
 
+        //выделенный элемент
+        public T SelectedItem { get => selectedItem; set { selectedItem = value; OnPropertyChanged(); } }
+        T selectedItem;
+
         string operationMsg;
-        public string OperationMsg { get => operationMsg; set {  operationMsg = value; OnPropertyChanged(); } }
+        public string OperationMsg { get => operationMsg; set { operationMsg = value; OnPropertyChanged(); } }
         #endregion
 
         #region Команды
         public AsyncCommand SaveChanges => saveChanges ??= new AsyncCommand(async (obj) => { await SaveChangesAsync(); });
         AsyncCommand saveChanges;
+
+        public RelayCommand RemoveRow => removeRow ??= new RelayCommand(obj =>
+        {
+            if (obj != null)
+            {
+                removeData.Add(obj as T);
+                Data.Remove(obj as T);
+            }
+        });
+        RelayCommand removeRow;
         #endregion
 
 
@@ -53,16 +68,37 @@ namespace RepairDepot.ViewModel
                 if (Data[i] == null)
                     Data.Remove(Data[i]);
             }
-            if (Data.Count == 0)
-                return;
-            try
+            //сохранение данных в бд
+            if (Data.Count > 0)
             {
-                await tableManager.SaveData(Data);
+                try
+                {
+                    await tableManager.SaveData(Data);
+                    this.OperationMsg = "Операция выполнена успешно";
+                }
+                catch (Exception ex)
+                {
+                    this.OperationMsg = "Не все поля заполнены";
+                }
             }
-            catch (Exception ex)
+
+            //удаление записей из бд
+            if (removeData.Count > 0)
             {
-                this.OperationMsg = "Не все поля заполнены";
+                try
+                {
+                    await tableManager.DeleteData(removeData);
+                    this.OperationMsg = "Операция выполнена успешно";
+                }
+                catch (Exception ex)
+                {
+                    this.OperationMsg = "Не удалось удалить записи";
+                }
             }
         }
+        /// <summary>
+        /// Данные на удаление
+        /// </summary>
+        HashSet<T> removeData = new HashSet<T>();
     }
 }

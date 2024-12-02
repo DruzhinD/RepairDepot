@@ -75,10 +75,10 @@
                      ui:ControlHelper.Header="Уровень доступа"
                      Margin="3"
                      MinHeight="50" />
-            <TextBox Text=""
-                     IsReadOnly="True"
+            <TextBox IsReadOnly="True"
                      ui:ControlHelper.PlaceholderText="Н/Д"
                      ui:ControlHelper.Header="Департамент"
+                     Text="{Binding Department}"
                      Margin="3"
                      MinHeight="50" />
         </WrapPanel>

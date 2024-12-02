@@ -8,12 +8,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+#nullable disable
 
 namespace RepairDepot.ViewModel
 {
     public class MainMenuVM : BasePageVM
     {
-        public override string Name => "Главное меню";
+        #region Свойства
+        public Visibility VisibleForeman { get => visibleForeman; set { visibleForeman = value; OnPropertyChanged(); } }
+        Visibility visibleForeman = Visibility.Collapsed;
+        public Visibility VisibleWorker { get => visibleWorker; set { visibleWorker = value; OnPropertyChanged(); } }
+        Visibility visibleWorker = Visibility.Collapsed;
+        public Visibility VisibleEmployee { get => visibleEmployee; set { visibleEmployee = value; OnPropertyChanged(); } }
+        Visibility visibleEmployee = Visibility.Collapsed;
+        public Visibility VisibleInternalRailway { get => visibleInternalRailway; set { visibleInternalRailway = value; OnPropertyChanged(); } }
+        Visibility visibleInternalRailway = Visibility.Collapsed;
+        public Visibility VisibleExternalRailway { get => visibleExternalRailway; set { visibleExternalRailway = value; OnPropertyChanged(); } }
+        Visibility visibleExternalRailway = Visibility.Collapsed;
+        public Visibility VisibleRailway { get => visibleRailway; set { visibleRailway = value; OnPropertyChanged(); } }
+        Visibility visibleRailway = Visibility.Collapsed;
+        public Visibility VisibleWagon { get => visibleWagon; set { visibleWagon = value; OnPropertyChanged(); } }
+        Visibility visibleWagon = Visibility.Collapsed;
+        public Visibility VisibleServiceDirectorate { get => visibleServiceDirectorate; set { visibleServiceDirectorate = value; OnPropertyChanged(); } }
+        Visibility visibleServiceDirectorate = Visibility.Collapsed;
+        public Visibility VisibleRepairRequest { get => visibleRepairRequest; set { visibleRepairRequest = value; OnPropertyChanged(); } }
+        Visibility visibleRepairRequest = Visibility.Collapsed;
+        public Visibility VisibleRepairType { get => visibleRepairType; set { visibleRepairType = value; OnPropertyChanged(); } }
+        Visibility visibleRepairType = Visibility.Collapsed;
+        public Visibility VisibleRepairOrder { get => visibleRepairOrder; set { visibleRepairOrder = value; OnPropertyChanged(); } }
+        Visibility visibleRepairOrder = Visibility.Collapsed;
+        public Visibility VisibleRepairTask { get => visibleRepairTask; set { visibleRepairTask = value; OnPropertyChanged(); } }
+        Visibility visibleRepairTask = Visibility.Collapsed;
+        public Visibility VisibleCompleteReport { get => visibleCompleteReport; set { visibleCompleteReport = value; OnPropertyChanged(); } }
+        Visibility visibleCompleteReport = Visibility.Collapsed;
+        public Visibility VisibleQualityControl { get => visibleQualityControl; set { visibleQualityControl = value; OnPropertyChanged(); } }
+        Visibility visibleQualityControl = Visibility.Collapsed;
+        public Visibility VisibleAwardOrder { get => visibleAwardOrder; set { visibleAwardOrder = value; OnPropertyChanged(); } }
+        Visibility visibleAwardOrder = Visibility.Collapsed;
+
+        #endregion
 
         #region Команды
         AsyncCommand openPermission;
@@ -129,7 +163,57 @@ namespace RepairDepot.ViewModel
 
         #endregion
 
+        public override string Name => "Главное меню";
         public MainMenuVM() : base() { }
+
+        public override async Task Initialize()
+        {
+            if (CommonData.User.Privileges.TechnicalDepartment)
+            {
+                VisibleWagon = Visibility.Visible;
+                VisibleRailway = Visibility.Visible;
+                VisibleInternalRailway = Visibility.Visible;
+                VisibleExternalRailway = Visibility.Visible;
+                VisibleRepairRequest = Visibility.Visible;
+
+                VisibleServiceDirectorate = Visibility.Visible;
+                VisibleRepairType = Visibility.Visible;
+            }
+            if (CommonData.User.Privileges.PlaningDepartment)
+            {
+                VisibleRepairRequest = Visibility.Visible;
+                VisibleRepairOrder = Visibility.Visible;
+                VisibleRepairTask = Visibility.Visible;
+                VisibleCompleteReport = Visibility.Visible;
+                VisibleQualityControl = Visibility.Visible;
+
+                VisibleWorker = Visibility.Visible;
+                VisibleForeman = Visibility.Visible;
+                VisibleEmployee = Visibility.Visible;
+            }
+            if (CommonData.User.Privileges.StaffDepartment)
+            {
+                VisibleWorker = Visibility.Visible;
+                VisibleForeman = Visibility.Visible;
+                VisibleEmployee = Visibility.Visible;
+                VisibleAwardOrder = Visibility.Visible;
+
+                VisibleQualityControl = Visibility.Visible;
+            }
+            if (CommonData.User.Privileges.RepairDepartment)
+            {
+                VisibleWorker = Visibility.Visible;
+                VisibleForeman = Visibility.Visible;
+                VisibleEmployee = Visibility.Visible;
+                VisibleAwardOrder = Visibility.Visible;
+
+                VisibleRepairTask = Visibility.Visible;
+                VisibleCompleteReport = Visibility.Visible;
+
+            }
+
+        }
+
 
         async Task CreateViewAndNotify(BasePageVM vm)
         {

@@ -69,6 +69,7 @@ public class AuthorizationVM : BasePageVM
                     msg = "Авторизация выполнена успешно! \n" +
                     $"Добро пожаловать, {User.User.FirstName}!";
                     CommonData.User = User;
+                    await Mediator.Notify("RemoveAllTabs", new List<string>() { this.Name });
                     await Mediator.Notify("ShowControlsPerPermission");
                 }
                 else

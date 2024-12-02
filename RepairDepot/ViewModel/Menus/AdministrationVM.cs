@@ -1,4 +1,5 @@
 ﻿using DatabaseAdapter.Models;
+using RepairDepot.Model.TableManaging;
 using RepairDepot.View;
 using RepairDepot.ViewModel.Commands;
 using RepairDepot.ViewModel.DefinitionVM;
@@ -20,21 +21,28 @@ namespace RepairDepot.ViewModel
             });
         }
 
-
-        AsyncCommand openPermissionEditForm;
-        public AsyncCommand OpenPermissionEditForm
+        AsyncCommand openPermissionTable;
+        public AsyncCommand OpenPermissionTable
         {
-            get => openPermissionEditForm ??= new AsyncCommand(
+            get => openPermissionTable ??= new AsyncCommand(
                 async (obj) =>
                 {
-                    var vm = new PermissionEditVM();
-                    Mediator.Notify("CreateTab", new Tuple<object, string>(vm, vm.Name));
+                    var vm = new TableEditVM<Permission>("Уровни доступа");
+                    Mediator.Notify("CreateTab", new Tuple<object, string>(new TableEditForm(vm), vm.Name));
+                });
+        }
+        AsyncCommand openUsersTable;
+        public AsyncCommand OpenUsersTable
+        {
+            get => openUsersTable ??= new AsyncCommand(
+                async (obj) =>
+                {
+                    var vm = new TableEditVM<User>("Пользователи ИС");
+                    Mediator.Notify("CreateTab", new Tuple<object, string>(new TableEditForm(vm), vm.Name));
                 });
         }
         #endregion
 
-        public AdministrationVM() { }
-
-
+        public AdministrationVM() : base() { }
     }
 }

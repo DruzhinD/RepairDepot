@@ -10,13 +10,19 @@ namespace RepairDepot.ViewModel
         ObservableCollection<TabItemVM> tabItems = new ObservableCollection<TabItemVM>();
         public ObservableCollection<TabItemVM> TabItems { get => tabItems; set { tabItems = value; OnPropertyChanged(); } }
 
-        public TabItemVM SelectedTabItem { get => selectedTabItem; set {  selectedTabItem = value; OnPropertyChanged(); } }
+        public TabItemVM SelectedTabItem { get => selectedTabItem; set { selectedTabItem = value; OnPropertyChanged(); } }
         TabItemVM selectedTabItem;
         #endregion
 
         #region Команды
-        RelayCommand closeTab;
+        /// <summary>
+        /// Закрыть конкретную вкладку
+        /// </summary>
         public RelayCommand CloseTab => closeTab ??= new RelayCommand(obj => RemoveTabItem(obj as string));
+        RelayCommand closeTab;
+
+        public RelayCommand CloseAllTabs => closeAllTabs ??= new RelayCommand(obj => RemoveAllTabs(obj));
+        RelayCommand closeAllTabs;
         #endregion
 
         public CustomTabControlVM()
@@ -25,6 +31,7 @@ namespace RepairDepot.ViewModel
             AddTabItem(vm, vm.Name);
             Mediator.Subscribe(nameof(CreateTab), CreateTab);
             Mediator.Subscribe(nameof(RemoveTab), RemoveTab);
+            Mediator.Subscribe(nameof(RemoveAllTabs), RemoveAllTabs);
         }
 
 
@@ -53,9 +60,7 @@ namespace RepairDepot.ViewModel
                 }
         }
 
-        public async override Task Initialize()
-        {
-        }
+        public async override Task Initialize() { }
 
         /// <summary>
         /// Создание вкладки с произвольным содержимым
@@ -77,6 +82,40 @@ namespace RepairDepot.ViewModel
         {
             var s = obj as string;
             RemoveTabItem(s);
+        }
+
+        /// <summary>
+        /// Удалить все вкладки кроме переданных в obj
+        /// </summary>
+        /// <param name="obj">должен соответствовать <see cref="IEnumerable{string}"/>T - string</param>
+        /// <returns></returns>
+        async Task RemoveAllTabs(object obj)
+        {
+            if (obj == null)
+            {
+                TabItems.Clear();
+                return;
+            }
+            IEnumerable<string>? tabsKeys = obj as IEnumerable<string>;
+            IEnumerable<TabItemVM> tabs = TabItems.Where(x => tabsKeys.Contains(x.Header));
+            
+            for (int i = 0; i < TabItems.Count; i++)
+            {
+                if (tabs.Contains(TabItems[i]))
+                    continue;
+                TabItems.Remove(TabItems[i]);
+                i--;
+            }
+        }
+
+        TabItemVM GetTabItem(string key)
+        {
+            foreach (var t in TabItems)
+            {
+                if (t.Header == key)
+                    return t;
+            }
+            return null;
         }
     }
 }

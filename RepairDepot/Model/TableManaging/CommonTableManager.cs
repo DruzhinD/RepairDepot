@@ -35,7 +35,15 @@ namespace RepairDepot.Model.TableManaging
                 db.UpdateRange(data);
                 await db.SaveChangesAsync();
             }
+        }
 
+        public async Task DeleteData(IEnumerable<T> data)
+        {
+            using (RepairDepotContext db = new RepairDepotContext(Config.GetInstanse().DbContextOptions))
+            {
+                db.RemoveRange(data);
+                await db.SaveChangesAsync();
+            }
         }
     }
 }

@@ -24,11 +24,11 @@
     </i:Interaction.Triggers>
     
     <TabControl SelectedItem="{Binding SelectedTabItem}"
-                ItemsSource="{Binding TabItems, Mode=TwoWay}">
+                ItemsSource="{Binding TabItems, Mode=TwoWay}"
+                Background="#b6bdff">
         <TabControl.ItemTemplate>
             <DataTemplate>
-                <DockPanel LastChildFill="True"
-                           >
+                <DockPanel LastChildFill="True">
                     <Button Content="X"
                             DockPanel.Dock="Right"
                             Command="{Binding CloseSelf}"
@@ -37,7 +37,7 @@
                             FontSize="10"
                             Padding="0"
                             Width="15">
- 
+
                     </Button>
                     <Label Content="{Binding Header}" />
                 </DockPanel>

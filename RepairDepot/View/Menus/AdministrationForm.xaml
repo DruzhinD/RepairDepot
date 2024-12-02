@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:RepairDepot.View"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -34,13 +35,15 @@
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
         
-        <StackPanel Grid.Row="1">
+        <ui:SimpleStackPanel  Grid.Row="1">
             <Button 
                     Content="Регистрация нового пользователя"
                     Command="{Binding OpenRegistrationForm}"/>
             <Button 
                     Content="Определение нового уровня доступа"
-                    Command="{Binding OpenPermissionEditForm}"/>
-        </StackPanel>
+                    Command="{Binding OpenPermissionTable}"/>
+            <Button Content="Управление пользователями"
+                    Command="{Binding OpenUsersTable}" />
+        </ui:SimpleStackPanel>
     </Grid>
 </UserControl>

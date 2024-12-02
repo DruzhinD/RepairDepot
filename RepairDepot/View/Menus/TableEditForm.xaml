@@ -25,25 +25,35 @@
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="7*" />
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <DataGrid ItemsSource="{Binding Data}"
                   AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"
-                  AutoGenerateColumns="True">
+                  AutoGenerateColumns="True"
+                  SelectedItem="{Binding SelectedItem}"
+                  CanUserDeleteRows="False">
 
         </DataGrid>
         <ui:SimpleStackPanel Grid.Row="1"
                              Margin="5"
                              Spacing="5">
-        <Button 
-                Content="Сохранить"
-                Command="{Binding SaveChanges}"
-                
-                ui:ControlHelper.CornerRadius="10"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" />
-            <TextBlock Text="{Binding OperationMsg}"/>
+
+            <Button Content="Удалить выделенную запись"
+                    Grid.Column="1"
+                    Command="{Binding RemoveRow}"
+                    CommandParameter="{Binding SelectedItem}"
+                    ui:ControlHelper.CornerRadius="10"
+                    HorizontalAlignment="Stretch"
+                    Margin="100,0"
+                    VerticalAlignment="Stretch" />
+            <Button Content="Сохранить"
+                    Command="{Binding SaveChanges}"
+                    ui:ControlHelper.CornerRadius="10"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch" />
+            <TextBlock Text="{Binding OperationMsg}"
+                       TextAlignment="Center"/>
         </ui:SimpleStackPanel>
     </Grid>
 </UserControl>
