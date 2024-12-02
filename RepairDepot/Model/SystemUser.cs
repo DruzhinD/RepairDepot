@@ -12,6 +12,9 @@ namespace RepairDepot.Model
         protected User user;
         public User User { get => user; }
         public Permission Privileges { get => user.Permission; }
+        
+        public bool AuthStatus => authStatus;
+        bool authStatus;
 
         public SystemUser()
         {
@@ -37,7 +40,10 @@ namespace RepairDepot.Model
                 bool result = PasswordHasher.Validate(user.Password, password);
                 //если пароль введен верно, то сохраняем сведения о пользователе
                 if (result)
+                {
                     this.user = user;
+                    authStatus = true;
+                }
                 return result;
             }
         }

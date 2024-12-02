@@ -34,8 +34,9 @@
 
         <Button Grid.Row="1"
                 Command="{Binding SaveChanges, IsAsync=True}"
-                Style="{StaticResource ButtonBaseStyle}"
                 Margin="3"
-                Content="Сохранить" />
+                Content="Сохранить"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch" />
     </Grid>
 </UserControl>

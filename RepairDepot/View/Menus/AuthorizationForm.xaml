@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:RepairDepot.View"
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
              mc:Ignorable="d"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DesignHeight="300"
              d:DesignWidth="600">
@@ -18,6 +19,7 @@
     <UserControl.DataContext>
         <viewmodel:AuthorizationVM />
     </UserControl.DataContext>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -28,40 +30,40 @@
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <!--поля ввода-->
-        <StackPanel Grid.Column="0">
-            <Label MinHeight="50"
-                   Content="Логин"
-                   Margin="20, 10"
-                   Style="{StaticResource LabelStyle}" />
-            <TextBox MinHeight="50"
+        <ui:SimpleStackPanel Margin="3"
+                             Grid.Column="0">
+
+            <TextBox ui:ControlHelper.Header="Логин"
+                     ui:ControlHelper.PlaceholderText="Введите логин"
                      Text="{Binding InputLogin}"
-                     Margin="20, 0"
-                     Style="{StaticResource TextBoxStyle}" />
-        </StackPanel>
-        <StackPanel Grid.Column="1">
-            <Label MinHeight="50"
-                   Content="Пароль"
-                   Margin="20, 10"
-                   Style="{StaticResource LabelStyle}" />
-            <TextBox MinHeight="50"
+                     Grid.Row="2"
+                     Grid.Column="0" />
+        </ui:SimpleStackPanel>
+        <ui:SimpleStackPanel Margin="3"
+                             Grid.Column="1">
+
+            <TextBox ui:ControlHelper.Header="Пароль"
+                     ui:ControlHelper.PlaceholderText="Введите пароль"
                      Text="{Binding InputPassword}"
-                     Margin="20, 0"
-                     Style="{StaticResource TextBoxStyle}" />
-        </StackPanel>
+                     Grid.Row="2"
+                     Grid.Column="1" />
+
+        </ui:SimpleStackPanel>
         <!--результат авторизации-->
-        <StackPanel Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Margin="50,10">
+        <ui:SimpleStackPanel Spacing="5"
+                             Grid.Row="1"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="2"
+                             Margin="50,10">
             <Button MinHeight="50"
                     Command="{Binding Authorize}"
                     Margin="0, 10"
-                    Style="{StaticResource ButtonBaseStyle}" 
-                    Content="Войти"/>
-            <Label MinHeight="50"
-                   Style="{StaticResource LabelStyle}"
-                   Content="{Binding OperationMsg}" />
+                    Content="Войти"
+                    HorizontalAlignment="Stretch" />
+            <TextBox MinHeight="50"
+                     IsReadOnly="True"
+                     Text="{Binding OperationMsg}" />
 
-        </StackPanel>
+        </ui:SimpleStackPanel>
     </Grid>
 </UserControl>

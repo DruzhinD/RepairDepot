@@ -17,17 +17,28 @@
     <UserControl.DataContext>
         <viewmodel:AdministrationVM />
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="Button"
+               BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch" />
+            <Setter Property="VerticalAlignment"
+                    Value="Stretch" />
+            <Setter Property="Margin"
+                    Value="3" />
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
-
+        
         <StackPanel Grid.Row="1">
-            <Button Style="{StaticResource ButtonBaseStyle}"
+            <Button 
                     Content="Регистрация нового пользователя"
                     Command="{Binding OpenRegistrationForm}"/>
-            <Button Style="{StaticResource ButtonBaseStyle}"
+            <Button 
                     Content="Определение нового уровня доступа"
                     Command="{Binding OpenPermissionEditForm}"/>
         </StackPanel>

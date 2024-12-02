@@ -1,4 +1,6 @@
-﻿using RepairDepot.ViewModel.Commands;
+﻿using DatabaseAdapter.Models;
+using RepairDepot.View;
+using RepairDepot.ViewModel.Commands;
 using RepairDepot.ViewModel.DefinitionVM;
 
 namespace RepairDepot.ViewModel
@@ -13,7 +15,8 @@ namespace RepairDepot.ViewModel
         {
             get => openRegistrationForm ??= new RelayCommand(obj =>
             {
-                Mediator.Notify(nameof(RegistrationVM));
+                var vm = new RegistrationVM();
+                Mediator.Notify("CreateTab", new Tuple<object, string>(vm, vm.Name));
             });
         }
 
@@ -21,7 +24,12 @@ namespace RepairDepot.ViewModel
         AsyncCommand openPermissionEditForm;
         public AsyncCommand OpenPermissionEditForm
         {
-            get => openPermissionEditForm ??= new AsyncCommand(async (obj) => { Mediator.Notify(nameof(PermissionEditVM)); });
+            get => openPermissionEditForm ??= new AsyncCommand(
+                async (obj) =>
+                {
+                    var vm = new PermissionEditVM();
+                    Mediator.Notify("CreateTab", new Tuple<object, string>(vm, vm.Name));
+                });
         }
         #endregion
 

@@ -11,7 +11,8 @@ namespace RepairDepot.ViewModel
         public override string Name => "Права доступа";
 
         #region Свойства для View
-        public ObservableCollection<Permission> Permissions { get; set; } = new ObservableCollection<Permission>();
+        public ObservableCollection<Permission> Permissions { get => permissions; set { permissions = value; OnPropertyChanged(); } }
+        ObservableCollection<Permission> permissions = new ObservableCollection<Permission>();
         #endregion
 
         #region Команды
@@ -23,9 +24,7 @@ namespace RepairDepot.ViewModel
 
         public override async Task Initialize()
         {
-            var perm = await new CommonTableManager<Permission>().LoadData();
-            foreach(var p in perm)
-                Permissions.Add(p);
+            Permissions = await new CommonTableManager<Permission>().LoadData();
         }
 
         AsyncCommand load;

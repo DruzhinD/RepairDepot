@@ -31,6 +31,14 @@ namespace RepairDepot.ViewModel
         void AddTabItem(object view, string vmName)
         {
             TabItemVM tabItem = new TabItemVM(view, vmName);
+            //не позволяет создавать дубликаты
+            foreach (var item in tabItems)
+                if (tabItem.Header == item.Header)
+                {
+                    SelectedTabItem = item;
+                    return;
+                }
+
             TabItems.Add(tabItem);
             SelectedTabItem = tabItem;
         }
@@ -47,10 +55,6 @@ namespace RepairDepot.ViewModel
 
         public async override Task Initialize()
         {
-            var vm = new MainMenuVM();
-            TabItemVM tabItem = new TabItemVM(vm, vm.Name);
-            TabItems.Add(tabItem);
-
         }
 
         /// <summary>

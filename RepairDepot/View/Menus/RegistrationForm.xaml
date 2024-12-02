@@ -7,10 +7,10 @@
              xmlns:controls="clr-namespace:RepairDepot.Controls"
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
              d:DesignHeight="300"
-             d:DesignWidth="600"
-             Visibility="{Binding Visible}">
+             d:DesignWidth="600">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding InitializeCommand}">
@@ -26,77 +26,50 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        <Label Style="{StaticResource LabelStyle}"
-               Content="Фамилия"
-               Grid.Row="0"
-               Grid.Column="0" />
-        <TextBox Style="{StaticResource TextBoxStyle}"
-                 Text="{Binding LastName}"
-                 Grid.Row="0"
-                 Grid.Column="1" />
-        <Label Style="{StaticResource LabelStyle}"
-               Content="Имя"
-               Grid.Row="1"
-               Grid.Column="0" />
-        <TextBox Style="{StaticResource TextBoxStyle}"
-                 Text="{Binding FirstName}"
-                 Grid.Row="1"
-                 Grid.Column="1" />
-        <Label Style="{StaticResource LabelStyle}"
-               Content="Отчество"
-               Grid.Row="2"
-               Grid.Column="0" />
-        <TextBox Style="{StaticResource TextBoxStyle}"
-                 Text="{Binding MiddleName}"
-                 Grid.Row="2"
-                 Grid.Column="1" />
-        <Label Style="{StaticResource LabelStyle}"
-               Content="Логин"
-               Grid.Row="3"
-               Grid.Column="0" />
-        <TextBox Style="{StaticResource TextBoxStyle}"
-                 Text="{Binding Login}"
-                 Grid.Row="3"
-                 Grid.Column="1" />
-        <Label Style="{StaticResource LabelStyle}"
-               Content="Пароль"
-               Grid.Row="4"
-               Grid.Column="0" />
-        <TextBox Style="{StaticResource TextBoxStyle}"
-                 Text="{Binding Password}"
-                 Grid.Row="4"
-                 Grid.Column="1" />
-        <Label Content="Доступные права"
-               Style="{StaticResource LabelStyle}"
-               Grid.Row="5"
-               Grid.Column="0" />
-        <ComboBox x:Name="listbox"
-                  ItemsSource="{Binding Permissions}"
-                  DisplayMemberPath="Name"
-                  SelectedItem="{Binding SelectedPermission}"
-                  Grid.Row="5"
-                  Grid.Column="1" />
+        <ui:SimpleStackPanel  Margin="3"
+                              Grid.Row="0"
+                              Grid.Column="0"
+                              Orientation="Vertical">
 
-        <Button Style="{StaticResource ButtonBaseStyle}"
-                Content="Зарегистрировать"
-                Command="{Binding Registrate, IsAsync=True}"
-                Grid.Row="6"
-                Grid.Column="0"
-                Grid.ColumnSpan="2" 
-                IsEnabled="{Binding RegistrationButtonEnable}"/>
-        <Label Style="{StaticResource LabelStyle}"
-               Content="{Binding OperationMsg}"
-               Grid.Row="7"
-               Grid.Column="0"
-               Grid.ColumnSpan="2" />
+            <TextBox ui:ControlHelper.Header="Фамилия"
+                     ui:ControlHelper.PlaceholderText="Введите фамилию"
+                     Text="{Binding LastName}" />
+            <TextBox ui:ControlHelper.Header="Имя"
+                     ui:ControlHelper.PlaceholderText="Введите имя"
+                     Text="{Binding FirstName}" />
+            <TextBox ui:ControlHelper.Header="Отчество"
+                     ui:ControlHelper.PlaceholderText="Введите отчество"
+                     Text="{Binding MiddleName}" />
+        </ui:SimpleStackPanel>
+        <ui:SimpleStackPanel Grid.Column="1"
+                             Margin="3">
+
+            <TextBox ui:ControlHelper.Header="Логин"
+                     ui:ControlHelper.PlaceholderText="Введите логин"
+                     Text="{Binding Login}" />
+            <TextBox ui:ControlHelper.Header="Пароль"
+                         ui:ControlHelper.PlaceholderText="Введите пароль" 
+                         Text="{Binding Password}"/>
+            <ComboBox ItemsSource="{Binding Permissions}"
+                      SelectedItem="{Binding SelectedPermission}"
+                      DisplayMemberPath="Name"
+                      SelectedIndex="2"
+                      ui:ControlHelper.Header="Уровень доступа"
+                      MinWidth="200"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Stretch" />
+        </ui:SimpleStackPanel>
+        <ui:SimpleStackPanel Margin="3"
+                             Grid.Row="1"
+                             Grid.ColumnSpan="2">
+            <Button Content="Зарегистрировать"
+                    Command="{Binding Registrate, IsAsync=True}"
+                    IsEnabled="{Binding RegistrationButtonEnable}"
+                    HorizontalAlignment="Stretch" />
+            <TextBox Text="{Binding OperationMsg}" />
+        </ui:SimpleStackPanel>
     </Grid>
 </UserControl>

@@ -2,10 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
                     xmlns:viewmodelDefinition="clr-namespace:RepairDepot.ViewModel.DefinitionVM"
+                    xmlns:viewMenus="clr-namespace:RepairDepot.View.Menus"
                     xmlns:view="clr-namespace:RepairDepot.View">
 
     <DataTemplate DataType="{x:Type viewmodel:MainVM}">
-        <view:MainWindow/>
+        <view:MainWindow />
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodel:AuthorizationVM}">
         <view:AuthorizationForm />
@@ -28,9 +29,13 @@
     <DataTemplate DataType="{x:Type viewmodel:CustomTabControlVM}">
         <view:CustomTabControl />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:ProfileVM}">
+        <viewMenus:ProfileForm />
+    </DataTemplate>
     <!--<DataTemplate DataType="{x:Type viewmodelDefinition:BasePageVM}">
         <view:TableEditForm />
     </DataTemplate>-->
+
 
     <!--базовый стиль-->
     <Style TargetType="Control"

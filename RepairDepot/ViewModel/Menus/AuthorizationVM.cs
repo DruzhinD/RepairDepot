@@ -62,7 +62,6 @@ public class AuthorizationVM : BasePageVM
                 //попытка авторизации
                 SystemUser User = new SystemUser();
                 Task<bool> authTask = User.AuthorizationAsync(this.InputLogin, InputPassword);
-                //await Task.Delay(6 * 1000); //TODO: убрать проверку асинхронности
                 bool authResult = await authTask;
                 if (authResult)
                 {
@@ -70,14 +69,13 @@ public class AuthorizationVM : BasePageVM
                     msg = "Авторизация выполнена успешно! \n" +
                     $"Добро пожаловать, {User.User.FirstName}!";
                     CommonData.User = User;
+                    await Mediator.Notify("ShowControlsPerPermission");
                 }
                 else
                 {
                     msg = "Неверный логин/пароль";
                 }
                 this.OperationMsg = msg;
-                //await Task.Delay(2 * 1000);
-                await Mediator.Notify("authorize");
             });
         }
     }

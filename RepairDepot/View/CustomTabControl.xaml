@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
              xmlns:local="clr-namespace:RepairDepot.View"
              d:DataContext="{d:DesignInstance Type=viewmodel:CustomTabControlVM}"
@@ -26,11 +27,16 @@
                 ItemsSource="{Binding TabItems, Mode=TwoWay}">
         <TabControl.ItemTemplate>
             <DataTemplate>
-                <DockPanel LastChildFill="True">
+                <DockPanel LastChildFill="True"
+                           >
                     <Button Content="X"
                             DockPanel.Dock="Right"
                             Command="{Binding CloseSelf}"
-                            CommandParameter="{Binding Header}">
+                            CommandParameter="{Binding Header}"
+                            Height="15"
+                            FontSize="10"
+                            Padding="0"
+                            Width="15">
  
                     </Button>
                     <Label Content="{Binding Header}" />

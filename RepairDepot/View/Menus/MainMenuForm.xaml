@@ -7,6 +7,7 @@
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="450"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DesignWidth="800">
     <i:Interaction.Triggers>
@@ -18,31 +19,71 @@
     <UserControl.DataContext>
         <viewmodel:MainMenuVM />
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="Button"
+               BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch" />
+            <Setter Property="VerticalAlignment"
+                    Value="Stretch" />
+            <Setter Property="Margin"
+                    Value="3" />
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
+        <ui:SimpleStackPanel  Grid.Row="0">
             <TextBlock TextAlignment="Center">
                 Главное меню
             </TextBlock>
-        </StackPanel>
+            <TextBlock TextAlignment="Left">
+                Для перехода к нужному документу или разделу нажмите соответствующую кнопку.
+            </TextBlock>
+        </ui:SimpleStackPanel>
 
-        <StackPanel Grid.Row="1">
+        <ScrollViewer Grid.Row="1"
+                      ui:ScrollViewerHelper.AutoHideScrollBars="True">
+        <ui:SimpleStackPanel 
+                   ui:ScrollViewerHelper.AutoHideScrollBars="True">
 
-            <Button Style="{StaticResource ButtonBaseStyle}"
-                    Margin="10"
-                    Content="Permission"
-                    Command="{Binding OpenTableEdit, IsAsync=True}"/>
-            <Button Style="{StaticResource ButtonBaseStyle}"
-                    Margin="10"
-                    Content="User"
-                    Command="{Binding OpenTableEdit2}"/>
-            <Button Style="{StaticResource ButtonBaseStyle}"
-                    Margin="10"
-                    Content="" />
-        </StackPanel>
+            <Button Content="Бригадиры"
+                    Command="{Binding OpenForeman, IsAsync=True}" />
+            <Button Content="Рабочие"
+                    Command="{Binding OpenWorker, IsAsync=True}" />
+            <Button Content="Сотрудники (общий список)"
+                    Command="{Binding OpenEmployee, IsAsync=True}" />
+            <!--<Button Content="Задание на ремонт - сотрудники"
+                    Command="{Binding OpenEmployeeRepairTask, IsAsync=True}" />-->
+            <Button Content="Внутренние железные дороги"
+                    Command="{Binding OpenInternalRailway, IsAsync=True}" />
+            <Button Content="Внешние железные дороги"
+                    Command="{Binding OpenExternalRailway, IsAsync=True}" />
+            <Button Content="Железные дороги (общий список)"
+                    Command="{Binding OpenRailway, IsAsync=True}" />
+            <Button Content="Вагоны"
+                    Command="{Binding OpenWagon, IsAsync=True}" />
+            <Button Content="Дирекции по обслуживанию пассажиров"
+                    Command="{Binding OpenServiceDirectorate, IsAsync=True}" />
+            <Button Content="Запросы на ремонт"
+                    Command="{Binding OpenRepairRequest, IsAsync=True}" />
+            <Button Content="Типы ремонта"
+                    Command="{Binding OpenRepairType, IsAsync=True}" />
+            <Button Content="Наряды на ремонт"
+                    Command="{Binding OpenRepairOrder, IsAsync=True}" />
+            <Button Content="Задания на ремонт"
+                    Command="{Binding OpenRepairTask, IsAsync=True}" />
+            <Button Content="Отчеты о выполнении работ"
+                    Command="{Binding OpenCompleteReport, IsAsync=True}" />
+            <Button Content="Акты контроля качества"
+                    Command="{Binding OpenQualityControl, IsAsync=True}" />
+            <Button Content="Приказы о начислении премий"
+                    Command="{Binding OpenAwardOrder, IsAsync=True}" />
+
+        </ui:SimpleStackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

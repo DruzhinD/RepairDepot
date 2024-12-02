@@ -19,6 +19,7 @@ namespace RepairDepot.ViewModel.DefinitionVM
             return (this.Name == other.Name);
         }
 
+        //TODO надо ли?
         public static bool operator ==(BasePageVM pageVM, TabItemVM tabItem)
         {
             return (pageVM.Name == tabItem.Header) == true;

@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="RepairDepot.View.Menus.ProfileForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:RepairDepot.View.Menus"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <UserControl.DataContext>
+        <viewmodel:ProfileVM />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="TextBox"
+               BasedOn="{StaticResource DefaultTextBoxStyle}">
+            <Setter Property="Width"
+                    Value="300" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="5*" />
+        </Grid.RowDefinitions>
+
+        <TextBox Text="{Binding Status}"
+                 IsReadOnly="True"
+                 Margin="3"
+                 MinHeight="20"
+                 HorizontalAlignment="Left" />
+        <WrapPanel Grid.Column="0"
+                   Grid.Row="1"
+                   Orientation="Vertical">
+            <TextBox Text="{Binding UserInfo.User.Login}"
+                     IsReadOnly="True"
+                     ui:ControlHelper.Header="Логин"
+                     ui:ControlHelper.PlaceholderText="Н/Д"
+                     Margin="3"
+                     MinHeight="50" />
+            <TextBox Text="{Binding UserInfo.User.LastName}"
+                     IsReadOnly="True"
+                     ui:ControlHelper.PlaceholderText="Н/Д"
+                     ui:ControlHelper.Header="Фамилия"
+                     Margin="3"
+                     MinHeight="50" />
+            <TextBox Text="{Binding UserInfo.User.FirstName}"
+                     ui:ControlHelper.PlaceholderText="Н/Д"
+                     ui:ControlHelper.Header="Имя"
+                     IsReadOnly="True"
+                     Margin="3"
+                     MinHeight="50" />
+            <TextBox Text="{Binding UserInfo.User.MiddleName}"
+                     Margin="3"
+                     IsReadOnly="True"
+                     ui:ControlHelper.PlaceholderText="Н/Д"
+                     ui:ControlHelper.Header="Отчество"
+                     MinHeight="50" />
+            <TextBox Text="{Binding UserInfo.Privileges.Name}"
+                     IsReadOnly="True"
+                     ui:ControlHelper.PlaceholderText="Н/Д"
+                     ui:ControlHelper.Header="Уровень доступа"
+                     Margin="3"
+                     MinHeight="50" />
+            <TextBox Text=""
+                     IsReadOnly="True"
+                     ui:ControlHelper.PlaceholderText="Н/Д"
+                     ui:ControlHelper.Header="Департамент"
+                     Margin="3"
+                     MinHeight="50" />
+        </WrapPanel>
+
+    </Grid>
+</UserControl>

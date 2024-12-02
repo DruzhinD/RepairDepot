@@ -14,11 +14,11 @@ namespace RepairDepot.ViewModel
     /// </summary>
     public static class CommonData
     {
-        static SystemUser user;
 
         /// <summary>
         /// Авторизованный пользователь системы
         /// </summary>
         public static SystemUser User { get => user; set => user = value; }
+        static SystemUser user;
     }
 }

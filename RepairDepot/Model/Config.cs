@@ -66,7 +66,6 @@ public class Config
     private static Dictionary<string, string> Deserialize(string configPath)
     {
         Dictionary<string, string>? data;
-
         using (Stream file = new FileStream(configPath, FileMode.Open))
         {
             data = JsonSerializer.Deserialize<Dictionary<string, string>>(file);

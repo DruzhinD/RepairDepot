@@ -29,7 +29,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource ButtonBaseStyle}"
+            <Button VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
                     Margin="5"
                     Content="Войти" 
                     Command="{Binding Auth}"/>

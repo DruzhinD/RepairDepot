@@ -18,7 +18,8 @@ namespace RepairDepot.ViewModel
         {
             get => auth ??= new RelayCommand(obj =>
             {
-                Mediator.Notify(nameof(AuthorizationVM));
+                var vm = new AuthorizationVM();
+                Mediator.Notify("CreateTab", new Tuple<object, string>(vm, vm.Name));
             });
         }
         #endregion
