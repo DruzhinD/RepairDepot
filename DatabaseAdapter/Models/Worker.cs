@@ -2,8 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace DatabaseAdapter.Models;
 
@@ -12,15 +10,12 @@ namespace DatabaseAdapter.Models;
 /// </summary>
 public partial class Worker : IdModel
 {
-    [DisplayName("ID работника")]
+
     public int EmployeeId { get; set; }
-    
-    [DisplayName("ID бригадира")]
+
     public int ChiefId { get; set; }
 
-    [Browsable(false)]
-    public virtual Employee Chief { get; set; }
+    public virtual Foreman Chief { get; set; }
 
-    [Browsable(false)]
     public virtual Employee Employee { get; set; }
 }

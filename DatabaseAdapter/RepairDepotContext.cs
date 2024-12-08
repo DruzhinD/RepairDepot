@@ -19,11 +19,7 @@ public partial class RepairDepotContext : DbContext
 
     public virtual DbSet<Employee> Employees { get; set; }
 
-    public virtual DbSet<ExternalRailway> ExternalRailways { get; set; }
-
     public virtual DbSet<Foreman> Foremen { get; set; }
-
-    public virtual DbSet<InternalRailway> InternalRailways { get; set; }
 
     public virtual DbSet<Permission> Permissions { get; set; }
 
@@ -138,27 +134,6 @@ public partial class RepairDepotContext : DbContext
                     });
         });
 
-        modelBuilder.Entity<ExternalRailway>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("ExternalRailway_pkey");
-
-            entity.ToTable("ExternalRailway", tb => tb.HasComment("Внешняя ЖД"));
-
-            entity.Property(e => e.Bank)
-                .HasMaxLength(60)
-                .HasColumnName("bank");
-            entity.Property(e => e.BusinessAddress)
-                .HasMaxLength(80)
-                .HasColumnName("business_address");
-            entity.Property(e => e.Inn).HasColumnName("inn");
-            entity.Property(e => e.RailwayId).HasColumnName("railway_id");
-
-            entity.HasOne(d => d.Railway).WithMany(p => p.ExternalRailways)
-                .HasForeignKey(d => d.RailwayId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("ExternalRailway_railway_id_fkey");
-        });
-
         modelBuilder.Entity<Foreman>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Foreman_pkey");
@@ -174,22 +149,6 @@ public partial class RepairDepotContext : DbContext
                 .HasForeignKey<Foreman>(d => d.EmployeeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_foreman_employee");
-        });
-
-        modelBuilder.Entity<InternalRailway>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("InternalRailway_pkey");
-
-            entity.ToTable("InternalRailway", tb => tb.HasComment("Внутренняя ЖД"));
-
-            entity.HasIndex(e => e.RailwayId, "InternalRailway_railway_id_key").IsUnique();
-
-            entity.Property(e => e.RailwayId).HasColumnName("railway_id");
-
-            entity.HasOne(d => d.Railway).WithOne(p => p.InternalRailway)
-                .HasForeignKey<InternalRailway>(d => d.RailwayId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("InternalRailway_railway_id_fkey");
         });
 
         modelBuilder.Entity<Permission>(entity =>
@@ -247,7 +206,14 @@ public partial class RepairDepotContext : DbContext
 
             entity.ToTable("Railway");
 
+            entity.Property(e => e.Bank)
+                .HasMaxLength(60)
+                .HasColumnName("bank");
+            entity.Property(e => e.BusinessAddress)
+                .HasMaxLength(80)
+                .HasColumnName("business_address");
             entity.Property(e => e.External).HasDefaultValue(false);
+            entity.Property(e => e.Inn).HasColumnName("inn");
         });
 
         modelBuilder.Entity<RepairOrder>(entity =>
@@ -304,6 +270,11 @@ public partial class RepairDepotContext : DbContext
 
             entity.Property(e => e.ForemanId).HasColumnName("foreman_id");
             entity.Property(e => e.RepairOrderId).HasColumnName("repair_order_id");
+
+            entity.HasOne(d => d.Foreman).WithMany(p => p.RepairTasks)
+                .HasForeignKey(d => d.ForemanId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_repair_task_foreman");
 
             entity.HasOne(d => d.RepairOrder).WithOne(p => p.RepairTask)
                 .HasForeignKey<RepairTask>(d => d.RepairOrderId)
@@ -432,12 +403,12 @@ public partial class RepairDepotContext : DbContext
             entity.Property(e => e.ChiefId).HasColumnName("chief_id");
             entity.Property(e => e.EmployeeId).HasColumnName("employee_id");
 
-            entity.HasOne(d => d.Chief).WithMany(p => p.WorkerChiefs)
+            entity.HasOne(d => d.Chief).WithMany(p => p.Workers)
                 .HasForeignKey(d => d.ChiefId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_worker_foreman");
 
-            entity.HasOne(d => d.Employee).WithOne(p => p.WorkerEmployee)
+            entity.HasOne(d => d.Employee).WithOne(p => p.Worker)
                 .HasForeignKey<Worker>(d => d.EmployeeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_worker_employee");
@@ -451,7 +422,6 @@ public partial class RepairDepotContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Warning);
-        optionsBuilder.UseLazyLoadingProxies();
+        optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
     }
 }

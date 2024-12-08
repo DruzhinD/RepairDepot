@@ -2,9 +2,9 @@
 using System.ComponentModel;
 namespace DatabaseAdapter.Models
 {
-    public abstract class IdModel : BaseModel
+    public abstract class IdModel
     {
-        [ReadOnly(true)]
+        //[ReadOnly(true)]
         [DisplayName("ID")]
         public int Id { get; set; }
     }

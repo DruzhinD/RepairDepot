@@ -6,7 +6,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Models1",
+   "OutputPath": "Models",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "DatabaseAdapter",
    "Schemas": null,
@@ -31,15 +31,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "public.ExternalRailway",
-         "ObjectType": 0
-      },
-      {
          "Name": "public.Foreman",
-         "ObjectType": 0
-      },
-      {
-         "Name": "public.InternalRailway",
          "ObjectType": 0
       },
       {
