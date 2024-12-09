@@ -3,6 +3,7 @@ using RepairDepot.Model.TableManaging;
 using RepairDepot.View;
 using RepairDepot.ViewModel.Commands;
 using RepairDepot.ViewModel.DefinitionVM;
+using RepairDepot.ViewModel.TableVM;
 
 namespace RepairDepot.ViewModel
 {
@@ -37,8 +38,8 @@ namespace RepairDepot.ViewModel
             get => openUsersTable ??= new AsyncCommand(
                 async (obj) =>
                 {
-                    var vm = new TableEditVM<User>("Пользователи ИС");
-                    Mediator.Notify("CreateTab", new Tuple<object, string>(new TableEditForm(vm), vm.Name));
+                    var vm = new UserTableVM();
+                    Mediator.Notify("CreateTab", new Tuple<object, string>(vm, vm.Name));
                 });
         }
         #endregion

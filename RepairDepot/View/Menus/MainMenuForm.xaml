@@ -70,12 +70,12 @@
                     <Button Content="Задание на ремонт - сотрудники"
                             Visibility="{Binding VisibleEmployeeRepairTask}"
                             Command="{Binding OpenEmployeeRepairTask, IsAsync=True}" />
-                    <Button Content="Внутренние железные дороги"
+                    <!--<Button Content="Внутренние железные дороги"
                             Visibility="{Binding VisibleInternalRailway}"
-                            Command="{Binding OpenInternalRailway, IsAsync=True}" />
-                    <Button Content="Внешние железные дороги"
+                            Command="{Binding OpenInternalRailway, IsAsync=True}" />-->
+                    <!--<Button Content="Внешние железные дороги"
                             Visibility="{Binding VisibleExternalRailway}"
-                            Command="{Binding OpenExternalRailway, IsAsync=True}" />
+                            Command="{Binding OpenExternalRailway, IsAsync=True}" />-->
                     <Button Content="Железные дороги (общий список)"
                             Visibility="{Binding VisibleRailway}"
                             Command="{Binding OpenRailway, IsAsync=True}" />

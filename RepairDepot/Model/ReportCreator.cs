@@ -30,7 +30,7 @@ namespace RepairDepot.Model
         {
             using (XLWorkbook wbook = new XLWorkbook())
             {
-                string dateformat = "dd/MM//yy";
+                string dateformat = "dd/MM/yy";
                 IXLWorksheet ws = wbook.Worksheets.Add("Отчет");
 
                 //главный заголовок

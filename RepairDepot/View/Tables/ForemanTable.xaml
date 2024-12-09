@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="RepairDepot.View.Tables.ForemanTable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:RepairDepot.View.Tables"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance Type=viewmodel:ForemanTableVM}"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel.TableVM"
+             d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.DataContext>
+        <viewmodel:ForemanTableVM />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style x:Key="ButtonTableStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch" />
+            <Setter Property="VerticalAlignment"
+                    Value="Stretch" />
+            <Setter Property="Margin"
+                    Value="100, 5" />
+            <Setter Property="ui:ControlHelper.CornerRadius"
+                    Value="5" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <DataGrid AutoGenerateColumns="False"
+                  ItemsSource="{Binding Data}"
+                  RowDetailsVisibilityMode="VisibleWhenSelected"
+                  SelectedItem="{Binding SelectedItem}"
+                  Grid.Row="0"
+                  CanUserDeleteRows="False"
+                  ScrollViewer.CanContentScroll="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding Id}" />
+                <DataGridTextColumn Header="ФИО"
+                                    Binding="{Binding Employee.Name}" />
+                <DataGridTextColumn Header="Банк. карта"
+                                    Binding="{Binding Employee.BankCard}" />
+                <DataGridTextColumn Header="Образование"
+                                    Binding="{Binding Employee.Education}" />
+                <DataGridTextColumn Header="Специализация"
+                                    Binding="{Binding Employee.Specialization}" />
+                <DataGridTextColumn Header="Опыт работы (лет)"
+                                    Binding="{Binding Employee.Experience}" />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <ui:SimpleStackPanel Spacing="5">
+                        <!--<TextBox IsReadOnly="True"
+                                 Text="Бригадир"
+                                 BorderThickness="0" />
+                        <ui:SimpleStackPanel Spacing="3"
+                                             Orientation="Horizontal">
+                            <TextBox IsReadOnly="True"
+                                     ui:ControlHelper.Header="ID"
+                                     Text="{Binding Chief.Id}" />
+                            <TextBox ui:ControlHelper.Header="ФИО"
+                                     Text="{Binding Chief.Name}" />
+                        </ui:SimpleStackPanel>-->
+                        <TextBox IsReadOnly="True"
+                                 Text="Подчиненные"
+                                 BorderThickness="0" />
+                        <DataGrid AutoGenerateColumns="False"
+                                  ItemsSource="{Binding Workers}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID"
+                                                    Binding="{Binding Id}" />
+                                <DataGridTextColumn Header="ФИО"
+                                                    Binding="{Binding Employee.Name}" />
+                                <DataGridTextColumn Header="Банк. карта"
+                                                    Binding="{Binding Employee.BankCard}" />
+                                <DataGridTextColumn Header="Образование"
+                                                    Binding="{Binding Employee.Education}" />
+                                <DataGridTextColumn Header="Специализация"
+                                                    Binding="{Binding Employee.Specialization}" />
+                                <DataGridTextColumn Header="Опыт работы (лет)"
+                                                    Binding="{Binding Employee.Experience}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ui:SimpleStackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+
+        </DataGrid>
+
+        <ui:SimpleStackPanel Grid.Row="1"
+                             Margin="5"
+                             Spacing="5">
+
+            <Button Content="Удалить выделенную запись"
+                    Grid.Column="1"
+                    Command="{Binding DeleteRow}"
+                    Style="{StaticResource ButtonTableStyle}"
+                    CommandParameter="{Binding SelectedItem}" />
+            <Button Content="Сохранить"
+                    Command="{Binding SaveChanges}"
+                    Style="{StaticResource ButtonTableStyle}" />
+            <TextBlock Text="{Binding OperationMsg}"
+                       TextAlignment="Center" />
+        </ui:SimpleStackPanel>
+    </Grid>
+</UserControl>

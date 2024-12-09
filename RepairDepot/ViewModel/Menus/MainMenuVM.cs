@@ -1,8 +1,11 @@
 ﻿using DatabaseAdapter.Models;
+using RepairDepot.Model;
 using RepairDepot.Model.TableManaging;
 using RepairDepot.View;
+using RepairDepot.View.Tables;
 using RepairDepot.ViewModel.Commands;
 using RepairDepot.ViewModel.DefinitionVM;
+using RepairDepot.ViewModel.TableVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,74 +72,64 @@ namespace RepairDepot.ViewModel
         AsyncCommand openAwardOrder;
         public AsyncCommand OpenAwardOrder => openAwardOrder ??= new AsyncCommand(async (obj) =>
         {
-            var vm = new TableEditVM<AwardOrder>("Приказы о начислении премий");
-            await CreateViewAndNotify(vm);
+            var vm = new AwardOrderTableVM();
+            await CreateCustomViewAndNotify(vm);
         });
         AsyncCommand openCompleteReport;
         public AsyncCommand OpenCompleteReport => openCompleteReport ??= new AsyncCommand(async (obj) =>
         {
-            var vm = new TableEditVM<CompleteReport>("Отчеты о выполнении работ");
-            await CreateViewAndNotify(vm);
+            var vm = new CompleteReportTableVM();
+
+            
+            await CreateCustomViewAndNotify(vm);
         });
         AsyncCommand openEmployee;
         public AsyncCommand OpenEmployee => openEmployee ??= new AsyncCommand(async (obj) =>
         {
-            var vm = new TableEditVM<Employee>("Сотрудники (общий список)");
-            await CreateViewAndNotify(vm);
+            var vm = new WorkerTableVM();
+            await CreateCustomViewAndNotify(vm);
         });
         AsyncCommand openEmployeeRepairTask;
-        public AsyncCommand OpenEmployeeRepairTask => openEmployeeRepairTask ??= new AsyncCommand(async (obj) =>
-        {
-            var vm = new TableEditVM<EmployeeRepairTask>("Задание на ремонт - сотрудники");
-            await CreateViewAndNotify(vm);
-        });
+
         AsyncCommand openExternalRailway;
-        public AsyncCommand OpenExternalRailway => openExternalRailway ??= new AsyncCommand(async (obj) =>
-        {
-            var vm = new TableEditVM<ExternalRailway>("Внешние железные дороги");
-            await CreateViewAndNotify(vm);
-        });
+
         AsyncCommand openForeman;
         public AsyncCommand OpenForeman => openForeman ??= new AsyncCommand(async (obj) =>
         {
-            var vm = new TableEditVM<Foreman>("Бригадиры");
-            await CreateViewAndNotify(vm);
+            var vm = new ForemanTableVM();
+            await CreateCustomViewAndNotify(vm);
         });
         AsyncCommand openInternalRailway;
-        public AsyncCommand OpenInternalRailway => openInternalRailway ??= new AsyncCommand(async (obj) =>
-        {
-            var vm = new TableEditVM<InternalRailway>("Внутренние железные дороги");
-            await CreateViewAndNotify(vm);
-        });
+
         AsyncCommand openQualityControl;
         public AsyncCommand OpenQualityControl => openQualityControl ??= new AsyncCommand(async (obj) =>
         {
-            var vm = new TableEditVM<QualityControl>("Акты контроля качества");
-            await CreateViewAndNotify(vm);
+            var vm = new QualityControlTableVM();
+            await CreateCustomViewAndNotify(vm);
         });
         AsyncCommand openRailway;
         public AsyncCommand OpenRailway => openRailway ??= new AsyncCommand(async (obj) =>
         {
-            var vm = new TableEditVM<Railway>("Железные дороги (общий список)");
-            await CreateViewAndNotify(vm);
+            var vm = new RailwayTableVM();
+            await CreateCustomViewAndNotify(vm);
         });
         AsyncCommand openRepairOrder;
         public AsyncCommand OpenRepairOrder => openRepairOrder ??= new AsyncCommand(async (obj) =>
         {
-            var vm = new TableEditVM<RepairOrder>("Наряды на ремонт");
-            await CreateViewAndNotify(vm);
+            var vm = new RepairOrderTableVM();
+            await CreateCustomViewAndNotify(vm);
         });
         AsyncCommand openRepairRequest;
         public AsyncCommand OpenRepairRequest => openRepairRequest ??= new AsyncCommand(async (obj) =>
         {
-            var vm = new TableEditVM<RepairRequest>("Запросы на ремонт");
-            await CreateViewAndNotify(vm);
+            var vm = new RepairRequestTableVM();
+            await CreateCustomViewAndNotify(vm);
         });
         AsyncCommand openRepairTask;
         public AsyncCommand OpenRepairTask => openRepairTask ??= new AsyncCommand(async (obj) =>
         {
-            var vm = new TableEditVM<RepairTask>("Задания на ремонт");
-            await CreateViewAndNotify(vm);
+            var vm = new RepairTaskTableVM();
+            await CreateCustomViewAndNotify(vm);
         });
         AsyncCommand openRepairType;
         public AsyncCommand OpenRepairType => openRepairType ??= new AsyncCommand(async (obj) =>
@@ -153,8 +146,8 @@ namespace RepairDepot.ViewModel
         AsyncCommand openWagon;
         public AsyncCommand OpenWagon => openWagon ??= new AsyncCommand(async (obj) =>
         {
-            var vm = new TableEditVM<Wagon>("Вагоны");
-            await CreateViewAndNotify(vm);
+            var vm = new WagonTableVM();
+            await CreateCustomViewAndNotify(vm);
         });
         AsyncCommand openWorker;
         public AsyncCommand OpenWorker => openWorker ??= new AsyncCommand(async (obj) =>
@@ -221,6 +214,12 @@ namespace RepairDepot.ViewModel
         async Task CreateViewAndNotify(BasePageVM vm)
         {
             var tuple = new Tuple<object, string>(new TableEditForm(vm), vm.Name);
+            await Mediator.Notify("CreateTab", tuple);
+        }
+
+        async Task CreateCustomViewAndNotify(BasePageVM vm)
+        {
+            var tuple = new Tuple<object, string>(vm, vm.Name);
             await Mediator.Notify("CreateTab", tuple);
         }
     }

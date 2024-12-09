@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="RepairDepot.View.Tables.RailwayTable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:RepairDepot.View.Tables"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance Type=viewmodel:RailwayTableVM}"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel.TableVM"
+             d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.DataContext>
+        <viewmodel:RailwayTableVM />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style x:Key="ButtonTableStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch" />
+            <Setter Property="VerticalAlignment"
+                    Value="Stretch" />
+            <Setter Property="Margin"
+                    Value="100, 5" />
+            <Setter Property="ui:ControlHelper.CornerRadius"
+                    Value="5" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <DataGrid AutoGenerateColumns="False"
+                  ItemsSource="{Binding Data}"
+                  RowDetailsVisibilityMode="VisibleWhenSelected"
+                  SelectedItem="{Binding SelectedItem}"
+                  Grid.Row="0"
+                  CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding Id}"
+                                    IsReadOnly="True" />
+                <DataGridCheckBoxColumn Header="Внешняя"
+                                        IsThreeState="False"
+                                        Binding="{Binding External}" />
+                <DataGridTextColumn Header="ИНН"
+                                    Binding="{Binding Inn}" />
+                <DataGridTextColumn Header="Банк"
+                                    Binding="{Binding Bank}" />
+                <DataGridTextColumn Header="Юр. Адрес"
+                                    Binding="{Binding BusinessAddress}" />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DataGrid ItemsSource="{Binding Wagons}"
+                              AutoGenerateColumns="False"
+                              SelectedItem="{Binding DataContext.NestedSelectedItem, 
+                                        RelativeSource={RelativeSource AncestorType=UserControl}}"
+                              CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"
+                                                Binding="{Binding Id}"
+                                                IsReadOnly="True" />
+                            <DataGridTextColumn Header="Рег. номер"
+                                                Binding="{Binding RegNumber}" />
+                            <DataGridTextColumn Header="Дирекция по обслуживанию"
+                                                Binding="{Binding ServiceDirectorate.Directorate}" />
+                            <DataGridTextColumn Header="Тип вагона"
+                                                Binding="{Binding WagonType.Type}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+
+        </DataGrid>
+
+        <ui:SimpleStackPanel Grid.Row="1"
+                             Margin="5"
+                             Spacing="5">
+
+            <Button Content="Удалить выделенную запись"
+                    Grid.Column="1"
+                    Command="{Binding DeleteRow}"
+                    Style="{StaticResource ButtonTableStyle}"
+                    CommandParameter="{Binding SelectedItem}" />
+            <Button Content="Сохранить"
+                    Command="{Binding SaveChanges}"
+                    Style="{StaticResource ButtonTableStyle}" />
+            <TextBlock Text="{Binding OperationMsg}"
+                       TextAlignment="Center" />
+        </ui:SimpleStackPanel>
+    </Grid>
+</UserControl>

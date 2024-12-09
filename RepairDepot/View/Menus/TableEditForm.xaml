@@ -28,11 +28,14 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        <DataGrid ItemsSource="{Binding Data}"
-                  AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"
-                  AutoGenerateColumns="True"
-                  SelectedItem="{Binding SelectedItem}"
-                  CanUserDeleteRows="False">
+        <DataGrid  ItemsSource="{Binding Data}"
+                   AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"
+                   AutoGenerateColumns="True"
+                   SelectedItem="{Binding SelectedItem}"
+                   CanUserDeleteRows="False"
+                   x:Name="FilterDataGridAuto"
+                   Grid.Row="0"
+                   CanUserSortColumns="True">
 
         </DataGrid>
         <ui:SimpleStackPanel Grid.Row="1"
@@ -53,7 +56,7 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch" />
             <TextBlock Text="{Binding OperationMsg}"
-                       TextAlignment="Center"/>
+                       TextAlignment="Center" />
         </ui:SimpleStackPanel>
     </Grid>
 </UserControl>

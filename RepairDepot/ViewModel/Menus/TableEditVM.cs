@@ -1,5 +1,6 @@
 ﻿using DatabaseAdapter.Models;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.EntityFrameworkCore;
 using RepairDepot.Model;
 using RepairDepot.Model.TableManaging;
 using RepairDepot.ViewModel.Commands;
@@ -8,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace RepairDepot.ViewModel
 {
-    public class TableEditVM<T> : BasePageVM where T : BaseModel
+    public class TableEditVM<T> : BasePageVM where T : IdModel
     {
         public override string Name => name;
         string name = string.Empty;
@@ -45,7 +46,7 @@ namespace RepairDepot.ViewModel
 
         public TableEditVM()
         {
-            name = typeof(T).Name; //TODO: передавать название в качестве агрумента
+            name = typeof(T).Name;
         }
 
         /// <summary>
@@ -62,6 +63,7 @@ namespace RepairDepot.ViewModel
         {
             Data = await tableManager.LoadData();
         }
+
 
         public async Task SaveChangesAsync()
         {
@@ -112,4 +114,7 @@ namespace RepairDepot.ViewModel
         /// </summary>
         HashSet<T> removeData = new HashSet<T>();
     }
+
+
+    
 }

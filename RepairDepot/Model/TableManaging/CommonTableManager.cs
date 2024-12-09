@@ -1,4 +1,5 @@
-﻿using DatabaseAdapter.Models;
+﻿using ClosedXML;
+using DatabaseAdapter.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace RepairDepot.Model.TableManaging
     /// Универсальный класс доступа к любой таблице базы данных. <br/>
     /// Примечание: часть операций выполняется синхронно
     /// </summary>
-    public class CommonTableManager<T> : ITableManager<T> where T : BaseModel
+    public class CommonTableManager<T> : ITableManager<T> where T : IdModel
     {
         /// <summary>
         /// <inheritdoc/> <br/>

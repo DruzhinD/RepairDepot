@@ -4,6 +4,7 @@ using RepairDepot.ViewModel.DefinitionVM;
 using RepairDepot.Model;
 using System.IO;
 using System.Diagnostics;
+using System.Windows.Data;
 
 namespace RepairDepot.ViewModel;
 
@@ -90,7 +91,7 @@ public class MainVM : BaseVM
         WelcomeVM vm = new WelcomeVM();
         var tabItem = new Tuple<object, string>(vm, vm.Name);
         await Mediator.Notify("CreateTab", tabItem);
-        await new ReportCreator().CreateReport();
+        //CollectionViewSource
     }
 
 

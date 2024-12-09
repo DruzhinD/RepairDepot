@@ -13,13 +13,13 @@ namespace RepairDepot.ViewModel.DefinitionVM
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
+        #endregion
 
         /// <summary>
         /// Ининициализация ViewModel
         /// </summary>
         public virtual async Task Initialize() { }
 
-        #endregion
 
         /// <summary>
         /// Команда для инициализации юзерконтрола на этапе загрузки. <br/>

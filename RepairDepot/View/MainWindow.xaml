@@ -14,8 +14,10 @@
         Width="900"
         MinHeight="450"
         MinWidth="800"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         Style="{StaticResource DefaultWindowStyle}"
         Title="Ремонтное депо">
+    <!--diag - для диагностики-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding InitializeCommand}">
