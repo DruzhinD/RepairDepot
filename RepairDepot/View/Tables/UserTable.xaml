@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance Type=viewmodel:UserTableVM}"
+             xmlns:control="http://filterdatagrid.control.com/2021"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
@@ -40,22 +41,23 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        <DataGrid AutoGenerateColumns="False"
-                  ItemsSource="{Binding Data}"
-                  RowDetailsVisibilityMode="VisibleWhenSelected"
-                  SelectedItem="{Binding SelectedItem}"
-                  Grid.Row="0"
-                  CanUserDeleteRows="False">
-            <i:Interaction.Triggers>
+        <control:FilterDataGrid  AutoGenerateColumns="False"
+                                 ItemsSource="{Binding Data}"
+                                 RowDetailsVisibilityMode="VisibleWhenSelected"
+                                 SelectedItem="{Binding SelectedItem}"
+                                 Grid.Row="0"
+                                 CanUserDeleteRows="False">
+            <!--<i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseRightButtonUp">
                     <i:InvokeCommandAction Command="{Binding OpenNestedObject}"
                                            CommandParameter="{Binding NestedSelectedItem}" />
                 </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID"
-                                    Binding="{Binding Id}"
-                                    IsReadOnly="True" />
+            </i:Interaction.Triggers>-->
+            <control:FilterDataGrid.Columns>
+                <control:DataGridTextColumn Header="ID"
+                                            Binding="{Binding Id}"
+                                            IsReadOnly="True"
+                                            IsColumnFiltered="True" />
                 <DataGridTextColumn Header="Логин"
                                     Binding="{Binding Login}" />
                 <DataGridTextColumn Header="Фамилия"
@@ -66,8 +68,29 @@
                                     Binding="{Binding MiddleName}" />
                 <DataGridTextColumn Header="Уровень доступа"
                                     Binding="{Binding Permission.Name}" />
-            </DataGrid.Columns>
-        </DataGrid>
+            </control:FilterDataGrid.Columns>
+            <control:FilterDataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <ui:SimpleStackPanel
+                        Spacing="3">
+                        <TextBox IsReadOnly="True"
+                                 Text="Логи пользователя"
+                                 BorderThickness="0" />
+                        <control:FilterDataGrid AutoGenerateColumns="False"
+                                                ItemsSource="{Binding UserLogs}">
+                            <control:FilterDataGrid.Columns>
+                                <control:DataGridTextColumn Header="ID"
+                                                            Binding="{Binding Id}"
+                                                            IsReadOnly="True"
+                                                            IsColumnFiltered="True" />
+                                <DataGridTextColumn Header="Запись"
+                                                    Binding="{Binding Message}" />
+                            </control:FilterDataGrid.Columns>
+                        </control:FilterDataGrid>
+                    </ui:SimpleStackPanel>
+                </DataTemplate>
+            </control:FilterDataGrid.RowDetailsTemplate>
+        </control:FilterDataGrid>
 
         <ui:SimpleStackPanel Grid.Row="1"
                              Margin="5"

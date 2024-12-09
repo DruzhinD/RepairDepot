@@ -8,6 +8,7 @@
              d:DesignHeight="450"
              d:DataContext="{d:DesignInstance Type=viewmodel:RailwayTableVM}"
              xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:control="http://filterdatagrid.control.com/2021"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel.TableVM"
              d:DesignWidth="800">
@@ -39,22 +40,24 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        <DataGrid AutoGenerateColumns="False"
-                  ItemsSource="{Binding Data}"
-                  RowDetailsVisibilityMode="VisibleWhenSelected"
-                  SelectedItem="{Binding SelectedItem}"
-                  Grid.Row="0"
-                  CanUserDeleteRows="False">
+        <control:FilterDataGrid  AutoGenerateColumns="False"
+                                 ItemsSource="{Binding Data}"
+                                 RowDetailsVisibilityMode="VisibleWhenSelected"
+                                 SelectedItem="{Binding SelectedItem}"
+                                 Grid.Row="0"
+                                 CanUserDeleteRows="False"
+                                 FilterLanguage="Russian">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseRightButtonUp">
                     <i:InvokeCommandAction Command="{Binding OpenNestedObject}"
-                                           CommandParameter="{Binding NestedSelectedItem}"/>
+                                           CommandParameter="{Binding NestedSelectedItem}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID"
-                                    Binding="{Binding Id}"
-                                    IsReadOnly="True" />
+            <control:FilterDataGrid.Columns>
+                <control:DataGridTextColumn  Header="ID"
+                                             Binding="{Binding Id}"
+                                             IsReadOnly="True"
+                                             IsColumnFiltered="True" />
                 <DataGridCheckBoxColumn Header="Внешняя"
                                         IsThreeState="False"
                                         Binding="{Binding External}" />
@@ -64,7 +67,7 @@
                                     Binding="{Binding Bank}" />
                 <DataGridTextColumn Header="Юр. Адрес"
                                     Binding="{Binding BusinessAddress}" />
-            </DataGrid.Columns>
+            </control:FilterDataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <DataGrid ItemsSource="{Binding Wagons}"
@@ -87,7 +90,7 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
 
-        </DataGrid>
+        </control:FilterDataGrid>
 
         <ui:SimpleStackPanel Grid.Row="1"
                              Margin="5"

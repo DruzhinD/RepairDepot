@@ -60,9 +60,19 @@ public abstract class BaseTableVM : BasePageVM
 
     protected async virtual Task SaveChangesMethod()
     {
-        using var db = new RepairDepotContext(Config.GetInstanse().DbContextOptions);
-        db.UpdateRange(Data);
-        await db.SaveChangesAsync();
+        try
+        { 
+            using var db = new RepairDepotContext(Config.GetInstanse().DbContextOptions);
+            db.UpdateRange(Data);
+            //await db.SaveChangesAsync();
+
+            string logMsg = Logger.FormatLog($"Сохранение {this.Name}");
+            var log = new UserLog() { User = CommonData.User.User, Message = logMsg};
+            db.Update(log);
+            await db.SaveChangesAsync();
+        }
+        catch { }
+
     }
 
     protected abstract Task OpenNestedObjectMethod();

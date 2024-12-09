@@ -20,6 +20,7 @@ namespace RepairDepot.ViewModel.TableVM
 
             var users = await db.Users
                 .Include(x => x.Permission)
+                .Include(x => x.UserLogs)
                 .ToListAsync();
             Data = new System.Collections.ObjectModel.ObservableCollection<IdModel>(users);
         }

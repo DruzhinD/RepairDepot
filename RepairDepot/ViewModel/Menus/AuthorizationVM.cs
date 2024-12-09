@@ -71,6 +71,13 @@ public class AuthorizationVM : BasePageVM
                     CommonData.User = User;
                     await Mediator.Notify("RemoveAllTabs", new List<string>() { this.Name });
                     await Mediator.Notify("ShowControlsPerPermission");
+
+                    //лог об авторизации
+                    string logMsg = Logger.FormatLog($"вход");
+                    using var db = new RepairDepotContext(Config.GetInstanse().DbContextOptions);
+                    var log = new UserLog() { User = User.User, Message = logMsg};
+                    db.UserLogs.Update(log);
+                    await db.SaveChangesAsync();
                 }
                 else
                 {
