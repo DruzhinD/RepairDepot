@@ -37,11 +37,12 @@ namespace RepairDepot.ViewModel.TableVM
             Data = new ObservableCollection<IdModel>(railway);
         }
 
-        //protected async override Task SaveChangesMethod()
-        //{
-        //    using var db = new RepairDepotContext(Config.GetInstanse().DbContextOptions);
-        //    db.UpdateRange(Data);
-        //    await db.SaveChangesAsync();
-        //}
+        public RelayCommand DoubleClickCommand => new RelayCommand(obj => Console.WriteLine("тык!"));
+
+        protected async override Task OpenNestedObjectMethod()
+        {
+            var vm = new WagonTableVM();
+            await CreateAndNotify(vm);
+        }
     }
 }

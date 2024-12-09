@@ -25,5 +25,11 @@ namespace RepairDepot.ViewModel.TableVM
 
             Data = new System.Collections.ObjectModel.ObservableCollection<IdModel>(qualityControls);
         }
+
+        protected async override Task OpenNestedObjectMethod()
+        {
+            var vm = new AwardOrderTableVM();
+            await CreateAndNotify(vm);
+        }
     }
 }

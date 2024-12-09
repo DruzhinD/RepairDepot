@@ -26,5 +26,11 @@ namespace RepairDepot.ViewModel.TableVM
                 .ToListAsync();
             Data = new System.Collections.ObjectModel.ObservableCollection<IdModel>(repairTasks);
         }
+
+        protected async override Task OpenNestedObjectMethod()
+        {
+            var vm = new CompleteReportTableVM();
+            await CreateAndNotify(vm);
+        }
     }
 }

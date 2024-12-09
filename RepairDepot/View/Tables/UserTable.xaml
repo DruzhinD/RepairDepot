@@ -46,10 +46,16 @@
                   SelectedItem="{Binding SelectedItem}"
                   Grid.Row="0"
                   CanUserDeleteRows="False">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseRightButtonUp">
+                    <i:InvokeCommandAction Command="{Binding OpenNestedObject}"
+                                           CommandParameter="{Binding NestedSelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"
-                                    Binding="{Binding Id}" 
-                                    IsReadOnly="True"/>
+                                    Binding="{Binding Id}"
+                                    IsReadOnly="True" />
                 <DataGridTextColumn Header="Логин"
                                     Binding="{Binding Login}" />
                 <DataGridTextColumn Header="Фамилия"

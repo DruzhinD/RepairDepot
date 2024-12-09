@@ -1,5 +1,6 @@
 ﻿using DatabaseAdapter.Models;
 using RepairDepot.Model;
+using RepairDepot.View;
 using RepairDepot.ViewModel.Commands;
 using System.Collections.ObjectModel;
 
@@ -43,6 +44,12 @@ public abstract class BaseTableVM : BasePageVM
     /// </summary>
     public RelayCommand DeleteRow => deleteRow ??= new RelayCommand(obj => DeleteRowMethod(obj));
     RelayCommand deleteRow;
+
+    /// <summary>
+    /// Команда для открытия вложенной таблицы в отдельной вкладке
+    /// </summary>
+    public AsyncCommand OpenNestedObject => openNestedObject ??= new AsyncCommand(async (obj) => await OpenNestedObjectMethod());
+        AsyncCommand openNestedObject;
     #endregion
 
     protected virtual void DeleteRowMethod(object obj)
@@ -56,5 +63,19 @@ public abstract class BaseTableVM : BasePageVM
         using var db = new RepairDepotContext(Config.GetInstanse().DbContextOptions);
         db.UpdateRange(Data);
         await db.SaveChangesAsync();
+    }
+
+    protected abstract Task OpenNestedObjectMethod();
+
+
+    /// <summary>
+    /// Создать tab, согласно переданному VM
+    /// </summary>
+    /// <param name="vm"></param>
+    /// <returns></returns>
+    protected async Task CreateAndNotify(BasePageVM vm)
+    {
+        var tuple = new Tuple<object, string>(vm, vm.Name);
+        await Mediator.Notify("CreateTab", tuple);
     }
 }

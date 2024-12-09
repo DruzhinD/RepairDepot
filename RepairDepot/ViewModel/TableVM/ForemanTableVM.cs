@@ -25,5 +25,11 @@ namespace RepairDepot.ViewModel.TableVM
 
             Data = new System.Collections.ObjectModel.ObservableCollection<IdModel>(foremen);
         }
+
+        protected async override Task OpenNestedObjectMethod()
+        {
+            var vm = new WorkerTableVM();
+            await CreateAndNotify(vm);
+        }
     }
 }

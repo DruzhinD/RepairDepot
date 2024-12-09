@@ -33,5 +33,11 @@ namespace RepairDepot.ViewModel.TableVM
 
             Data = new ObservableCollection<IdModel>(wagons);
         }
+
+        protected async override Task OpenNestedObjectMethod()
+        {
+            var vm = new RailwayTableVM();
+            await CreateAndNotify(vm);
+        }
     }
 }

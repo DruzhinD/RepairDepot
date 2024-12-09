@@ -47,6 +47,12 @@
                   Grid.Row="0"
                   CanUserDeleteRows="False"
                   ScrollViewer.CanContentScroll="False">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseRightButtonUp">
+                    <i:InvokeCommandAction Command="{Binding OpenNestedObject}"
+                                           CommandParameter="{Binding NestedSelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"
                                     Binding="{Binding Id}" />

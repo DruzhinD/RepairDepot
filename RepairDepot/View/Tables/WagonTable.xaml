@@ -46,6 +46,12 @@
                   SelectedItem="{Binding SelectedItem}"
                   Grid.Row="0"
                   CanUserDeleteRows="False">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseRightButtonUp">
+                    <i:InvokeCommandAction Command="{Binding OpenNestedObject}"
+                                           CommandParameter="{Binding NestedSelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"
                                     Binding="{Binding Id}" />
@@ -63,12 +69,12 @@
                                              Orientation="Horizontal">
                             <TextBox IsReadOnly="True"
                                      Text="Сведения о Ж/Д"
-                                     BorderThickness="0"/>
+                                     BorderThickness="0" />
                             <TextBox IsReadOnly="True"
                                      ui:ControlHelper.Header="ID"
                                      Text="{Binding Railway.Id}" />
                             <CheckBox Content="Внешняя"
-                                      IsChecked="{Binding Railway.External}"/>
+                                      IsChecked="{Binding Railway.External}" />
                             <TextBox ui:ControlHelper.Header="ИНН"
                                      Text="{Binding Railway.Inn}" />
                             <TextBox ui:ControlHelper.Header="Банк"

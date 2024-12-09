@@ -26,5 +26,11 @@ namespace RepairDepot.ViewModel.TableVM
 
             Data = new ObservableCollection<IdModel>(repairRequests);
         }
+
+        protected async override Task OpenNestedObjectMethod()
+        {
+            var vm = new RepairOrderTableVM();
+            await CreateAndNotify(vm);
+        }
     }
 }

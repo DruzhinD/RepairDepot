@@ -46,11 +46,17 @@
                   SelectedItem="{Binding SelectedItem}"
                   Grid.Row="0"
                   CanUserDeleteRows="False">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseRightButtonUp">
+                    <i:InvokeCommandAction Command="{Binding OpenNestedObject}"
+                                           CommandParameter="{Binding NestedSelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"
                                     Binding="{Binding Id}" />
                 <DataGridCheckBoxColumn Header="Работа выполнена качественно"
-                                    Binding="{Binding Quality}" />
+                                        Binding="{Binding Quality}" />
                 <DataGridTextColumn Header="Примечание"
                                     Binding="{Binding Comment}" />
             </DataGrid.Columns>
@@ -79,7 +85,7 @@
                                      ui:ControlHelper.Header="ID"
                                      Text="{Binding AwardOrder.Id}" />
                             <TextBox ui:ControlHelper.Header="Премия (руб.)"
-                                Text="{Binding AwardOrder.Bonus}" />
+                                     Text="{Binding AwardOrder.Bonus}" />
                             <TextBox ui:ControlHelper.Header="Премия (часть от з/п)"
                                      Text="{Binding AwardOrder.BonusPercent}" />
                         </ui:SimpleStackPanel>
