@@ -39,6 +39,8 @@ public partial class RepairDepotContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserLog> UserLogs { get; set; }
+
     public virtual DbSet<Wagon> Wagons { get; set; }
 
     public virtual DbSet<WagonType> WagonTypes { get; set; }
@@ -350,6 +352,24 @@ public partial class RepairDepotContext : DbContext
                 .HasConstraintName("user_permission_id_fkey");
         });
 
+        modelBuilder.Entity<UserLog>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("user_log_pkey");
+
+            entity.ToTable("user_log");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Message)
+                .HasMaxLength(500)
+                .HasColumnName("message");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserLogs)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_log_user");
+        });
+
         modelBuilder.Entity<Wagon>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Wagon_pkey");
@@ -418,10 +438,4 @@ public partial class RepairDepotContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-        optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
-    }
 }
