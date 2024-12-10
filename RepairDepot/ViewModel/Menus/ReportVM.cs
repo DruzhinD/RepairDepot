@@ -1,5 +1,6 @@
 ﻿using DatabaseAdapter.Models;
 using IronXL;
+//using IronWord;
 using IronXL.Formatting;
 using Microsoft.EntityFrameworkCore;
 using RepairDepot.Model;
@@ -14,6 +15,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using IronWord.Models;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml;
 
 namespace RepairDepot.ViewModel
 {
@@ -83,9 +88,10 @@ namespace RepairDepot.ViewModel
             Data = new ObservableCollection<CompleteReport>(reports);
         }
 
-
-
-        private void CreateExcelMethod()
+        /// <summary>
+        /// Преобразует текущую коллекцию Data в объект DataTable
+        /// </summary>
+        DataTable CollectionToDataTable()
         {
             //создание таблицы DataTable для дальнейшего экспорта в Excel
             DataTable table = new DataTable("Отчет");
@@ -109,6 +115,12 @@ namespace RepairDepot.ViewModel
                 report.RepairTask.RepairOrder.RepairRequest.Wagon.RegNumber];
                 table.Rows.Add(importData);
             }
+            return table;
+        }
+
+        private void CreateExcelMethod()
+        {
+            var table = CollectionToDataTable();
 
             //создание книги
             var workBook = new WorkBook();
@@ -118,7 +130,7 @@ namespace RepairDepot.ViewModel
 
             int rowIndexer = 0; //индекс строки, указывает на текущую пустую строку в Excel
 
-            //записываем заголовок таблицы
+            //заголовок таблицы
             string tableHeader = string.Format("Выполненные работы за период {0} - {1}",
                 arg0: Start.ToString("d"),
                 arg1: Stop.ToString("d"));
@@ -174,7 +186,176 @@ namespace RepairDepot.ViewModel
 
         private void CreateWordMethod()
         {
-            throw new NotImplementedException();
+            //имя документа
+            string docName = $"Отчет за {DateTime.Now.ToString("dd.MM.yy H`m`s")}.docx";
+            string savePath = Path.Combine(Config.GetInstanse().SavePath, docName);
+
+            using (var wordDoc = WordprocessingDocument.Create(savePath, DocumentFormat.OpenXml.WordprocessingDocumentType.Document))
+            {
+                //основная часть документа
+                MainDocumentPart mainPart = wordDoc.AddMainDocumentPart();
+                mainPart.Document = new Document();
+                Body body = new Body();
+
+                //заголовок таблицы
+                string tableHeader = string.Format("Выполненные работы за период {0} - {1}",
+                    arg0: Start.ToString("d"),
+                    arg1: Stop.ToString("d"));
+
+                string font = "Arial"; //название шрифта
+
+                //параметры текста
+                var textProps = new RunProperties()
+                {
+                    FontSize = new FontSize() { Val = "36" },
+                    RunFonts = new RunFonts() { Ascii = font }
+                };
+
+                //параграф с текстом
+                var text = new Text(tableHeader);
+                Paragraph paragraph = new Paragraph(new Run(text) { RunProperties = textProps });
+                //добавляем параграф в тело документа
+                body.Append(paragraph);
+
+                //данные для заполнения
+                var dataTable = CollectionToDataTable();
+
+                //таблица word
+                Table table = new Table();
+
+                //граница таблицы
+                TableProperties tableProperties = new TableProperties(
+                    new TableBorders(new TopBorder()
+                    { Val = new EnumValue<BorderValues>(BorderValues.Sawtooth), Size = 6 },
+                        new BottomBorder()
+                        { Val = new EnumValue<BorderValues>(BorderValues.Sawtooth), Size = 6 },
+                        new LeftBorder()
+                        { Val = new EnumValue<BorderValues>(BorderValues.Sawtooth), Size = 6 },
+                        new RightBorder()
+                        { Val = new EnumValue<BorderValues>(BorderValues.Sawtooth), Size = 6 },
+                        new InsideHorizontalBorder()
+                        { Val = new EnumValue<BorderValues>(BorderValues.Sawtooth), Size = 6 },
+                        new InsideVerticalBorder()
+                        { Val = new EnumValue<BorderValues>(BorderValues.Sawtooth), Size = 6 })
+                );
+                table.AppendChild<TableProperties>(tableProperties);
+
+                //заполняем заголовки таблицы
+                TableRow tableRow = new TableRow();
+                foreach (DataColumn column in dataTable.Columns)
+                {
+                    //параметры текста
+                    textProps = new RunProperties()
+                    {
+                        FontSize = new FontSize() { Val = "24" },
+                        RunFonts = new RunFonts() { Ascii = font },
+                        Bold = new Bold(),
+                    };
+                    //ячейка
+                    TableCell cell = new TableCell();
+                    cell.Append(new Paragraph(
+                                new Run(
+                                    new Text(column.ColumnName)
+                                        )
+                                { RunProperties = textProps }));
+                    tableRow.Append(cell);
+                }
+                table.Append(tableRow);
+
+                //заполняем данные
+                for (int row = 0; row < dataTable.Rows.Count; row++)
+                {
+                    tableRow = new TableRow();
+                    for (int column = 0; column < dataTable.Columns.Count; column++)
+                    {
+                        //параметры текста
+                        textProps = new RunProperties()
+                        {
+                            FontSize = new FontSize() { Val = "18" },
+                            RunFonts = new RunFonts() { Ascii = font }
+                        };
+
+                        //1 единица данных из таблицы (ячейка)
+                        TableCell cell = new TableCell(
+                            new Paragraph(
+                                new Run(
+                                    new Text(dataTable.Rows[row][column].ToString()
+                                    ))
+                                { RunProperties = textProps }));
+                        tableRow.Append(cell);
+                    }
+                    table.Append(tableRow);
+                }
+
+                //добавляем таблицу в тело документа
+                body.Append(table);
+
+                mainPart.Document.Append(body);
+                mainPart.Document.Save();
+            }
+
+            /*
+            //var doc = new WordDocument();
+            //doc.AddText("12345");
+            //string savePath = Path.Combine(Config.GetInstanse().SavePath, "123.docx");
+
+            //doc.Save(savePath);
+
+            DataTable table = CollectionToDataTable(); //данные
+
+            //WordDocument doc = new WordDocument();
+
+            //заголовок таблицы
+            string tableHeader = string.Format("Выполненные работы за период {0} - {1}",
+                arg0: Start.ToString("d"),
+                arg1: Stop.ToString("d"));
+
+            //добавляем текст
+            var text = new Text(tableHeader);
+            text.Style = new TextStyle()
+            {
+                TextFont = new Font()
+                {
+                    FontFamily = "Times New Roman",
+                    FontSize = 16,
+                },
+                Color = Color.Black,
+                IsBold = true,
+            };
+            var doc = new WordDocument(new Paragraph(text));
+            doc.AddParagraph(new Paragraph(text));
+
+            //создаем таблицу
+            Table docTable = new Table(table.Rows.Count + 1, table.Columns.Count);
+
+            docTable.Zebra = new ZebraColor("FFFFFF", "dddddd");
+            int rowIndexer = 0; //текущий индекс пустой строки таблицы
+            //пишем заголовки столбцов
+            for (int i = 0; i < table.Columns.Count; i++)
+                docTable[rowIndexer, i] = new TableCell(new Text(table.Columns[i].ColumnName));
+            rowIndexer++;
+
+            //записываем значения
+            foreach (DataRow row in table.Rows)
+            {
+                for (int j = 0; j < table.Columns.Count; j++)
+                {
+                    docTable[rowIndexer, j] = new TableCell(new Text(row[j].ToString()));
+                }
+                rowIndexer++;
+            }
+
+            //добавляем таблицу
+            doc.AddTable(docTable);
+            //имя документа
+            string docName = $"Отчет за {DateTime.Now.ToString("dd.MM.yy H`m`s")}.docx";
+
+            string savePath = Path.Combine(Config.GetInstanse().SavePath, docName);
+            doc.Save(savePath); */
+
+            //открываем документ
+            Process.Start(new ProcessStartInfo(savePath)
+            { UseShellExecute = true });
         }
     }
 }

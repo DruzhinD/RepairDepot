@@ -85,6 +85,7 @@ public class MainVM : BaseVM
     {
         Mediator.Subscribe(nameof(ShowControlsPerPermission), ShowControlsPerPermission);
         Config.GetInstanse();
+        
     }
 
     public async override Task Initialize()
@@ -94,6 +95,9 @@ public class MainVM : BaseVM
         WelcomeVM vm = new WelcomeVM();
         var tabItem = new Tuple<object, string>(vm, vm.Name);
         await Mediator.Notify("CreateTab", tabItem);
+        var vm2 = new ReportVM();
+        var tuple = new Tuple<object, string>(vm2, vm2.Name);
+        Mediator.Notify("CreateTab", tuple);
         //CollectionViewSource
     }
 
