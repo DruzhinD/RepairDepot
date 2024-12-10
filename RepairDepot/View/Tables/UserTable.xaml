@@ -41,23 +41,17 @@
             <RowDefinition Height="5*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        <control:FilterDataGrid  AutoGenerateColumns="False"
-                                 ItemsSource="{Binding Data}"
-                                 RowDetailsVisibilityMode="VisibleWhenSelected"
-                                 SelectedItem="{Binding SelectedItem}"
-                                 Grid.Row="0"
-                                 CanUserDeleteRows="False">
-            <!--<i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseRightButtonUp">
-                    <i:InvokeCommandAction Command="{Binding OpenNestedObject}"
-                                           CommandParameter="{Binding NestedSelectedItem}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>-->
-            <control:FilterDataGrid.Columns>
-                <control:DataGridTextColumn Header="ID"
-                                            Binding="{Binding Id}"
-                                            IsReadOnly="True"
-                                            IsColumnFiltered="True" />
+        <DataGrid  AutoGenerateColumns="False"
+                   ItemsSource="{Binding Data}"
+                   RowDetailsVisibilityMode="VisibleWhenSelected"
+                   SelectedItem="{Binding SelectedItem}"
+                   Grid.Row="0"
+                   CanUserDeleteRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding Id}"
+                                    IsReadOnly="True"
+                                    IsColumnFiltered="True" />
                 <DataGridTextColumn Header="Логин"
                                     Binding="{Binding Login}" />
                 <DataGridTextColumn Header="Фамилия"
@@ -68,29 +62,28 @@
                                     Binding="{Binding MiddleName}" />
                 <DataGridTextColumn Header="Уровень доступа"
                                     Binding="{Binding Permission.Name}" />
-            </control:FilterDataGrid.Columns>
-            <control:FilterDataGrid.RowDetailsTemplate>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <ui:SimpleStackPanel
-                        Spacing="3">
+                    <ui:SimpleStackPanel Spacing="3">
                         <TextBox IsReadOnly="True"
                                  Text="Логи пользователя"
                                  BorderThickness="0" />
-                        <control:FilterDataGrid AutoGenerateColumns="False"
-                                                ItemsSource="{Binding UserLogs}">
-                            <control:FilterDataGrid.Columns>
-                                <control:DataGridTextColumn Header="ID"
-                                                            Binding="{Binding Id}"
-                                                            IsReadOnly="True"
-                                                            IsColumnFiltered="True" />
+                        <DataGrid AutoGenerateColumns="False"
+                                  ItemsSource="{Binding UserLogs}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID"
+                                                    Binding="{Binding Id}"
+                                                    IsReadOnly="True"
+                                                    IsColumnFiltered="True" />
                                 <DataGridTextColumn Header="Запись"
                                                     Binding="{Binding Message}" />
-                            </control:FilterDataGrid.Columns>
-                        </control:FilterDataGrid>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </ui:SimpleStackPanel>
                 </DataTemplate>
-            </control:FilterDataGrid.RowDetailsTemplate>
-        </control:FilterDataGrid>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
 
         <ui:SimpleStackPanel Grid.Row="1"
                              Margin="5"
