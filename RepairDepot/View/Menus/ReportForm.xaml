@@ -65,18 +65,25 @@
                                     IsReadOnly="True"
                                     IsColumnFiltered="True" />
                 <DataGridTextColumn Header="Дата начала (план)"
+                                    IsReadOnly="True"
                                     Binding="{Binding RepairTask.RepairOrder.DateStart}" />
                 <DataGridTextColumn Header="Дата начала (факт)"
+                                    IsReadOnly="True"
                                     Binding="{Binding DateStartFact}" />
                 <DataGridTextColumn Header="Дата завершения (план)"
+                                    IsReadOnly="True"
                                     Binding="{Binding RepairTask.RepairOrder.DateStop}" />
                 <DataGridTextColumn Header="Дата завершения (факт)"
+                                    IsReadOnly="True"
                                     Binding="{Binding DateStopFact}" />
                 <DataGridTextColumn Header="Стоимость"
+                                    IsReadOnly="True"
                                     Binding="{Binding RepairTask.RepairOrder.Money}" />
                 <DataGridTextColumn Header="ФИО бригадира"
+                                    IsReadOnly="True"
                                     Binding="{Binding RepairTask.Foreman.Employee.Name}" />
                 <DataGridTextColumn Header="Рег. номер вагона"
+                                    IsReadOnly="True"
                                     Binding="{Binding RepairTask.RepairOrder.RepairRequest.Wagon.RegNumber}" />
             </DataGrid.Columns>
         </DataGrid>

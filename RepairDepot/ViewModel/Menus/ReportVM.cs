@@ -1,5 +1,6 @@
 ﻿using DatabaseAdapter.Models;
 using IronXL;
+using IronXL.Formatting;
 using Microsoft.EntityFrameworkCore;
 using RepairDepot.Model;
 using RepairDepot.ViewModel.Commands;
@@ -86,73 +87,85 @@ namespace RepairDepot.ViewModel
 
         private void CreateExcelMethod()
         {
-            DataTable table = new DataTable();
-            table.TableName = "Отчет";
-            var column1 = new DataColumn("Дата начала (план)", typeof(string));
-            table.Columns.Add(column1);
-            var column2 = new DataColumn("Дата начала (факт)", typeof(string));
-            table.Columns.Add(column2);
-            var column3 = new DataColumn("Дата завершения (план)", typeof(string));
-            table.Columns.Add(column3);
-            var column4 = new DataColumn("Дата завершения (факт)", typeof(string));
-            table.Columns.Add(column4);
-            var column5 = new DataColumn("Стоимость", typeof(decimal));
-            table.Columns.Add(column5);
-            var column6 = new DataColumn("ФИО бригадира", typeof(string));
-            table.Columns.Add(column6);
-            var column7 = new DataColumn("Рег. номер вагона", typeof(long));
-            table.Columns.Add(column7);
+            //создание таблицы DataTable для дальнейшего экспорта в Excel
+            DataTable table = new DataTable("Отчет");
+            table.Columns.Add("Дата начала (план)", typeof(DateOnly));
+            table.Columns.Add("Дата начала (факт)", typeof(DateOnly));
+            table.Columns.Add("Дата завершения (план)", typeof(DateOnly));
+            table.Columns.Add("Дата завершения (факт)", typeof(DateOnly));
+            table.Columns.Add("Стоимость", typeof(decimal));
+            table.Columns.Add("ФИО бригадира", typeof(string));
+            table.Columns.Add("Рег. номер вагона", typeof(long));
+            //заполнение данными
             foreach (CompleteReport report in Data)
             {
-                object[] objects = [
-                    report.RepairTask.RepairOrder.DateStart.ToString("d"),
-                    report.DateStartFact.ToString("d"),
-                    report.RepairTask.RepairOrder.DateStop.ToString("d"),
-                    report.DateStopFact.ToString("d"),
+                object[] importData = [
+                    report.RepairTask.RepairOrder.DateStart,
+                    report.DateStartFact,
+                    report.RepairTask.RepairOrder.DateStop,
+                    report.DateStopFact,
                 report.RepairTask.RepairOrder.Money,
                 report.RepairTask.Foreman.Employee.Name,
                 report.RepairTask.RepairOrder.RepairRequest.Wagon.RegNumber];
-                table.Rows.Add(objects);
+                table.Rows.Add(importData);
             }
 
-            DataSet ds = new DataSet();
-            ds.Tables.Add(table);
-            var options = new IronXL.Options.CreatingOptions();
-            //WorkBook workBook = WorkBook.Load(ds);
+            //создание книги
             var workBook = new WorkBook();
-            string workBookName = $"{DateTime.Now.ToString("d")} Report.xlsx";
-            string path = Path.Combine(Config.GetInstanse().SavePath, workBookName);
+            WorkSheet ws = workBook.DefaultWorkSheet; //лист по умолчанию
+            string workBookName = $"Отчет за {DateTime.Now.ToString("dd.MM.yy H`m`s")}.xlsx";
+            string savePath = Path.Combine(Config.GetInstanse().SavePath, workBookName);
 
-            string header = $"Выполненные работы за период {Start} - {Stop}";
-            string[] headers = { "Дата начала (план)" , "Дата начала (факт)", "Дата завершения (план)" , "Дата завершения (факт)" , "Стоимость", "ФИО бригадира", "Рег. номер вагона" };
-            WorkSheet ws = workBook.CreateWorkSheet("отчет");
-            //ws.AddNamedTable(,,new IronXL.Styles.TableStyle() { })
-            //ws.AddNamedTable
-            for (int i = 0; i < headers.Length; i++)
-                ws.SetCellValue(1, i, headers[i]);
-            ws.SetCellValue(0, 0, header);
-            ws.Merge("A1:G1");
-            for (int i = 0; i < table.Rows.Count; i++)
-            //foreach (var column in table.Columns)
+            int rowIndexer = 0; //индекс строки, указывает на текущую пустую строку в Excel
+
+            //записываем заголовок таблицы
+            string tableHeader = string.Format("Выполненные работы за период {0} - {1}",
+                arg0: Start.ToString("d"),
+                arg1: Stop.ToString("d"));
+            ws[$"A{1 + rowIndexer++}"].Value = tableHeader;
+            ws.Merge("A1:G1"); //объединяем ячейки
+
+            string alphabet = "ABCDEFGHIJKLMNOPQRSTUV"; //алфавит
+            string tableStartIndex = $"{alphabet[0]}{1 + rowIndexer}";
+            //заголовки столбцов таблицы
+            for (int i = 0; i < table.Columns.Count; i++)
+                ws[$"{alphabet[i]}{1 + rowIndexer}"].Value = table.Columns[i].ColumnName;
+
+            //заполняем таблицу данными
+            foreach (DataRow row in table.Rows)
             {
-                var row = table.Rows[i];
                 for (int j = 0; j < table.Columns.Count; j++)
-                    //foreach (var row in table.Rows)
                 {
-                    //var cell = ws.GetCellAt(i+1, j);
-                    //cell = Cell.;
-                    ws.SetCellValue(i+2, j, row[j].ToString());
-                    //int[] indexes = {0,1,2,3 };
-                    //if (indexes.Contains(j))
-                    //    cell.FormatString = "dd/MM/yy";
-                    //ws.
-                    ws.AutoSizeColumn(j); //переместить
-                }
-            }
+                    string cellIndex = $"{alphabet[j]}{1 + rowIndexer}"; //текущий индекс ячейки
+                    var rowValue = row[j]; //значение из таблицы
+                    if (rowValue.GetType() == typeof(DateOnly))
+                    {
+                        ws[cellIndex].DateTimeValue = ((DateOnly)rowValue).ToDateTime(TimeOnly.MinValue);
+                    }
+                    else
+                    {
+                        ws[cellIndex].Value = rowValue;
+                        //ws[cellIndex].
+                    }
 
-            workBook.SaveAs(path);
+                }
+                rowIndexer++;
+            }
+            string tableStopIndex = $"{alphabet[table.Columns.Count - 1]}{1 + rowIndexer - 1}";
+
+            //авторазмер столбцов
+            for (int i = 0; i < ws.ColumnCount; i++)
+                ws.AutoSizeColumn(i);
+
+            //форматируем таблицу
+            //IronXL.Range tableRange = ws[tableStartIndex + ":" + tableStopIndex];
+            //var tableStyle = IronXL.Styles.TableStyle.TableStyleDark1;
+            //ws.AddNamedTable("table1", tableRange, tableStyle: tableStyle);
+
+            //сохранение
+            workBook.SaveAs(savePath);
             //открываем документ
-            Process.Start(new ProcessStartInfo(path)
+            Process.Start(new ProcessStartInfo(savePath)
             { UseShellExecute = true });
             return;
         }
