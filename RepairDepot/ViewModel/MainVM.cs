@@ -71,10 +71,13 @@ public class MainVM : BaseVM
     AsyncCommand createReport;
     public AsyncCommand CreateReport => createReport ??= new AsyncCommand(async (obj) =>
     {
-        string path = await new ReportCreator().CreateReport();
-        Process.Start(new ProcessStartInfo(
-            Path.Combine(Config.GetInstanse().SavePath, path))
-        { UseShellExecute = true }); ;
+        //string path = await new ReportCreator().CreateReport();
+        //Process.Start(new ProcessStartInfo(
+        //    Path.Combine(Config.GetInstanse().SavePath, path))
+        //{ UseShellExecute = true }); ;
+        var vm = new ReportVM();
+        var tuple = new Tuple<object, string>(vm, vm.Name);
+        await Mediator.Notify("CreateTab", tuple);
     });
     #endregion
 

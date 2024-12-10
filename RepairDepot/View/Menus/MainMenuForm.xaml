@@ -32,8 +32,8 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="4*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="5*" />
         </Grid.RowDefinitions>
 
         <ui:SimpleStackPanel  Grid.Row="0">
@@ -42,11 +42,13 @@
                 Главное меню
             </TextBlock>
             <TextBlock TextAlignment="Left"
-                       MaxWidth="300"
+                       MaxWidth="500"
                        TextWrapping="Wrap"
                        HorizontalAlignment="Left"
                        FontStyle="Italic">
                 Для перехода к нужному документу или разделу нажмите соответствующую кнопку.
+            <LineBreak />
+                Примечание: для перехода к таблице вложенного документа нажмите правой кнопкой мыши
             </TextBlock>
         </ui:SimpleStackPanel>
 

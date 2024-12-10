@@ -46,7 +46,7 @@
             <Button Content="Главное меню"
                     Command="{Binding OpenMainMenu}"
                     Visibility="{Binding VisibilityAuthorizedControl}" />
-            <Button Content="Сформировать отчет"
+            <Button Content="Отчеты"
                     Command="{Binding CreateReport}"
                     Visibility="{Binding VisibilityAuthorizedControl}" />
         </ui:SimpleStackPanel>

@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="RepairDepot.View.Menus.ReportForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:RepairDepot.View.Menus"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DataContext="{d:DesignInstance Type=viewmodel:ReportVM}"
+             xmlns:control="http://filterdatagrid.control.com/2021"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:viewmodel="clr-namespace:RepairDepot.ViewModel"
+             d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.DataContext>
+        <viewmodel:ReportVM />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style x:Key="ButtonTableStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch" />
+            <Setter Property="VerticalAlignment"
+                    Value="Stretch" />
+            <Setter Property="ui:ControlHelper.CornerRadius"
+                    Value="5" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="5*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ui:SimpleStackPanel Grid.Row="0"
+                             Grid.ColumnSpan="2">
+            <TextBlock FontSize="16">
+                На этой странице вы можете создать отчеты в виде документов Word или Excel
+                <LineBreak />
+                Выберите период за который необходимо сформировать отчет
+            </TextBlock>
+        </ui:SimpleStackPanel>
+        <DataGrid  AutoGenerateColumns="False"
+                   ItemsSource="{Binding Data}"
+                   RowDetailsVisibilityMode="VisibleWhenSelected"
+                   SelectedItem="{Binding SelectedItem}"
+                   Grid.Row="1"
+                   CanUserDeleteRows="False"
+                   BorderThickness="3"
+                   BorderBrush="#a6b3ff">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding Id}"
+                                    IsReadOnly="True"
+                                    IsColumnFiltered="True" />
+                <DataGridTextColumn Header="Дата начала (план)"
+                                    Binding="{Binding RepairTask.RepairOrder.DateStart}" />
+                <DataGridTextColumn Header="Дата начала (факт)"
+                                    Binding="{Binding DateStartFact}" />
+                <DataGridTextColumn Header="Дата завершения (план)"
+                                    Binding="{Binding RepairTask.RepairOrder.DateStop}" />
+                <DataGridTextColumn Header="Дата завершения (факт)"
+                                    Binding="{Binding DateStopFact}" />
+                <DataGridTextColumn Header="Стоимость"
+                                    Binding="{Binding RepairTask.RepairOrder.Money}" />
+                <DataGridTextColumn Header="ФИО бригадира"
+                                    Binding="{Binding RepairTask.Foreman.Employee.Name}" />
+                <DataGridTextColumn Header="Рег. номер вагона"
+                                    Binding="{Binding RepairTask.RepairOrder.RepairRequest.Wagon.RegNumber}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <ui:SimpleStackPanel Grid.Column="1"
+                             Grid.Row="1"
+                             Spacing="5"
+                             Margin="10"
+                             HorizontalAlignment="Center">
+            <DatePicker ui:ControlHelper.Header="Начало периода"
+                        SelectedDate="{Binding Start}" />
+            <DatePicker ui:ControlHelper.Header="Конец периода"
+                        SelectedDate="{Binding Stop}" />
+            <Button Margin="0, 20, 0, 0"
+                    Content="Обновить"
+                    Style="{StaticResource ButtonTableStyle}" 
+                    Command="{Binding Refresh}"/>
+            <Button Style="{StaticResource ButtonTableStyle}"
+                    Content="Word"
+                    Margin="0, 40, 0, 0"
+                    Command="{Binding CreateWord}"/>
+            <Button Style="{StaticResource ButtonTableStyle}"
+                    Content="Excel"
+                    Command="{Binding CreateExcel}" />
+        </ui:SimpleStackPanel>
+    </Grid>
+
+</UserControl>
