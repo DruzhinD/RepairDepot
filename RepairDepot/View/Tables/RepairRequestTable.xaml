@@ -55,8 +55,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"
                                     Binding="{Binding Id}" />
-                <DataGridCheckBoxColumn Header="Причина"
-                                        Binding="{Binding Reason}" />
+                <DataGridTextColumn Header="Причина"
+                                    Binding="{Binding Reason}" />
                 <DataGridTextColumn Header="Тип ремонта"
                                     Binding="{Binding RepairType.Type}" />
             </DataGrid.Columns>
@@ -110,6 +110,9 @@
                     Command="{Binding DeleteRow}"
                     Style="{StaticResource ButtonTableStyle}"
                     CommandParameter="{Binding SelectedItem}" />
+            <Button Content="Добавить новую запись"
+                    Command="{Binding AddRow}"
+                    Style="{StaticResource ButtonTableStyle}" />
             <Button Content="Сохранить"
                     Command="{Binding SaveChanges}"
                     Style="{StaticResource ButtonTableStyle}" />

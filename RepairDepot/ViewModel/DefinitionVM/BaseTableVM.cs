@@ -30,6 +30,12 @@ public abstract class BaseTableVM : BasePageVM
     /// </summary>
     public IdModel NestedSelectedItem { get => nestedSelectedItem; set { nestedSelectedItem = value; OnPropertyChanged(); } }
     IdModel nestedSelectedItem;
+
+    /// <summary>
+    /// Сообщение, выводимое на экран по результату операций
+    /// </summary>
+    public string OperationMsg { get => operationMsg; set { operationMsg = value; OnPropertyChanged(); } }
+    string operationMsg;
     #endregion
 
     #region Команды
@@ -46,17 +52,40 @@ public abstract class BaseTableVM : BasePageVM
     RelayCommand deleteRow;
 
     /// <summary>
+    /// Команда добавления строк данных
+    /// </summary>
+    public RelayCommand AddRow => addRow ??= new RelayCommand(obj => AddRowMethod(obj));
+    RelayCommand addRow;
+
+    /// <summary>
     /// Команда для открытия вложенной таблицы в отдельной вкладке
     /// </summary>
     public AsyncCommand OpenNestedObject => openNestedObject ??= new AsyncCommand(async (obj) => await OpenNestedObjectMethod());
         AsyncCommand openNestedObject;
     #endregion
 
+    /// <summary>
+    /// данные для удаления
+    /// </summary>
+    protected List<IdModel> dataToDelete = new List<IdModel>();
+
     protected virtual void DeleteRowMethod(object obj)
     {
         if (Data.Contains(obj))
+        {
             Data.Remove((IdModel)obj);
+            dataToDelete.Add((IdModel)obj);
+        }
+        
     }
+
+    protected virtual void AddRowMethod(object obj)
+    {
+        var newItem = (IdModel)Data[0].Clone();
+        newItem.Id = 0;
+        Data.Add(newItem);
+    }
+
 
     protected async virtual Task SaveChangesMethod()
     {
@@ -70,8 +99,19 @@ public abstract class BaseTableVM : BasePageVM
             var log = new UserLog() { User = CommonData.User.User, Message = logMsg};
             db.Update(log);
             await db.SaveChangesAsync();
+            OperationMsg = "Сохранение прошло успешно!";
+
+            //удаление
+            if (dataToDelete.Count > 0)
+            {
+                db.RemoveRange(dataToDelete);
+                await db.SaveChangesAsync();
+                OperationMsg += "\n" + "Удаление выбранных данных прошло успешно!";
+            }
+
+
         }
-        catch { }
+        catch (Exception ex) { }
 
     }
 

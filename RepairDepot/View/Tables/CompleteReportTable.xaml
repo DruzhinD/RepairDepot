@@ -102,6 +102,9 @@
                     Command="{Binding DeleteRow}"
                     Style="{StaticResource ButtonTableStyle}"
                     CommandParameter="{Binding SelectedItem}" />
+            <Button Content="Добавить новую запись"
+                    Command="{Binding AddRow}"
+                    Style="{StaticResource ButtonTableStyle}" />
             <Button Content="Сохранить"
                     Command="{Binding SaveChanges}"
                     Style="{StaticResource ButtonTableStyle}" />

@@ -26,6 +26,7 @@ namespace RepairDepot.ViewModel.TableVM
                 .ToListAsync();
 
             Data = new System.Collections.ObjectModel.ObservableCollection<IdModel>(workers);
+            await base.Initialize();
         }
 
         protected async override Task OpenNestedObjectMethod()

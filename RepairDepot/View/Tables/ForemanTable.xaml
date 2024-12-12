@@ -70,17 +70,6 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <ui:SimpleStackPanel Spacing="5">
-                        <!--<TextBox IsReadOnly="True"
-                                 Text="Бригадир"
-                                 BorderThickness="0" />
-                        <ui:SimpleStackPanel Spacing="3"
-                                             Orientation="Horizontal">
-                            <TextBox IsReadOnly="True"
-                                     ui:ControlHelper.Header="ID"
-                                     Text="{Binding Chief.Id}" />
-                            <TextBox ui:ControlHelper.Header="ФИО"
-                                     Text="{Binding Chief.Name}" />
-                        </ui:SimpleStackPanel>-->
                         <TextBox IsReadOnly="True"
                                  Text="Подчиненные"
                                  BorderThickness="0" />
@@ -116,6 +105,9 @@
                     Command="{Binding DeleteRow}"
                     Style="{StaticResource ButtonTableStyle}"
                     CommandParameter="{Binding SelectedItem}" />
+            <Button Content="Добавить новую запись"
+                    Command="{Binding AddRow}"
+                    Style="{StaticResource ButtonTableStyle}" />
             <Button Content="Сохранить"
                     Command="{Binding SaveChanges}"
                     Style="{StaticResource ButtonTableStyle}" />

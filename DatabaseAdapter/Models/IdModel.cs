@@ -2,10 +2,15 @@
 using System.ComponentModel;
 namespace DatabaseAdapter.Models
 {
-    public abstract class IdModel
+    public abstract class IdModel : ICloneable
     {
         //[ReadOnly(true)]
         [DisplayName("ID")]
         public int Id { get; set; }
+
+        public virtual object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }
