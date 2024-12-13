@@ -1,7 +1,4 @@
 ﻿using DatabaseAdapter.Models;
-using IronXL;
-//using IronWord;
-using IronXL.Formatting;
 using Microsoft.EntityFrameworkCore;
 using RepairDepot.Model;
 using RepairDepot.ViewModel.Commands;
@@ -15,10 +12,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using IronWord.Models;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml;
+using ClosedXML.Excel;
 
 namespace RepairDepot.ViewModel
 {
@@ -133,87 +130,80 @@ namespace RepairDepot.ViewModel
             lock (Data)
             {
 
-                //создание книги
-                var workBook = new WorkBook();
-                WorkSheet ws = workBook.DefaultWorkSheet; //лист по умолчанию
-                string workBookName = $"Отчет за {DateTime.Now.ToString("dd.MM.yy H`m`s")}.xlsx";
-                string savePath = Path.Combine(Config.GetInstanse().SavePath, workBookName);
-
-                int rowIndexer = 0; //индекс строки, указывает на текущую пустую строку в Excel
-
-                //заголовок таблицы
-                string tableHeader = string.Format("Выполненные работы за период {0} - {1}",
-                    arg0: Start.ToString("d"),
-                    arg1: Stop.ToString("d"));
-                ws[$"A{1 + rowIndexer++}"].Value = tableHeader;
-                ws.Merge("A1:G1"); //объединяем ячейки
-
-                string alphabet = "ABCDEFGHIJKLMNOPQRSTUV"; //алфавит
-                string tableStartIndex = $"{alphabet[0]}{1 + rowIndexer}";
-
-                var borderStyle = IronXL.Styles.BorderType.Medium;
-                //заголовки столбцов таблицы
-                for (int i = 0; i < table.Columns.Count; i++)
+                using (XLWorkbook wbook = new XLWorkbook())
                 {
-                    var cellIndex = $"{alphabet[i]}{1 + rowIndexer}";
-                    ws[cellIndex].Value = table.Columns[i].ColumnName; //значение
+                    //создание листа
+                    IXLWorksheet ws = wbook.Worksheets.Add("Отчет");
 
-                    //граница
-                    ws[cellIndex].Style.LeftBorder.Type = borderStyle;
-                    ws[cellIndex].Style.TopBorder.Type = borderStyle;
-                    ws[cellIndex].Style.RightBorder.Type = borderStyle;
-                    ws[cellIndex].Style.BottomBorder.Type = borderStyle;
-                }
-                rowIndexer++;
+                    string workBookName = $"Отчет за {DateTime.Now.ToString("dd.MM.yy H`m`s")}.xlsx";
+                    string savePath = Path.Combine(Config.GetInstanse().SavePath, workBookName);
 
-                //заполняем таблицу данными
-                foreach (DataRow row in table.Rows)
-                {
-                    for (int j = 0; j < table.Columns.Count; j++)
+                    int rowIndexer = 0; //индекс строки, указывает на текущую пустую строку в Excel
+
+                    //заголовок таблицы
+                    string tableHeader = string.Format("Выполненные работы за период {0} - {1}",
+                        arg0: Start.ToString("d"),
+                        arg1: Stop.ToString("d"));
+                    
+                    var range = ws.Range($"A{1 + rowIndexer++}").Merge();
+                    range.Value = tableHeader; //объединяем ячейки
+                    range.Style.Font.SetBold(true).Font.FontSize = 16; //форматирование
+
+                    string alphabet = "ABCDEFGHIJKLMNOPQRSTUV"; //алфавит
+                    string tableStartIndex = $"{alphabet[0]}{1 + rowIndexer}";
+
+                    var borderStyle = XLBorderStyleValues.Medium;
+                    //заголовки столбцов таблицы
+                    for (int i = 0; i < table.Columns.Count; i++)
                     {
-                        string cellIndex = $"{alphabet[j]}{1 + rowIndexer}"; //текущий индекс ячейки
-                        var rowValue = row[j]; //значение из таблицы
-                                               //форматы данных
-                        if (rowValue.GetType() == typeof(DateOnly))
-                        {
-                            ws[cellIndex].DateTimeValue = ((DateOnly)rowValue).ToDateTime(TimeOnly.MinValue);
-                            ws[cellIndex].FormatString = "dd/MM/yy";
-                        }
-                        else if (float.TryParse(rowValue.ToString(), out float a))
-                        {
-                            ws[cellIndex].Value = rowValue;
-                            ws[cellIndex].FormatString = BuiltinFormats.Number0;
-                        }
-                        else
-                        {
-                            ws[cellIndex].Value = rowValue;
-                        }
+                        var cellIndex = $"{alphabet[i]}{1 + rowIndexer}";
+                        ws.Cell(cellIndex).Value = table.Columns[i].ColumnName; //значение
 
                         //граница
-                        ws[cellIndex].Style.LeftBorder.Type = borderStyle;
-                        ws[cellIndex].Style.TopBorder.Type = borderStyle;
-                        ws[cellIndex].Style.RightBorder.Type = borderStyle;
-                        ws[cellIndex].Style.BottomBorder.Type = borderStyle;
-
+                        ws.Cell(cellIndex).Style.Border.LeftBorder = borderStyle;
+                        ws.Cell(cellIndex).Style.Border.TopBorder = borderStyle;
+                        ws.Cell(cellIndex).Style.Border.RightBorder = borderStyle;
+                        ws.Cell(cellIndex).Style.Border.BottomBorder = borderStyle;
                     }
                     rowIndexer++;
+
+                    //заполняем таблицу данными
+                    foreach (DataRow row in table.Rows)
+                    {
+                        for (int j = 0; j < table.Columns.Count; j++)
+                        {
+                            string cellIndex = $"{alphabet[j]}{1 + rowIndexer}"; //текущий индекс ячейки
+                            var rowValue = row[j]; //значение из таблицы
+                                                   //форматы данных
+                            if (rowValue.GetType() == typeof(DateOnly))
+                            {
+                                ws.Cell(cellIndex).Style.DateFormat.Format = "dd/MM/yy";
+                            }
+                            else if (float.TryParse(rowValue.ToString(), out float a))
+                            {
+                                ws.Cell(cellIndex).Style.NumberFormat.Format = "0";
+                            }
+                            ws.Cell(cellIndex).Value = rowValue.ToString();
+
+                            ws.Cell(cellIndex).Style.Border.LeftBorder = borderStyle;
+                            ws.Cell(cellIndex).Style.Border.TopBorder = borderStyle;
+                            ws.Cell(cellIndex).Style.Border.RightBorder = borderStyle;
+                            ws.Cell(cellIndex).Style.Border.BottomBorder = borderStyle;
+                        }
+                        rowIndexer++;
+                    }
+                    string tableStopIndex = $"{alphabet[table.Columns.Count - 1]}{1 + rowIndexer - 1}";
+
+                    //авторазмер столбцов
+                    ws.Columns().AdjustToContents();
+
+                    //сохранение
+                    wbook.SaveAs(savePath);
+                    //открываем документ
+                    Process.Start(new ProcessStartInfo(savePath)
+                    { UseShellExecute = true });
                 }
-                string tableStopIndex = $"{alphabet[table.Columns.Count - 1]}{1 + rowIndexer - 1}";
 
-                //авторазмер столбцов
-                for (int i = 0; i < ws.ColumnCount; i++)
-                    ws.AutoSizeColumn(i);
-
-                //форматируем таблицу
-                //IronXL.Range tableRange = ws[tableStartIndex + ":" + tableStopIndex];
-                //var tableStyle = IronXL.Styles.TableStyle.TableStyleDark1;
-                //ws.AddNamedTable("table1", tableRange, tableStyle: tableStyle);
-
-                //сохранение
-                workBook.SaveAs(savePath);
-                //открываем документ
-                Process.Start(new ProcessStartInfo(savePath)
-                { UseShellExecute = true });
             }
 
         }

@@ -115,6 +115,10 @@ public abstract class BaseTableVM : BasePageVM
 
     }
 
+
+    /// <summary>
+    /// Открытие в новой вкладке таблицы, содержащей вложенные данные
+    /// </summary>
     protected abstract Task OpenNestedObjectMethod();
 
 

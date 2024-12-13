@@ -103,11 +103,11 @@
                     Style="{StaticResource ButtonTableStyle}" 
                     Command="{Binding Refresh}"/>
             <Button Style="{StaticResource ButtonTableStyle}"
-                    Content="Word"
+                    Content="отчет Word"
                     Margin="0, 40, 0, 0"
                     Command="{Binding CreateWord}"/>
             <Button Style="{StaticResource ButtonTableStyle}"
-                    Content="Excel"
+                    Content="отчет Excel"
                     Command="{Binding CreateExcel}" />
         </ui:SimpleStackPanel>
     </Grid>
